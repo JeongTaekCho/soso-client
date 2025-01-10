@@ -15,7 +15,7 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
   return (
     <>
       <TanstackQueryProvider>
-        <div className={`min-h-screen pb-60 ${pathname === '/' ? 'pt-0' : 'pt-56'} `}>
+        <div className={`m-auto min-h-screen w-full max-w-screen pb-60 ${pathname === '/' ? 'pt-0' : 'pt-56'} `}>
           {children}
           <BottomNavigation />
         </div>
