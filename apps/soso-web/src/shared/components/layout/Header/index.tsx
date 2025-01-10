@@ -24,6 +24,7 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
       }}
       className="layout-center fixed left-0 top-0 z-sticky h-56 w-full px-20"
     >
+      n n
       {!type && (
         <Flex align="center" className="h-full w-full">
           <h1 className="font-title3_bold">{title}</h1>{' '}
