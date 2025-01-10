@@ -56,6 +56,10 @@ body {
   font-family: 'Pretendard', sans-serif;
 }
 
+.layout-center {
+  @apply left-1/2 m-auto w-full max-w-screen -translate-x-1/2;
+}
+
 input,
 select,
 textarea {

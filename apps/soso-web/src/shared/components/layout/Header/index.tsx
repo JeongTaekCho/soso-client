@@ -22,7 +22,7 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
       style={{
         top: top || '0',
       }}
-      className="fixed left-0 top-0 z-sticky h-56 w-full px-20"
+      className="layout-center fixed left-0 top-0 z-sticky h-56 w-full px-20"
     >
       {!type && (
         <Flex align="center" className="h-full w-full">
