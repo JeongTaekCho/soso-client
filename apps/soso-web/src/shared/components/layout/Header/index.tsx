@@ -11,13 +11,19 @@ interface HeaderProps {
   type?: 'close' | 'back' | 'customBack' | 'search';
   title?: string;
   customBtn?: ReactNode;
+  top?: string;
 }
 
-export default function Header({ type, title, customBtn }: HeaderProps) {
+export default function Header({ type, title, customBtn, top }: HeaderProps) {
   const { handleBack } = useBack();
 
   return (
-    <div className="h-56 w-full bg-white px-20">
+    <div
+      style={{
+        top: top || '0',
+      }}
+      className="fixed left-0 top-0 z-sticky h-56 w-full px-20"
+    >
       {!type && (
         <Flex align="center" className="h-full w-full">
           <h1 className="font-title3_bold">{title}</h1>{' '}

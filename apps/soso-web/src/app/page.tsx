@@ -1,9 +1,5 @@
-import Header from '@/shared/components/layout/Header';
+import HomePage from '@/app/home/components/Home';
 
 export default function Home() {
-  return (
-    <div>
-      <Header type="search" title="헤더" />
-    </div>
-  );
+  return <HomePage />;
 }
