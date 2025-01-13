@@ -1,13 +1,13 @@
 import clsx from 'clsx';
+import { InputHTMLAttributes } from 'react';
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   width?: string;
   height?: string;
-  placeholder?: string;
   className?: string;
 }
 
-export default function Input({ width, height, placeholder, className }: InputProps) {
+export default function Input({ width, height, placeholder, className, onChange }: InputProps) {
   return (
     <div
       style={{
@@ -21,6 +21,7 @@ export default function Input({ width, height, placeholder, className }: InputPr
           'h-full w-full rounded-12 bg-gray-50 px-16 py-14 font-body1_m placeholder:text-gray-400 focus:outline-main',
           className
         )}
+        onChange={onChange}
       />
     </div>
   );

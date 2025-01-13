@@ -24,22 +24,22 @@ export default function HomePage() {
         <div ref={swiperRef} className="swiper-container w-full">
           <div className="swiper-wrapper">
             <div className="swiper-slide">
-              <PlaceCard width="100%" />
+              <PlaceCard width="100%" type="map" />
             </div>
             <div className="swiper-slide">
-              <PlaceCard width="100%" />
+              <PlaceCard width="100%" type="map" />
             </div>
             <div className="swiper-slide">
-              <PlaceCard width="100%" />
+              <PlaceCard width="100%" type="map" />
             </div>
             <div className="swiper-slide">
-              <PlaceCard width="100%" />
+              <PlaceCard width="100%" type="map" />
             </div>
             <div className="swiper-slide">
-              <PlaceCard width="100%" />
+              <PlaceCard width="100%" type="map" />
             </div>
             <div className="swiper-slide">
-              <PlaceCard width="100%" />
+              <PlaceCard width="100%" type="map" />
             </div>
           </div>
         </div>
