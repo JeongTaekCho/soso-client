@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import RootLayoutProvider from '@/shared/components/provider/RootLayoutProvider';
 import './globals.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 export const metadata: Metadata = {
   title: '소소',
