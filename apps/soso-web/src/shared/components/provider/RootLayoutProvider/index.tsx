@@ -19,6 +19,7 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
           {children}
           <BottomNavigation />
         </div>
+        <div id="modal-root" className=""></div>
       </TanstackQueryProvider>
     </>
   );
