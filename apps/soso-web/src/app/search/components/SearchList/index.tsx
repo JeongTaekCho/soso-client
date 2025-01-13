@@ -18,6 +18,12 @@ export default function SearchList() {
           <PlaceCard />
         </div>
       </Flex>
+      <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
+        <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
+        <button className="h-56 w-[263px] rounded-16 bg-orange-light text-main font-body1_m">
+          소중한 소품샵 제보하기
+        </button>
+      </Flex>
     </Flex>
   );
 }
