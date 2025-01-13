@@ -184,6 +184,13 @@ const config: Config = {
           letterSpacing: '0px',
           fontWeight: '500',
         },
+        '.layout-center': {
+          left: '50%',
+          margin: '0 auto',
+          width: '100%',
+          maxWidth: '600px',
+          transform: 'translateX(-50%)',
+        },
       };
 
       addUtilities(customUtilities);
