@@ -21,6 +21,7 @@ export default function Button({ width, height, title, disabled, className, ...p
         className,
         disabled ? 'opacity-30' : 'opacity-100'
       )}
+      disabled={disabled}
       {...props}
     >
       {title}
