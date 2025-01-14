@@ -35,7 +35,7 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
           />
 
           {/* 모달 */}
@@ -45,7 +45,7 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{
-              duration: 0.4,
+              duration: 0.3,
               type: 'spring',
               stiffness: 100,
               damping: 20,
