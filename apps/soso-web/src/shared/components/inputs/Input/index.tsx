@@ -7,7 +7,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-export default function Input({ width, height, placeholder, className, onChange }: InputProps) {
+export default function Input({ width, height, placeholder, className, onChange, ...props }: InputProps) {
   return (
     <div
       style={{
@@ -22,6 +22,7 @@ export default function Input({ width, height, placeholder, className, onChange 
           className
         )}
         onChange={onChange}
+        {...props}
       />
     </div>
   );

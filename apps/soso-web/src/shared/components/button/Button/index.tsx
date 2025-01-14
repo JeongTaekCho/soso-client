@@ -7,10 +7,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   disabled?: boolean;
   className?: string;
-  onClick: () => void;
 }
 
-export default function Button({ width, height, title, disabled, onClick, className }: ButtonProps) {
+export default function Button({ width, height, title, disabled, className, ...props }: ButtonProps) {
   return (
     <button
       style={{
@@ -22,8 +21,7 @@ export default function Button({ width, height, title, disabled, onClick, classN
         className,
         disabled ? 'opacity-30' : 'opacity-100'
       )}
-      disabled={disabled}
-      onClick={onClick}
+      {...props}
     >
       {title}
     </button>
