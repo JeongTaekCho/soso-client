@@ -6,9 +6,9 @@ import { useEffect } from 'react';
 export default function AuthComponent() {
   const router = useRouter();
 
-  // useEffect(() => {
-  //   router.push('/login');
-  // }, []);
+  useEffect(() => {
+    router.push('/login');
+  }, []);
 
   return null;
 }
