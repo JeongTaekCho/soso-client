@@ -33,7 +33,7 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
       <TanstackQueryProvider>
         <AuthComponent />
         <div
-          className={`h-screenVh m-auto w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'px-20 pt-56'} `}
+          className={`h-screenVh m-auto w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'px-20 pt-56'} shadow-md`}
         >
           {children}
           {!isHiddenNavigation && <BottomNavigation />}
