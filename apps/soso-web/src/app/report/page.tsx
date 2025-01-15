@@ -1,9 +1,18 @@
+'use client';
+
 import Button from '@/shared/components/button/Button';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
+import { useRouter } from 'next/navigation';
 
 export default function ReportPage() {
+  const router = useRouter();
+
+  const handleNext = () => {
+    router.push('/report/write');
+  };
+
   return (
     <div>
       <Header title="제보하기" />
@@ -39,7 +48,7 @@ export default function ReportPage() {
             <Flex justify="center" align="center" className="h-52 w-full rounded-14 bg-[#FBF6F4] text-gray-600">
               대구 광역시 북구 구암동 960-2
             </Flex>
-            <Button title="여기가 맞아요" />
+            <Button title="여기가 맞아요" onClick={handleNext} />
           </Flex>
         </Flex>
       </Flex>

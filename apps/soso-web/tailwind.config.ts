@@ -222,6 +222,7 @@ const config: Config = {
           width: '100%',
           paddingBottom: '80px',
           backgroundColor: '#fff',
+          zIndex: '800',
         },
         '.bottom-button': {
           position: 'absolute',
@@ -231,6 +232,12 @@ const config: Config = {
           width: '100%',
           maxWidth: '600px',
           transform: 'translateX(-50%)',
+        },
+        '.position-center': {
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
         },
       };
 
