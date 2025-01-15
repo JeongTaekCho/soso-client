@@ -16,15 +16,17 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
   const isHiddenNavigation = pathname.includes('/login');
 
   return (
-    <>
+    <div>
       <TanstackQueryProvider>
         <AuthComponent />
-        <div className={`m-auto min-h-screen w-full max-w-screen pb-60 ${pathname === '/' ? 'pt-0' : 'px-20 pt-56'} `}>
+        <div
+          className={`m-auto min-h-screen w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'px-20 pt-56'} `}
+        >
           {children}
           {!isHiddenNavigation && <BottomNavigation />}
         </div>
         <div id="modal-root" className=""></div>
       </TanstackQueryProvider>
-    </>
+    </div>
   );
 }

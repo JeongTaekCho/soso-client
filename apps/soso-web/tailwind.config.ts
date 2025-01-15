@@ -223,6 +223,7 @@ const config: Config = {
           paddingBottom: '80px',
           backgroundColor: '#fff',
           zIndex: '800',
+          overflowY: 'auto',
         },
         '.bottom-button': {
           position: 'absolute',

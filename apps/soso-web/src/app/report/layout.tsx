@@ -7,9 +7,9 @@ interface ReportLayoutProps {
 
 export default function ReportLayout({ children, write }: ReportLayoutProps) {
   return (
-    <>
-      {children}
+    <div className="fixed top-0 px-20 layout-center">
       {write}
-    </>
+      {children}
+    </div>
   );
 }
