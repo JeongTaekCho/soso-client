@@ -30,12 +30,12 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
         </Flex>
       )}
       {type && type !== 'search' && (
-        <Flex justify="between" align="center" className="h-full w-full">
+        <Flex justify="between" align="center" className="relative h-full w-full">
           <div>
             <button>{type === 'close' && <XIcon />}</button>
             <button onClick={handleBack}>{type === 'back' && <BackIcon />}</button>
           </div>
-          <div className="font-title4_semi">{title}</div>
+          <h2 className="position-center font-title4_semi">{title}</h2>
           <div>{customBtn}</div>
         </Flex>
       )}
