@@ -10,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: {
+        screenVh: 'calc(var(--vh) * 100)',
+      },
       colors: {
         main: '#FF7F50',
         sub: '#D3CBC4',
@@ -218,7 +221,7 @@ const config: Config = {
           left: '0',
           right: '0',
           bottom: '0',
-          height: '100vh',
+          height: 'calc(var(--vh) * 100)',
           width: '100%',
           paddingBottom: '80px',
           backgroundColor: '#fff',
