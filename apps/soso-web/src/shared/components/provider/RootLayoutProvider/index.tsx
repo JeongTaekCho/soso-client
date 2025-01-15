@@ -15,12 +15,19 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
 
   const isHiddenNavigation = pathname.includes('/login');
 
+  const setVh = () => {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+  };
+
+  window.addEventListener('resize', setVh);
+  setVh();
+
   return (
     <div>
       <TanstackQueryProvider>
         <AuthComponent />
         <div
-          className={`m-auto min-h-screen w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'px-20 pt-56'} `}
+          className={`h-screenVh m-auto w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'px-20 pt-56'} `}
         >
           {children}
           {!isHiddenNavigation && <BottomNavigation />}
