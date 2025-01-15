@@ -14,13 +14,12 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // 클라이언트에서만 실행되도록 설정
     setMounted(true);
   }, []);
 
-  if (!mounted) return null; // 서버에서는 아무것도 렌더링하지 않음
+  if (!mounted) return null;
 
-  const modalRoot = document.getElementById('modal-root'); // 포털 대상 노드
+  const modalRoot = document.getElementById('modal-root');
 
   if (!modalRoot) return null;
 
