@@ -5,6 +5,7 @@ import XIcon from '@/shared/components/icons/XIcon';
 import Flex from '@/shared/components/layout/Flex';
 import HeaderSearch from '@/shared/components/layout/Header/components/HeaderSearch';
 import useBack from '@/shared/hooks/useBack';
+import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
 interface HeaderProps {
@@ -16,13 +17,14 @@ interface HeaderProps {
 
 export default function Header({ type, title, customBtn, top }: HeaderProps) {
   const { handleBack } = useBack();
+  const pathname = usePathname();
 
   return (
     <div
       style={{
         top: top || '0',
       }}
-      className="fixed left-0 top-0 z-sticky h-56 w-full px-20 layout-center"
+      className={`fixed left-0 top-0 z-sticky h-56 w-full px-20 layout-center ${pathname === '/' ? 'bg-transparent' : 'bg-white'}`}
     >
       {!type && (
         <Flex align="center" className="h-full w-full">
@@ -32,8 +34,10 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
       {type && type !== 'search' && (
         <Flex justify="between" align="center" className="relative h-full w-full">
           <div>
-            <button>{type === 'close' && <XIcon />}</button>
-            <button onClick={handleBack}>{type === 'back' && <BackIcon />}</button>
+            <button type="button">{type === 'close' && <XIcon />}</button>
+            <button type="button" onClick={handleBack}>
+              {type === 'back' && <BackIcon />}
+            </button>
           </div>
           <h2 className="position-center font-title4_semi">{title}</h2>
           <div>{customBtn}</div>

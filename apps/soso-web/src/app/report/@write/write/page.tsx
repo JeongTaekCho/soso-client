@@ -1,11 +1,21 @@
+'use client';
+
 import AddButton from '@/shared/components/button/AddButton';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/inputs/Input';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
+import BottomModal from '@/shared/components/modal/BottomModal';
+import { useState } from 'react';
 
 export default function ReportWrite() {
+  const [isTimeSettingModal, setIsTimeSettingModal] = useState(false);
+
+  const handleToggleTimeSettingModal = () => {
+    setIsTimeSettingModal((prev) => !prev);
+  };
+
   return (
     <form className="modal-page">
       <Header type="back" title="제보하기" />
@@ -32,7 +42,7 @@ export default function ReportWrite() {
           <Flex direction="col" className="w-full" gap={20}>
             <Flex direction="col" gap={6} className="w-full">
               <h5 className="text-gray-500 font-body1_m">운영 요일/시간</h5>
-              <AddButton />
+              <AddButton type="button" onClick={handleToggleTimeSettingModal} />
             </Flex>
             <Flex direction="col" gap={6} className="w-full">
               <h3 className="text-gray-500 font-body1_m">전화번호</h3>
@@ -42,10 +52,13 @@ export default function ReportWrite() {
         </Flex>
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">판매상품</h3>
-          <AddButton />
+          <AddButton type="button" />
         </Flex>
-        <Button title="등록하기" />
+        <Button type="submit" title="등록하기" />
       </Flex>
+      <BottomModal isOpen={isTimeSettingModal} onClose={handleToggleTimeSettingModal}>
+        운영 시간 모달
+      </BottomModal>
     </form>
   );
 }
