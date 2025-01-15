@@ -14,6 +14,7 @@ const config: Config = {
         main: '#FF7F50',
         sub: '#D3CBC4',
         background: '#FDF9F8',
+        black: '#191919',
         gray: {
           '50': '#F7F8F9',
           '100': '#E8EBED',
@@ -106,7 +107,28 @@ const config: Config = {
     function ({ addBase }: PluginAPI) {
       addBase({
         ':root': {
-          // root
+          '--main-color': '#FF7F50',
+          '--sub-color': '#D3CBC4',
+          '--background-color': '#FDF9F8',
+          '--gray-50': '#F7F8F9',
+          '--gray-100': '#E8EBED',
+          '--gray-200': '#C9CDD2',
+          '--gray-400': '#9EA4AA',
+          '--gray-500': '#72787F',
+          '--gray-600': '#454C53',
+          '--gray-800': '#26282B',
+          '--orange-light': '#FFF2EE',
+          '--orange-light-hover': '#FFECE5',
+          '--orange-light-active': '#FFD7C9',
+          '--orange-normal': '#FF7F50',
+          '--orange-normal-hover': '#E67248',
+          '--orange-normal-active': '#CC6640',
+          '--orange-dark': '#BF5F3C',
+          '--orange-dark-hover': '#994C30',
+          '--orange-dark-active': '#733924',
+          '--orange-darker': '#592C1C',
+          '--etc-red': '#F94E51',
+          '--etc-green': '#00B038',
         },
       });
     },
