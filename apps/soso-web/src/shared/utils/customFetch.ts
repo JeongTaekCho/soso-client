@@ -14,7 +14,7 @@ export const customFetch = async (url: string, options: FetchOptions = {}) => {
   };
 
   try {
-    const response = await fetch(url, finalOptions);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${url}`, finalOptions);
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

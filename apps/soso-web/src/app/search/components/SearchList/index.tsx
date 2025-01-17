@@ -14,20 +14,23 @@ export default function SearchList() {
 
   return (
     <Flex direction="col" gap={18} className="mt-12 w-full">
-      {!searchDebounceValue && <h3 className="font-title3_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
-      <Flex direction="col" className="w-full">
-        {data?.map((shop) => (
-          <div key={shop.id} className="w-full border-b border-gray-100">
-            <PlaceCard data={shop} />
-          </div>
-        ))}
-      </Flex>
-      <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
-        <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
-        <button className="h-56 w-[263px] rounded-16 bg-orange-light text-main font-body1_m">
-          소중한 소품샵 제보하기
-        </button>
-      </Flex>
+      {!searchDebounceValue && <h3 className="px-20 font-title3_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
+      {data && data?.length > 0 ? (
+        <Flex direction="col" className="w-full">
+          {data?.map((shop) => (
+            <div key={shop.id} className="w-full border-b border-gray-100">
+              <PlaceCard data={shop} />
+            </div>
+          ))}
+        </Flex>
+      ) : (
+        <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
+          <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
+          <button className="h-56 w-[263px] rounded-16 bg-orange-light text-main font-body1_m">
+            소중한 소품샵 제보하기
+          </button>
+        </Flex>
+      )}
     </Flex>
   );
 }
