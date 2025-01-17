@@ -1,14 +1,22 @@
 declare namespace naver.maps {
+  class Event {
+    static addListener(target: any, eventName: string, listener: (event: any) => void): void;
+    static removeListener(listener: (event: any) => void): void;
+    static trigger(target: any, eventName: string, eventObject?: any): void;
+  }
+
   class Map {
     constructor(el: HTMLElement, options: MapOptions);
     setOptions(key: string, value: any): void;
-    setCenter(center: LatLng): void;
+    setCenter({ lat: number, lng: number }): void;
     getCenter(): LatLng;
     setZoom(zoom: number): void;
     getZoom(): number;
-    panTo(latlng: LatLng): void;
+    panTo({ lat: number, lng: number }): void;
     addOverlayMapTypeId(mapTypeId: string): void;
     removeOverlayMapTypeId(mapTypeId: string): void;
+    fitBounds(bounds: Bounds, padding?: number | Padding): void; // 지도 경계를 맞추기
+    addListener(eventName: string, listener: (event: any) => void): void; // 지도 이벤트 추가
   }
 
   interface MapOptions {
@@ -23,6 +31,7 @@ declare namespace naver.maps {
     disableDoubleClickZoom?: boolean;
     draggable?: boolean;
     scrollWheel?: boolean;
+    keyboardShortcuts?: boolean; // 키보드로 지도 조작 가능 여부
   }
 
   interface ZoomControlOptions {
@@ -34,117 +43,95 @@ declare namespace naver.maps {
     lat(): number;
     lng(): number;
     toString(): string;
+    equals(latlng: LatLng): boolean; // 좌표 비교
   }
 
   class Marker {
     constructor(options: MarkerOptions);
     setPosition(position: LatLng): void;
     getPosition(): LatLng;
-    setMap(map: Map | null): void; // 마커를 지도에 추가하거나 제거
+    setMap(map: Map | null): void;
     getMap(): Map | null;
     setTitle(title: string): void;
     getTitle(): string;
+    setIcon(icon: string | MarkerImage | MarkerIconOptions): void; // 아이콘 설정 추가
+    setAnimation(animation: Animation | null): void; // 마커 애니메이션
   }
 
   interface MarkerOptions {
     position: LatLng;
-    map?: Map; // 마커를 추가할 지도 객체
-    title?: string; // 마커 제목
-    icon?: string | MarkerImage; // 마커 아이콘
-    draggable?: boolean; // 마커 드래그 가능 여부
-    clickable?: boolean; // 마커 클릭 가능 여부
-    zIndex?: number; // 마커의 z-index
+    map?: Map;
+    title?: string;
+    icon?: string | MarkerImage | MarkerIconOptions;
+    draggable?: boolean;
+    clickable?: boolean;
+    zIndex?: number;
   }
 
-  class MarkerImage {
-    constructor(url: string, size: Size, options?: MarkerImageOptions);
+  interface MarkerIconOptions {
+    url: string;
+    size?: Size;
+    scaledSize?: Size; // 스케일 조정된 아이콘 크기
+    origin?: Point;
+    anchor?: Point;
   }
 
-  interface MarkerImageOptions {
-    origin?: Point; // 아이콘의 기준점
-    anchor?: Point; // 기준점에서의 앵커 위치
-  }
-
-  class Size {
-    constructor(width: number, height: number);
-  }
-
-  class Point {
-    constructor(x: number, y: number);
-  }
-
-  class Polygon {
-    constructor(options: PolygonOptions);
-    setMap(map: Map | null): void;
-    getPath(): LatLng[];
-    setPath(paths: LatLng[]): void;
-  }
-
-  interface PolygonOptions {
-    map: Map;
-    paths: LatLng[] | LatLng[][]; // 다중 경로를 허용
-    strokeColor?: string;
-    strokeOpacity?: number;
-    strokeWeight?: number;
-    fillColor?: string;
-    fillOpacity?: number;
-  }
-
-  class CadastralLayer {
-    constructor(options: { map: Map });
-    setMap(map: Map): void;
-  }
-
-  class Polyline {
-    constructor(options: PolylineOptions);
-    setMap(map: Map | null): void; // 지도에 폴리라인 추가 또는 제거
-    getPath(): LatLng[]; // 폴리라인 경로 반환
-    setPath(path: LatLng[]): void; // 폴리라인 경로 설정
-  }
-
-  interface PolylineOptions {
-    map: Map; // 폴리라인을 추가할 지도 객체
-    path: LatLng[]; // 폴리라인 경로
-    strokeColor?: string; // 폴리라인 색상
-    strokeOpacity?: number; // 폴리라인 투명도
-    strokeWeight?: number; // 폴리라인 두께
-    clickable?: boolean; // 폴리라인 클릭 가능 여부
-    zIndex?: number; // 폴리라인의 z-index
-  }
-
-  class Circle {
-    constructor(options: CircleOptions);
-    setMap(map: Map | null): void;
-    getCenter(): LatLng;
-    setCenter(center: LatLng): void;
-    getRadius(): number;
-    setRadius(radius: number): void;
-  }
-
-  interface CircleOptions {
-    map: Map; // 추가할 지도 객체
-    center: LatLng; // 원의 중심 좌표
-    radius: number; // 반지름 (미터 단위)
-    strokeColor?: string; // 원의 외곽선 색상
-    strokeOpacity?: number; // 외곽선 투명도
-    strokeWeight?: number; // 외곽선 두께
-    fillColor?: string; // 원 내부 색상
-    fillOpacity?: number; // 내부 투명도
-  }
+  const Animation: {
+    BOUNCE: string; // 마커 바운스 애니메이션
+    DROP: string; // 마커 드롭 애니메이션
+  };
 
   class InfoWindow {
     constructor(options: InfoWindowOptions);
-    open(map: Map, anchor?: Marker): void;
+    open(map: Map, anchor?: Marker | LatLng): void;
     close(): void;
     setContent(content: string | HTMLElement): void;
     getContent(): string | HTMLElement;
+    setPosition(position: LatLng): void; // 위치 설정 추가
+    getPosition(): LatLng; // 현재 위치 반환
   }
 
   interface InfoWindowOptions {
-    content: string | HTMLElement; // 표시할 내용
-    maxWidth?: number; // 최대 너비
-    position?: LatLng; // 위치
-    zIndex?: number; // z-index
+    content: string | HTMLElement;
+    maxWidth?: number;
+    position?: LatLng;
+    zIndex?: number;
+    borderColor?: string; // 외곽선 색상
+    borderWidth?: number; // 외곽선 두께
+  }
+
+  class Geocoder {
+    addressSearch(query: string, callback: (status: string, response: GeocoderResponse) => void): void; // 주소 검색
+    coord2Address(lat: number, lng: number, callback: (status: string, response: GeocoderResponse) => void): void; // 좌표를 주소로 변환
+  }
+
+  interface GeocoderResponse {
+    status: string;
+    result: {
+      items: Array<{
+        address: string;
+        roadAddress?: string;
+        point: LatLng;
+      }>;
+    };
+  }
+
+  class Bounds {
+    constructor(sw: LatLng, ne: LatLng);
+    getSouthWest(): LatLng;
+    getNorthEast(): LatLng;
+    contains(latlng: LatLng): boolean; // 경계 내 좌표 포함 여부
+    extend(latlng: LatLng): void; // 경계 확장
+  }
+
+  class Padding {
+    constructor(top: number, right: number, bottom: number, left: number);
+  }
+
+  interface OverlayView {
+    setMap(map: Map | null): void;
+    getMap(): Map | null;
+    setZIndex(zIndex: number): void;
   }
 
   const MapTypeId: {
@@ -156,5 +143,7 @@ declare namespace naver.maps {
 
   type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
-  type Bounds = [LatLng, LatLng]; // 지도 경계
+  type Animation = 'BOUNCE' | 'DROP';
+
+  type Bounds = [LatLng, LatLng];
 }

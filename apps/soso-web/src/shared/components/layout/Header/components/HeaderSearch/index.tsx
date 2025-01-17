@@ -13,8 +13,6 @@ export default function HeaderSearch() {
 
   const searchDebounceValue = useDebounce(searchValue, 300);
 
-  console.log(searchDebounceValue);
-
   const handleChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
