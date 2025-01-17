@@ -1,6 +1,8 @@
 'use client';
 
 import Button from '@/shared/components/button/Button';
+import Divider from '@/shared/components/divider/Divider';
+import LinkIcon from '@/shared/components/icons/LinkIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
@@ -18,31 +20,21 @@ export default function ReportPage() {
       <Header title="제보하기" />
       <Flex direction="col" gap={16} className="w-full pt-76">
         <Flex direction="col" gap={20} className="w-full">
-          <Flex justify="between" align="center" className="w-full">
-            <Button
-              title="지도로 찾기"
-              width="49%"
-              height="52px"
-              borderColor="var(--gray-100)"
-              bgColor="#fff"
-              textColor="var(--gray-800)"
-              radius="12px"
-            />
-            <Button
-              title="주소로 찾기"
-              width="49%"
-              height="52px"
-              borderColor="var(--gray-100)"
-              bgColor="#fff"
-              textColor="var(--gray-800)"
-              radius="12px"
-            />
+          <Flex direction="col" gap={12} className="w-full px-20">
+            <h4 className="text-gray-500 font-body1_m">소중한 소품샵을 등록해 주세요.</h4>
+            <Flex justify="between" align="center" className="w-full">
+              <button className="flex h-58 w-full items-center justify-between rounded-12 border border-gray-100 bg-white px-16 text-gray-800 font-body1_m">
+                <span>주소로 찾기</span>
+                <LinkIcon />
+              </button>
+            </Flex>
           </Flex>
-          <div className="h-[185px] w-full overflow-hidden rounded-16">
+          <Divider height="10px" />
+          <div className="h-[185px] w-full overflow-hidden rounded-16 px-20">
             <NaverMap width="100%" height="100%" />
           </div>
         </Flex>
-        <Flex direction="col" gap={12} className="w-full">
+        <Flex direction="col" gap={12} className="w-full px-20">
           <h4 className="text-black font-title4_semi">이 위치가 맞나요?</h4>
           <Flex direction="col" gap={12} className="w-full">
             <Flex
