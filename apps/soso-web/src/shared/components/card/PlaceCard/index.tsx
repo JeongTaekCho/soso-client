@@ -44,7 +44,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
             <Image src={'/images/sample.png'} objectFit="cover" fill alt="" />
           </div>
           <Flex direction="col" gap={8}>
-            <h4 className="font-title4_semi">가게이름</h4>
+            <h4 className="font-title4_semi">{data.name}</h4>
             <p className="text-gray-400 font-body1_m">100m</p>
           </Flex>
         </Flex>
