@@ -3,10 +3,12 @@
 import PlaceCard from '@/shared/components/card/PlaceCard';
 import Flex from '@/shared/components/layout/Flex';
 import useDebounce from '@/shared/hooks/useDebounce';
+import { useGetShopQuery } from '@/shared/hooks/useGetShopQuery';
 import { useSearchStore } from '@/shared/store/useSearchStore';
 
 export default function SearchList() {
   const { searchValue } = useSearchStore();
+  const { data } = useGetShopQuery();
 
   const searchDebounceValue = useDebounce(searchValue, 300);
 
@@ -14,9 +16,11 @@ export default function SearchList() {
     <Flex direction="col" gap={18} className="mt-12 w-full">
       {!searchDebounceValue && <h3 className="font-title3_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
       <Flex direction="col" className="w-full">
-        <div className="w-full border-b border-gray-100">
-          <PlaceCard />
-        </div>
+        {data?.map((shop) => (
+          <div key={shop.id} className="w-full border-b border-gray-100">
+            <PlaceCard data={shop} />
+          </div>
+        ))}
       </Flex>
       <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
         <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
