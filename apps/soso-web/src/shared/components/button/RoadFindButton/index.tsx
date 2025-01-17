@@ -7,12 +7,19 @@ import Flex from '@/shared/components/layout/Flex';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import { useState } from 'react';
 
-export default function RoadFindButton() {
+interface RoadFindButtonProps {
+  kakaoUrl?: string;
+  naverUrl?: string;
+}
+
+export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonProps) {
   const [isFindModal, setIsFindModal] = useState(false);
 
   const handleToggleFindModal = () => {
     setIsFindModal((prev) => !prev);
   };
+
+  console.log(naverUrl);
 
   return (
     <>
@@ -29,8 +36,8 @@ export default function RoadFindButton() {
           </button>
           <h4 className="font-title3_bold">길찾기</h4>
           <Flex direction="col" gap={12} className="w-full">
-            <MapButton title="네이버 지도" />
-            <MapButton title="카카오 지도" />
+            <MapButton title="네이버 지도" onClick={() => window.open(naverUrl, '_blank')} />
+            <MapButton title="카카오 지도" onClick={() => window.open(kakaoUrl, '_blank')} />
             <MapButton title="apple 지도" />
           </Flex>
         </Flex>

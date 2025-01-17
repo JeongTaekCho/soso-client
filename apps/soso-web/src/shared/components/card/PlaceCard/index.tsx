@@ -1,6 +1,8 @@
 import RoadFindButton from '@/shared/components/button/RoadFindButton';
 import Flex from '@/shared/components/layout/Flex';
+import useGetLocation from '@/shared/hooks/useGetLocation';
 import { ShopType } from '@/shared/types/shopType';
+import { getDistance } from '@/shared/utils/getDistance';
 import Image from 'next/image';
 
 interface PlaceCardProps {
@@ -10,6 +12,20 @@ interface PlaceCardProps {
   data: ShopType;
 }
 export default function PlaceCard({ width, height, type, data }: PlaceCardProps) {
+  const { currentLocation } = useGetLocation();
+
+  const naverFindUrl = () => {
+    if (!currentLocation) return;
+    return `https://map.naver.com/v5/search/${data.location}`;
+    // return `nmap://route/public?slat=${currentLocation?.lat}&slng=${currentLocation?.lng}&dlat=${data?.lat}&dlng=${data?.lng}`; // 모바일
+  };
+
+  const kakaoFindUrl = () => {
+    if (!currentLocation) return;
+    return `https://map.kakao.com/link/to/${data.location},${data.lat},${data.lng}`;
+    // return `nmap://route/public?slat=${currentLocation?.lat}&slng=${currentLocation?.lng}&dlat=${data?.lat}&dlng=${data?.lng}`; // 모바일
+  };
+
   return type === 'map' ? (
     <div
       style={{
@@ -25,10 +41,12 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
           </div>
           <Flex direction="col" gap={8}>
             <h4 className="font-title4_semi">{data.name}</h4>
-            <p className="text-gray-400 font-body1_m">100m</p>
+            <p className="text-gray-400 font-body1_m">
+              {getDistance(Number(currentLocation?.lat), Number(currentLocation?.lng), data.lat, data.lng)}
+            </p>
           </Flex>
         </Flex>
-        <RoadFindButton />
+        <RoadFindButton naverUrl={naverFindUrl()} kakaoUrl={kakaoFindUrl()} />
       </Flex>
     </div>
   ) : (
@@ -45,10 +63,12 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
           </div>
           <Flex direction="col" gap={8}>
             <h4 className="font-title4_semi">{data.name}</h4>
-            <p className="text-gray-400 font-body1_m">100m</p>
+            <p className="text-gray-400 font-body1_m">
+              {getDistance(Number(currentLocation?.lat), Number(currentLocation?.lng), data.lat, data.lng)}
+            </p>
           </Flex>
         </Flex>
-        <RoadFindButton />
+        <RoadFindButton naverUrl={naverFindUrl()} kakaoUrl={kakaoFindUrl()} />
       </Flex>
     </div>
   );

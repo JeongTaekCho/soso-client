@@ -146,4 +146,24 @@ declare namespace naver.maps {
   type Animation = 'BOUNCE' | 'DROP';
 
   type Bounds = [LatLng, LatLng];
+
+  class Point {
+    constructor(x: number, y: number);
+    x: number;
+    y: number;
+  }
+
+  namespace TransCoord {
+    /**
+     * Converts WGS84 LatLng to TM128 Point
+     * @param latlng - The WGS84 LatLng object
+     */
+    function fromLatLngToTM128(latlng: LatLng): Point;
+
+    /**
+     * Converts TM128 Point to WGS84 LatLng
+     * @param point - The TM128 Point object
+     */
+    function fromTM128ToLatLng(point: Point): LatLng;
+  }
 }
