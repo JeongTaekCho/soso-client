@@ -3,12 +3,17 @@
 import PlaceCard from '@/shared/components/card/PlaceCard';
 import Header from '@/shared/components/layout/Header';
 import BottomModal from '@/shared/components/modal/BottomModal';
+import { useGetShopQuery } from '@/shared/hooks/useGetShopQuery';
 import { useSwiper } from '@/shared/hooks/useSwiper';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 const NaverMap = dynamic(() => import('../../../../shared/components/layout/NaverMap'), { ssr: false });
 export default function HomePage() {
+  const { data } = useGetShopQuery();
+
+  console.log(data);
+
   const { swiperRef } = useSwiper({
     slidesPerView: 1.2,
     spaceBetween: 10,
