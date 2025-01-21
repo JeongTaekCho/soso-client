@@ -33,12 +33,13 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
       <TanstackQueryProvider>
         <AuthComponent />
         <div
-          className={`h-screenVh m-auto w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'pt-56'} shadow-md`}
+          className={`m-auto h-screenVh w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'pt-56'} shadow-md`}
         >
           {children}
           {!isHiddenNavigation && <BottomNavigation />}
         </div>
-        <div id="modal-root" className=""></div>
+        <div id="bottom-modal-root" className=""></div>
+        <div id="portal-root" className=""></div>
       </TanstackQueryProvider>
     </div>
   );

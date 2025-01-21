@@ -93,8 +93,6 @@ export default function NaverMap({ width, height, markerEvent }: NaverMapProps) 
   useEffect(() => {
     if (!map) return;
 
-    console.log(zoom);
-
     map.setZoom(zoom);
   }, [zoom]);
 
