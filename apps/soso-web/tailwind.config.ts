@@ -44,6 +44,10 @@ const config: Config = {
           green: '#00B038',
         },
       },
+      backgroundColor: {
+        'black-25': 'rgba(0, 0, 0, 0.25)',
+        'black-50': 'rgba(0, 0, 0, 0.5)',
+      },
       fontSize: (() => {
         const sizes: { [key: string]: string } = {};
         for (let i = 1; i <= 100; i++) {

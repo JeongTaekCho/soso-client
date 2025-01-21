@@ -7,7 +7,6 @@ export const convertCoord = (lat: number, lng: number): naver.maps.Point | null 
 
   const wgs84Coord = new naver.maps.LatLng(lat, lng); // WGS84 좌표
   const tm128Coord = naver.maps.TransCoord.fromLatLngToTM128(wgs84Coord); // TM128 좌표
-  console.log('TM128 좌표:', tm128Coord);
 
   return tm128Coord; // TM128 객체 반환
 };

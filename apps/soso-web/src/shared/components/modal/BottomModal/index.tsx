@@ -19,7 +19,7 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
 
   if (!mounted) return null;
 
-  const modalRoot = document.getElementById('modal-root');
+  const modalRoot = document.getElementById('bottom-modal-root');
 
   if (!modalRoot) return null;
 
