@@ -2,18 +2,82 @@
 
 import AddButton from '@/shared/components/button/AddButton';
 import Button from '@/shared/components/button/Button';
+import TimePickerButton from '@/shared/components/button/TimePickerButton';
 import Input from '@/shared/components/inputs/Input';
+import TimePicker from '@/shared/components/inputs/TimePicker';
+import YoilCheckbox from '@/shared/components/inputs/YoilCheckbox';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
 import BottomModal from '@/shared/components/modal/BottomModal';
-import { useState } from 'react';
+import ModalPortal from '@/shared/components/modal/ModalPortal';
+import { useTimePicker } from '@/shared/hooks/useTimePicker';
+import { ChangeEvent, useState } from 'react';
+
+interface YoilType {
+  id: string;
+  label: string;
+  checked: boolean;
+}
 
 export default function ReportWrite() {
-  const [isTimeSettingModal, setIsTimeSettingModal] = useState(false);
+  const [isDeclareModal, setIsDeclareModal] = useState(false);
+  const {
+    openTime,
+    closeTime,
+    isTimePicker,
+    timePickerType,
+    handleCloseTimePicker,
+    handleOpenTimePicker,
+    handleTimePicker,
+  } = useTimePicker();
+
+  const [yoil, setYoil] = useState<YoilType[]>([
+    {
+      id: 'monday',
+      label: '월',
+      checked: false,
+    },
+    {
+      id: 'tuesday',
+      label: '화',
+      checked: false,
+    },
+    {
+      id: 'wednesday',
+      label: '수',
+      checked: false,
+    },
+    {
+      id: 'thursday',
+      label: '목',
+      checked: false,
+    },
+    {
+      id: 'friday',
+      label: '금',
+      checked: false,
+    },
+    {
+      id: 'saturday',
+      label: '토',
+      checked: false,
+    },
+    {
+      id: 'sunday',
+      label: '일',
+      checked: false,
+    },
+  ]);
+
+  const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
+    const { id, checked } = e.target as HTMLInputElement;
+
+    setYoil((prev) => prev.map((item) => (item.id === id ? { ...item, checked: checked } : item)));
+  };
 
   const handleToggleTimeSettingModal = () => {
-    setIsTimeSettingModal((prev) => !prev);
+    setIsDeclareModal((prev) => !prev);
   };
 
   return (
@@ -41,8 +105,31 @@ export default function ReportWrite() {
           <h3 className="text-gray-800 font-title4_semi">운영 정보</h3>
           <Flex direction="col" className="w-full" gap={20}>
             <Flex direction="col" gap={6} className="w-full">
-              <h5 className="text-gray-500 font-body1_m">운영 요일/시간</h5>
-              <AddButton type="button" onClick={handleToggleTimeSettingModal} />
+              <h5 className="text-gray-500 font-body1_m">운영 요일을 선택해주세요.</h5>
+              <div className="flex w-full max-w-[375px] items-center justify-between">
+                {yoil.map((item) => (
+                  <YoilCheckbox
+                    key={item.id}
+                    id={item.id}
+                    label={item.label}
+                    checked={item.checked}
+                    onChange={handleChangeCheckBox}
+                  />
+                ))}
+              </div>
+            </Flex>
+            <Flex direction="col" gap={6} className="w-full">
+              <h5 className="text-gray-500 font-body1_m">운영 시간을 선택해주세요.</h5>
+              <Flex justify="between" align="center" className="w-full" gap={20}>
+                <Flex className="flex-1" justify="between" align="center" gap={12}>
+                  <p className="text-gray-600 font-body1_m">open</p>
+                  <TimePickerButton label={openTime} onClick={() => handleOpenTimePicker('open')} />
+                </Flex>
+                <Flex className="flex-1" justify="between" align="center" gap={12}>
+                  <p className="text-gray-600 font-body1_m">close</p>
+                  <TimePickerButton label={closeTime} onClick={() => handleOpenTimePicker('close')} />
+                </Flex>
+              </Flex>
             </Flex>
             <Flex direction="col" gap={6} className="w-full">
               <h3 className="text-gray-500 font-body1_m">전화번호</h3>
@@ -56,9 +143,16 @@ export default function ReportWrite() {
         </Flex>
         <Button type="submit" title="등록하기" />
       </Flex>
-      <BottomModal isOpen={isTimeSettingModal} onClose={handleToggleTimeSettingModal}>
+      <BottomModal isOpen={isDeclareModal} onClose={handleToggleTimeSettingModal}>
         운영 시간 모달
       </BottomModal>
+      <ModalPortal isOpen={isTimePicker} onClose={handleCloseTimePicker}>
+        <TimePicker
+          onConfirm={handleTimePicker}
+          onCancel={handleCloseTimePicker}
+          value={timePickerType === 'open' ? openTime : closeTime}
+        />
+      </ModalPortal>
     </form>
   );
 }

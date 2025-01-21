@@ -19,8 +19,6 @@ export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonPro
     setIsFindModal((prev) => !prev);
   };
 
-  console.log(naverUrl);
-
   return (
     <>
       <button className="h-30 w-69 rounded-8 bg-orange-light" onClick={handleToggleFindModal}>
