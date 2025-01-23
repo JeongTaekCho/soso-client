@@ -9,16 +9,17 @@ import Flex from '@/shared/components/layout/Flex';
 import ContentSubTitle from '@/shared/components/text/ContentSubTitle';
 import ContentTitle from '@/shared/components/text/ContentTitle';
 import { useYoilStore } from '@/shared/store/useYoilStore';
-import { ChangeEvent } from 'react';
+import { useEffect } from 'react';
 
 export default function ShopOperInfo() {
   const { yoil, toggleYoil } = useYoilStore();
 
-  const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id } = e.target as HTMLInputElement;
-
-    toggleYoil(id);
-  };
+  useEffect(() => {
+    toggleYoil('monday');
+    toggleYoil('tuesday');
+    toggleYoil('wednesday');
+    toggleYoil('thursday');
+  }, []);
 
   return (
     <ContentBox>
@@ -36,7 +37,8 @@ export default function ShopOperInfo() {
                 id={item.id}
                 label={item.label}
                 checked={item.checked}
-                onChange={handleChangeCheckBox}
+                onChange={() => {}}
+                disabled
               />
             ))}
           </Flex>
