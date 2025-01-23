@@ -12,6 +12,7 @@ import NaverMap from '@/shared/components/layout/NaverMap';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import ModalPortal from '@/shared/components/modal/ModalPortal';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
+import { useYoilStore } from '@/shared/store/useYoilStore';
 import { ChangeEvent, useState } from 'react';
 
 interface YoilType {
@@ -32,48 +33,12 @@ export default function ReportWrite() {
     handleTimePicker,
   } = useTimePicker();
 
-  const [yoil, setYoil] = useState<YoilType[]>([
-    {
-      id: 'monday',
-      label: '월',
-      checked: false,
-    },
-    {
-      id: 'tuesday',
-      label: '화',
-      checked: false,
-    },
-    {
-      id: 'wednesday',
-      label: '수',
-      checked: false,
-    },
-    {
-      id: 'thursday',
-      label: '목',
-      checked: false,
-    },
-    {
-      id: 'friday',
-      label: '금',
-      checked: false,
-    },
-    {
-      id: 'saturday',
-      label: '토',
-      checked: false,
-    },
-    {
-      id: 'sunday',
-      label: '일',
-      checked: false,
-    },
-  ]);
+  const { yoil, toggleYoil } = useYoilStore();
 
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id, checked } = e.target as HTMLInputElement;
+    const { id } = e.target as HTMLInputElement;
 
-    setYoil((prev) => prev.map((item) => (item.id === id ? { ...item, checked: checked } : item)));
+    toggleYoil(id);
   };
 
   const handleToggleTimeSettingModal = () => {
