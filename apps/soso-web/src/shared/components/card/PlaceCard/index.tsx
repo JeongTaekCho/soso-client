@@ -4,6 +4,7 @@ import useGetLocation from '@/shared/hooks/useGetLocation';
 import { ShopType } from '@/shared/types/shopType';
 import { getDistance } from '@/shared/utils/getDistance';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface PlaceCardProps {
   width?: string;
@@ -27,7 +28,8 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
   };
 
   return type === 'map' ? (
-    <div
+    <Link
+      href={`/shop/${data.id}`}
       style={{
         width: width || '327px',
         height: height || 'auto',
@@ -48,9 +50,10 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
         </Flex>
         <RoadFindButton naverUrl={naverFindUrl()} kakaoUrl={kakaoFindUrl()} />
       </Flex>
-    </div>
+    </Link>
   ) : (
-    <div
+    <Link
+      href={`/shop/${data.id}`}
       style={{
         width: width || '100%',
         height: height || 'auto',
@@ -70,6 +73,6 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
         </Flex>
         <RoadFindButton naverUrl={naverFindUrl()} kakaoUrl={kakaoFindUrl()} />
       </Flex>
-    </div>
+    </Link>
   );
 }
