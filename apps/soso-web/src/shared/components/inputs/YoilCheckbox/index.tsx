@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, InputHTMLAttributes } from 'react';
 
-interface CheckboxProps {
+interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   checked: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -9,10 +9,10 @@ interface CheckboxProps {
   label: string;
 }
 
-const YoilCheckbox = ({ id, checked, onChange, size = 40, label }: CheckboxProps) => {
+const YoilCheckbox = ({ id, checked, onChange, size = 40, label, ...props }: CheckboxProps) => {
   return (
     <div className="flex items-center gap-2">
-      <input id={id} type="checkbox" className="hidden" checked={checked} onChange={onChange} />
+      <input id={id} type="checkbox" className="hidden" checked={checked} onChange={onChange} {...props} />
 
       <label
         htmlFor={id}

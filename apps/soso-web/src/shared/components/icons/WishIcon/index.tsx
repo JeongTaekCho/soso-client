@@ -1,7 +1,16 @@
 import { IconProps } from '@/shared/types/shareType';
 
-export default function WishIcon({ width, height }: IconProps) {
-  return (
+export default function WishIcon({ width, height, isActive }: IconProps) {
+  return isActive ? (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M21.9519 4.17042C19.9919 4.31241 17.948 5.27039 15.9921 7.20433C14.0361 5.26839 11.9942 4.31441 10.0362 4.17642C7.8243 4.01842 5.87036 4.9124 4.4564 6.32236C1.67648 9.09428 0.802504 14.1121 4.2524 17.562C4.26411 17.5737 4.27611 17.585 4.2884 17.596L15.3201 27.5897C15.5041 27.7567 15.7436 27.8492 15.9921 27.8492C16.2405 27.8492 16.4801 27.7567 16.664 27.5897L27.6957 17.596C27.708 17.585 27.72 17.5737 27.7317 17.562C31.1996 14.0941 30.3316 9.07628 27.5417 6.30636C26.1238 4.8984 24.1658 4.01042 21.9519 4.17042Z"
+        fill="#FF7F50"
+      />
+    </svg>
+  ) : (
     <svg
       width={width || '32'}
       height={height || '32'}
