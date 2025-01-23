@@ -5,7 +5,7 @@ import AirplaneIcon from '@/shared/components/icons/AirplaneIcon';
 import XIcon from '@/shared/components/icons/XIcon';
 import Flex from '@/shared/components/layout/Flex';
 import BottomModal from '@/shared/components/modal/BottomModal';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 
 interface RoadFindButtonProps {
   kakaoUrl?: string;
@@ -15,7 +15,8 @@ interface RoadFindButtonProps {
 export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonProps) {
   const [isFindModal, setIsFindModal] = useState(false);
 
-  const handleToggleFindModal = () => {
+  const handleToggleFindModal = (e: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
     setIsFindModal((prev) => !prev);
   };
 

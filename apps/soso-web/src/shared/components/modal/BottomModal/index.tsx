@@ -1,12 +1,12 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { ReactNode, useEffect, useState } from 'react';
+import { MouseEvent, ReactNode, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 interface BottomModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (e: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLDivElement>) => void;
   children: ReactNode;
 }
 
