@@ -34,9 +34,9 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
         width: width || '327px',
         height: height || 'auto',
       }}
-      className="overflow-hidden rounded-16"
+      className="overflow-hidden"
     >
-      <Flex className="h-full w-full bg-white px-18 py-16" align="end" justify="between">
+      <Flex className="h-full w-full rounded-16 bg-white px-18 py-16" align="end" justify="between">
         <Flex align="center" gap={12}>
           <div className="relative h-64 w-64">
             <Image src={'/images/sample.png'} objectFit="cover" fill alt="" />
@@ -58,8 +58,9 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
         width: width || '100%',
         height: height || 'auto',
       }}
+      className="overflow-hidden"
     >
-      <Flex className="h-full w-full bg-white px-18 py-16" align="center" justify="between">
+      <Flex className="h-full w-full rounded-16 bg-white px-18 py-16" align="center" justify="between">
         <Flex align="center" gap={12}>
           <div className="relative h-72 w-72">
             <Image src={'/images/sample.png'} objectFit="cover" fill alt="" />
