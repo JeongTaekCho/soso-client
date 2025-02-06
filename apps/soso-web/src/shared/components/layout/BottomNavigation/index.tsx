@@ -1,4 +1,6 @@
 import HomeNaviIcon from '@/shared/components/layout/BottomNavigation/components/HomeNaviIcon';
+import MyNaviIcon from '@/shared/components/layout/BottomNavigation/components/MyNaviIcon';
+import ReportNaviIcon from '@/shared/components/layout/BottomNavigation/components/ReportNaviIcon';
 import SearchNaviIcon from '@/shared/components/layout/BottomNavigation/components/SearchNaviIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Link from 'next/link';
@@ -21,12 +23,12 @@ export default function BottomNavigation() {
     },
     {
       label: '제보',
-      icon: <HomeNaviIcon isActive={pathname.includes('/report')} />,
+      icon: <ReportNaviIcon isActive={pathname.includes('/report')} />,
       href: '/report',
     },
     {
       label: '마이페이지',
-      icon: <HomeNaviIcon isActive={pathname.includes('/my')} />,
+      icon: <MyNaviIcon isActive={pathname.includes('/my')} />,
       href: '/my',
     },
   ];
@@ -38,7 +40,7 @@ export default function BottomNavigation() {
   };
 
   return (
-    <Flex className="layout-center fixed bottom-0 left-0 z-sticky w-full bg-white">
+    <Flex className="fixed bottom-0 left-0 z-sticky w-full bg-white layout-center">
       {MENU.map((menu: MenuType) => (
         <Link href={menu.href} key={menu.href} className="flex-1 pb-6 pt-7">
           <Flex direction="col" gap={5} align="center" className="h-full w-full">
