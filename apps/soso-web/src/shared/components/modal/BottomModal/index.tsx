@@ -39,7 +39,7 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
 
           {/* 모달 */}
           <motion.div
-            className="fixed bottom-0 z-modal w-full rounded-t-3xl bg-white p-4 shadow-lg layout-center"
+            className="fixed bottom-0 z-modal w-full rounded-t-3xl bg-white p-20 shadow-lg layout-center"
             initial={{ y: '100%', x: '-50%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
