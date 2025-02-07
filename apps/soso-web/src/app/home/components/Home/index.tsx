@@ -15,24 +15,26 @@ export default function HomePage() {
   const swiperRef = useRef<any>(null);
 
   const [currentShop, setCurrentShop] = useState<any | null>(null);
-  const { map, addMarker, setCenter, setZoom } = useMapStore();
+  const { map, addMarker, setCenter } = useMapStore();
 
+  // 슬라이드 변경 이벤트 핸들러
   const handleSlideChange = (swiper: any) => {
-    const activeIndex = swiper.realIndex;
+    const activeIndex = swiper.realIndex; // 복제 슬라이드를 제외한 실제 인덱스
     const selectedShop = shopData?.[activeIndex];
     if (selectedShop) {
       setCurrentShop(selectedShop);
       if (map) {
-        setCenter(selectedShop?.lat, selectedShop?.lng); // 지도 중심 이동
+        setCenter(selectedShop.lat, selectedShop.lng);
         map.setZoom(18);
       }
     }
   };
 
+  // 초기 마커 추가 로직
   useEffect(() => {
-    if (shopData?.length === 0 || !map) return;
+    if (!shopData?.length || !map) return;
 
-    shopData?.forEach((shop) => {
+    shopData.forEach((shop) => {
       addMarker({
         id: shop.id,
         position: { lat: shop.lat, lng: shop.lng },
@@ -40,8 +42,12 @@ export default function HomePage() {
     });
   }, [shopData, map, addMarker]);
 
-  const goToSlide = (index: number) => {
-    swiperRef.current?.slideTo(index, 500);
+  // 마커 클릭 시 슬라이드 이동
+  const goToSlide = (shopId: number) => {
+    const slideIndex = shopData?.findIndex((shop) => shop.id === shopId);
+    if (slideIndex !== -1 && swiperRef.current) {
+      swiperRef.current.slideToLoop(slideIndex, 300); // loop: true 환경에서 올바른 슬라이드 이동
+    }
   };
 
   return (
@@ -60,7 +66,7 @@ export default function HomePage() {
           centeredSlides={true}
           onSlideChange={handleSlideChange}
           onSwiper={(swiper) => {
-            swiperRef.current = swiper; // Swiper 인스턴스 저장
+            swiperRef.current = swiper;
           }}
         >
           {shopData?.map((shop) => (
@@ -70,12 +76,6 @@ export default function HomePage() {
           ))}
         </Swiper>
       </div>
-      {currentShop && (
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 transform bg-white p-4 shadow-lg">
-          <p>{currentShop.name}</p>
-          <p>{currentShop.location}</p>
-        </div>
-      )}
     </div>
   );
 }

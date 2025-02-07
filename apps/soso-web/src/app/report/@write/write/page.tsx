@@ -11,6 +11,8 @@ import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import ModalPortal from '@/shared/components/modal/ModalPortal';
+import AddFileUi from '@/shared/components/ui/AddFileUi';
+import { useFileUpload } from '@/shared/hooks/useFileUpload';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
 import { useYoilStore } from '@/shared/store/useYoilStore';
 import { ChangeEvent, useState } from 'react';
@@ -32,6 +34,7 @@ export default function ReportWrite() {
     handleOpenTimePicker,
     handleTimePicker,
   } = useTimePicker();
+  const { previews, addFiles, removeFile } = useFileUpload();
 
   const { yoil, toggleYoil } = useYoilStore();
 
@@ -104,7 +107,7 @@ export default function ReportWrite() {
         </Flex>
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">판매상품</h3>
-          <AddButton type="button" />
+          <AddFileUi previewArr={previews} addFiles={addFiles} removeFile={removeFile} />
         </Flex>
         <Button type="submit" title="등록하기" />
       </Flex>
