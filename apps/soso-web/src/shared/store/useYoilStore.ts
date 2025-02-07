@@ -10,10 +10,28 @@ interface YoilStore {
   yoil: YoilType[];
   toggleYoil: (id: string) => void;
   setYoil: (updatedYoil: YoilType[]) => void;
+  addYoil: YoilType[];
+  toggleAddYoil: (id: string) => void;
+  setAddYoil: (updatedYoil: YoilType[]) => void;
 }
 
 export const useYoilStore = create<YoilStore>((set) => ({
   yoil: [
+    { id: 'yoil_monday', label: '월', checked: false },
+    { id: 'yoil_tuesday', label: '화', checked: false },
+    { id: 'yoil_wednesday', label: '수', checked: false },
+    { id: 'yoil_thursday', label: '목', checked: false },
+    { id: 'yoil_friday', label: '금', checked: false },
+    { id: 'yoil_saturday', label: '토', checked: false },
+    { id: 'yoil_sunday', label: '일', checked: false },
+  ],
+  toggleYoil: (id) =>
+    set((state) => ({
+      yoil: state.yoil.map((day) => (day.id === id ? { ...day, checked: !day.checked } : day)),
+    })),
+  setYoil: (updatedYoil) => set(() => ({ yoil: updatedYoil })),
+
+  addYoil: [
     { id: 'monday', label: '월', checked: false },
     { id: 'tuesday', label: '화', checked: false },
     { id: 'wednesday', label: '수', checked: false },
@@ -22,9 +40,9 @@ export const useYoilStore = create<YoilStore>((set) => ({
     { id: 'saturday', label: '토', checked: false },
     { id: 'sunday', label: '일', checked: false },
   ],
-  toggleYoil: (id) =>
+  toggleAddYoil: (id) =>
     set((state) => ({
-      yoil: state.yoil.map((day) => (day.id === id ? { ...day, checked: !day.checked } : day)),
+      addYoil: state.addYoil.map((day) => (day.id === id ? { ...day, checked: !day.checked } : day)),
     })),
-  setYoil: (updatedYoil) => set(() => ({ yoil: updatedYoil })),
+  setAddYoil: (updatedYoil) => set(() => ({ yoil: updatedYoil })),
 }));
