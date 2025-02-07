@@ -4,21 +4,30 @@ import { ChangeEvent, InputHTMLAttributes } from 'react';
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   checked: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   size?: number;
   label: string;
 }
 
-const YoilCheckbox = ({ id, checked, onChange, size = 40, label, ...props }: CheckboxProps) => {
+const YoilCheckbox = ({ id, checked, onChange, size = 40, label, disabled, ...props }: CheckboxProps) => {
   return (
     <div className="flex items-center gap-2">
-      <input id={id} type="checkbox" className="hidden" checked={checked} onChange={onChange} {...props} />
+      <input
+        id={id}
+        type="checkbox"
+        className="hidden"
+        checked={checked}
+        onChange={onChange}
+        disabled={disabled}
+        {...props}
+      />
 
       <label
         htmlFor={id}
         className={clsx(
-          'flex cursor-pointer items-center justify-center rounded-full border transition-all duration-200',
-          checked ? 'border-main bg-orange-light' : 'border-gray-100 bg-white'
+          'flex items-center justify-center rounded-full border transition-all duration-200',
+          `${checked ? 'border-main bg-orange-light' : 'border-gray-100 bg-white'} ${disabled ? 'cursor-default' : 'cursor-pointer'}`
         )}
         style={{ width: size, height: size }}
       >

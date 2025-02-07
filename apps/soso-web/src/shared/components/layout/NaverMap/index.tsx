@@ -48,22 +48,20 @@ export default function NaverMap({ width, height, markerEvent }: NaverMapProps) 
         position: new naver.maps.LatLng(markerData.position.lat, markerData.position.lng),
         map: map,
         icon: {
-          content: `<div style="background: blue; border-radius: 50%; width: 10px; height: 10px;"></div>`,
+          content: `<div style="width:32px; height:32px"><img width='32' height='32' src="/images/marker/map_marker.png" alt="지도 마커" ></img></div>`,
         },
       });
 
-      // 기본 클릭 이벤트
       naver.maps.Event.addListener(newMarker, 'click', () => {
         map.panTo(newMarker.getPosition()); // 지도 중심 이동
         if (markerEvent) {
-          markerEvent(newMarker, markerData); // 커스텀 이벤트 호출
+          markerEvent(newMarker, markerData);
         }
       });
 
       return newMarker;
     });
 
-    // 사용자 정의 마커 배열 업데이트
     customMap.customMarkers = newMarkers;
   };
 

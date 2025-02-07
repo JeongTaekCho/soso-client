@@ -1,5 +1,6 @@
 'use client';
 
+import ReportModal from '@/app/shop/components/ShopTopInfo/components/ReportModal';
 import MapButton from '@/shared/components/button/RoadFindButton/components/MapButton';
 import Divider from '@/shared/components/divider/Divider';
 import LoadFindIcon from '@/shared/components/icons/LoadFindIcon';
@@ -8,15 +9,21 @@ import WishIcon from '@/shared/components/icons/WishIcon';
 import XIcon from '@/shared/components/icons/XIcon';
 import ContentBox from '@/shared/components/layout/ContentBox';
 import Flex from '@/shared/components/layout/Flex';
+import AlertModal from '@/shared/components/modal/AlertModal';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import { useState } from 'react';
 
 export default function ShopTopInfo() {
   const [isWish, setIsWish] = useState(false);
   const [isFindModal, setIsFindModal] = useState(false);
+  const [isReportModal, setIsReportModal] = useState(false);
 
   const handleToggleFindModal = () => {
     setIsFindModal((prev) => !prev);
+  };
+
+  const handleToggleReportModal = () => {
+    setIsReportModal((prev) => !prev);
   };
 
   const handleWishClick = () => {
@@ -37,7 +44,7 @@ export default function ShopTopInfo() {
           <span className="text-gray-500 font-body2_m">길찾기</span>
         </button>
         <Divider width="1px" height="56px" bgColor="#E8EBED" />
-        <button className="flex flex-1 flex-col items-center justify-center gap-2">
+        <button onClick={handleToggleReportModal} className="flex flex-1 flex-col items-center justify-center gap-2">
           <ReportIcon />
           <span className="text-gray-500 font-body2_m">신고</span>
         </button>
@@ -55,6 +62,13 @@ export default function ShopTopInfo() {
           </Flex>
         </Flex>
       </BottomModal>
+
+      <ReportModal isReportModal={isReportModal} handleToggleReportModal={handleToggleReportModal} />
+      <AlertModal isOpen={false} onClose={() => {}} title="신고완료">
+        소중한 정보 감사합니다.
+        <br />
+        확인 후 해당 장소는 삭제될 예정입니다.
+      </AlertModal>
     </ContentBox>
   );
 }
