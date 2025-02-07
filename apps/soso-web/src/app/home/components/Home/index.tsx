@@ -76,12 +76,6 @@ export default function HomePage() {
           ))}
         </Swiper>
       </div>
-      {currentShop && (
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 transform bg-white p-4 shadow-lg">
-          <p>{currentShop.name}</p>
-          <p>{currentShop.location}</p>
-        </div>
-      )}
     </div>
   );
 }

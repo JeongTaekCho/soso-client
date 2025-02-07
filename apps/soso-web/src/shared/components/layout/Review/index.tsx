@@ -1,11 +1,8 @@
 'use client';
 
-import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
 import Flex from '@/shared/components/layout/Flex';
-import InputContent from '@/shared/components/layout/InputContent';
 import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
+import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -91,19 +88,7 @@ export default function Review({ isMe }: ReviewProps) {
               </button>
             </Flex>
           </MessageBox>
-          <BottomModal isOpen={isWriteModal} onClose={handleToggleWriteModal}>
-            <Flex direction="col" gap={18}>
-              <Flex justify="between" align="center" className="w-full">
-                <BottomModalTitle title="후기 작성" />
-                <ModalCloseButton onClick={handleToggleWriteModal} />
-              </Flex>
-              <Flex direction="col" gap={38}>
-                <InputContent label="텍스트">
-                  <textarea />
-                </InputContent>
-              </Flex>
-            </Flex>
-          </BottomModal>
+          <ReviewWrite isOpen={isWriteModal} onClose={handleToggleWriteModal} />
         </>
       )}
     </Flex>
