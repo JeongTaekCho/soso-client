@@ -11,6 +11,7 @@ import TimePicker from '@/shared/components/inputs/TimePicker';
 import YoilCheckbox from '@/shared/components/inputs/YoilCheckbox';
 import ContentBox from '@/shared/components/layout/ContentBox';
 import Flex from '@/shared/components/layout/Flex';
+import InputContent from '@/shared/components/layout/InputContent';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import ModalPortal from '@/shared/components/modal/ModalPortal';
 import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
@@ -22,7 +23,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function ShopOperInfo() {
   const { yoil, toggleYoil, addYoil, toggleAddYoil } = useYoilStore();
-  const [isBottomModal, setIsBottomModal] = useState(true);
+  const [isBottomModal, setIsBottomModal] = useState(false);
 
   const {
     openTime,
@@ -93,8 +94,7 @@ export default function ShopOperInfo() {
           </Flex>
           <Flex direction="col" gap={38} align="center" className="w-full">
             <Flex direction="col" className="w-full" gap={20}>
-              <Flex direction="col" gap={6} className="w-full">
-                <h5 className="text-gray-500 font-body1_m">운영 요일을 선택해주세요.</h5>
+              <InputContent label="운영 요일을 선택해주세요.">
                 <div className="flex w-full max-w-[375px] items-center justify-between">
                   {addYoil.map((item) => (
                     <YoilCheckbox
@@ -106,9 +106,8 @@ export default function ShopOperInfo() {
                     />
                   ))}
                 </div>
-              </Flex>
-              <Flex direction="col" gap={6} className="w-full">
-                <h5 className="text-gray-500 font-body1_m">운영 시간을 선택해주세요.</h5>
+              </InputContent>
+              <InputContent label="운영 시간을 선택해주세요.">
                 <Flex justify="between" align="center" className="w-full" gap={20}>
                   <Flex className="flex-1" justify="between" align="center" gap={12}>
                     <p className="text-gray-600 font-body1_m">open</p>
@@ -119,11 +118,10 @@ export default function ShopOperInfo() {
                     <TimePickerButton label={closeTime} onClick={() => handleOpenTimePicker('close')} />
                   </Flex>
                 </Flex>
-              </Flex>
-              <Flex direction="col" gap={6} className="w-full">
-                <h3 className="text-gray-500 font-body1_m">전화번호</h3>
+              </InputContent>
+              <InputContent label="전화번호">
                 <Input placeholder="전화번호를 입력해 주세요." />
-              </Flex>
+              </InputContent>
             </Flex>
             <Button title="수정하기" />
           </Flex>
