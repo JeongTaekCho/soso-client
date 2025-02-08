@@ -8,7 +8,7 @@ export default function Backdrop({ onClick }: BackDropProps) {
   return (
     <motion.div
       onClick={onClick && onClick}
-      className="bg-black-50 fixed top-0 z-backdrop h-screen layout-center"
+      className="fixed top-0 z-backdrop h-screen bg-black-50 layout-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
