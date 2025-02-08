@@ -37,7 +37,7 @@ export const PRODUCT_LIST = [
   {
     id: 8,
     name: '반려동물',
-    value: 'pro_hand',
+    value: 'pro_pet',
   },
   {
     id: 9,

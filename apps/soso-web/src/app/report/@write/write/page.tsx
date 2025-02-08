@@ -1,6 +1,5 @@
 'use client';
 
-import AddButton from '@/shared/components/button/AddButton';
 import Button from '@/shared/components/button/Button';
 import TimePickerButton from '@/shared/components/button/TimePickerButton';
 import Input from '@/shared/components/inputs/Input';
@@ -16,12 +15,6 @@ import { useFileUpload } from '@/shared/hooks/useFileUpload';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
 import { useYoilStore } from '@/shared/store/useYoilStore';
 import { ChangeEvent, useState } from 'react';
-
-interface YoilType {
-  id: string;
-  label: string;
-  checked: boolean;
-}
 
 export default function ReportWrite() {
   const [isDeclareModal, setIsDeclareModal] = useState(false);

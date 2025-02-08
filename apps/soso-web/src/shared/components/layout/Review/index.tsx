@@ -3,6 +3,7 @@
 import Flex from '@/shared/components/layout/Flex';
 import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
 import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite';
+import { useDialog } from '@/shared/context/DialogContext';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -12,9 +13,29 @@ interface ReviewProps {
 export default function Review({ isMe }: ReviewProps) {
   const [isWrite, setIsWrtie] = useState(false);
   const [isWriteModal, setIsWriteModal] = useState(false);
+  const { openDialog, closeDialog } = useDialog();
 
   const handleToggleWriteModal = () => {
     setIsWriteModal((prev) => !prev);
+  };
+
+  const handleReviewDelete = () => {
+    console.log('123');
+    closeDialog();
+  };
+
+  const handleOpenDeleteModal = () => {
+    openDialog({
+      title: '후기 삭제',
+      message: (
+        <>
+          닉네임 님이 등록한 후기를
+          <br /> 삭제하시겠습니까?
+        </>
+      ),
+      type: 'confirm',
+      onConfirm: handleReviewDelete,
+    });
   };
 
   return (
@@ -38,7 +59,10 @@ export default function Review({ isMe }: ReviewProps) {
             <button className="h-30 w-41 rounded-[100px] border border-gray-100 text-gray-600 font-caption">
               수정
             </button>
-            <button className="h-30 w-41 rounded-[100px] border border-gray-100 text-gray-600 font-caption">
+            <button
+              onClick={handleOpenDeleteModal}
+              className="h-30 w-41 rounded-[100px] border border-gray-100 text-gray-600 font-caption"
+            >
               삭제
             </button>
           </Flex>
