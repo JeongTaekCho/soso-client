@@ -13,7 +13,7 @@ export default function ShopReview() {
           <ContentTitle title="후기" />
           <span className="text-gray-400 font-body1_m">2개</span>
         </Flex>
-        <IconButton label="전체보기" icon={<LinkIcon />} />
+        <IconButton label="전체보기" icon={<LinkIcon width="16" height="16" />} />
       </Flex>
       <Flex direction="col" gap={20} className="w-full">
         <Review isMe />

@@ -14,21 +14,18 @@ export default function SellProduct({ product, checkbox, isCheck, onClick }: Sel
   return (
     <div
       onClick={() => onClick?.({ id: product.id, name: product.name })}
-      className={clsx(checkbox && 'cursor-pointer')}
+      className={clsx('w-[calc(25%-6px)]', checkbox && 'cursor-pointer')}
     >
-      <Flex direction="col" gap={6} justify="center" align="center">
+      <Flex direction="col" gap={6} justify="center" align="center" className="h-full w-full">
         <Flex
           justify="center"
           align="center"
-          className={clsx(`h-72 w-72 rounded-12`, isCheck ? 'border border-main bg-orange-light' : 'bg-gray-50')}
+          className={clsx(
+            `relative aspect-square w-full rounded-12 p-10`,
+            isCheck ? 'border border-main bg-orange-light' : 'bg-gray-50'
+          )}
         >
-          <Image
-            src={`/images/product/${product.value}.png`}
-            width={48}
-            height={48}
-            objectFit="cover"
-            alt="판매상품 이미지"
-          />
+          <Image src={`/images/product/${product.value}.svg`} fill objectFit="cover" alt="판매상품 이미지" />
         </Flex>
         <p className="text-gray-500 font-body2_m">{product.name}</p>
       </Flex>

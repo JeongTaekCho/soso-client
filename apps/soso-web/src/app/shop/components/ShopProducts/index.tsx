@@ -15,8 +15,6 @@ export default function ShopProducts() {
   const [isBottomModal, setIsBottomModal] = useState(false);
   const { productList } = useProductListStore();
 
-  console.log(productList);
-
   const handleToggleBottomModal = () => {
     setIsBottomModal((prev) => !prev);
   };

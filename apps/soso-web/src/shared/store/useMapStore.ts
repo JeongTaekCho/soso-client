@@ -14,6 +14,7 @@ interface MapStore {
     lat: number;
     lng: number;
   };
+  minZoom: number;
   zoom: number;
   markers: Marker[]; // 여러 개의 마커를 저장
   map: naver.maps.Map | null;
@@ -33,6 +34,7 @@ const useMapStore = create<MapStore>((set, get) => ({
     lng: 127.0114263,
   },
   zoom: 18,
+  minZoom: 13,
   markers: [],
   map: null,
 
