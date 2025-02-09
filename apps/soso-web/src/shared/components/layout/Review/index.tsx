@@ -3,6 +3,7 @@
 import Flex from '@/shared/components/layout/Flex';
 import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
 import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite';
+import ProfileImage from '@/shared/components/ui/ProfileImage';
 import { useDialog } from '@/shared/context/DialogContext';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -42,13 +43,7 @@ export default function Review({ isMe }: ReviewProps) {
     <Flex direction="col" gap={14} className="w-full border-b border-gray-100 pb-20 last:border-none">
       <Flex justify="between" align="center" className="w-full">
         <Flex align="center" gap={12} className="w-full">
-          <Image
-            src={'/images/jojo.jpg'}
-            width={48}
-            height={48}
-            className="rounded-full border border-gray-100"
-            alt="유저 프로필"
-          />
+          <ProfileImage imgUrl="/images/jojo.jpg" />
           <Flex direction="col" className="w-full">
             <p className="text-gray-800 font-body2_m">쪼롱이</p>
             <p className="text-gray-400 font-caption">2024. 05. 05</p>
