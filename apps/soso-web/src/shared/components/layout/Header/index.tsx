@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
 interface HeaderProps {
-  type?: 'close' | 'back' | 'customBack' | 'search';
+  type?: 'close' | 'back' | 'customBack' | 'search' | 'customBtn';
   title?: string;
   customBtn?: ReactNode;
   top?: string;
@@ -28,10 +28,11 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
     >
       {!type && (
         <Flex align="center" className="h-full w-full">
-          <h1 className="font-title3_bold">{title}</h1>{' '}
+          <h1 className="font-title3_bold">{title}</h1>
         </Flex>
       )}
-      {type && type !== 'search' && (
+
+      {type && type !== 'search' && type !== 'customBtn' && (
         <Flex justify="between" align="center" className="relative h-full w-full">
           <div>
             <button type="button">{type === 'close' && <XIcon />}</button>
@@ -39,7 +40,13 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
               {type === 'back' && <BackIcon />}
             </button>
           </div>
-          <h2 className="position-center font-title4_semi">{title}</h2>
+          <h2 className="font-title4_semi position-center">{title}</h2>
+          <div>{customBtn}</div>
+        </Flex>
+      )}
+      {type === 'customBtn' && (
+        <Flex justify="between" align="center" className="h-full w-full">
+          <h1 className="font-title3_bold">{title}</h1>
           <div>{customBtn}</div>
         </Flex>
       )}

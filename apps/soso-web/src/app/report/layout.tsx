@@ -7,8 +7,8 @@ interface ReportLayoutProps {
 
 export default function ReportLayout({ children, write }: ReportLayoutProps) {
   return (
-    <div className="fixed top-0 layout-center">
-      {write}
+    <div>
+      <div className="fixed top-0 z-modal layout-center">{write}</div>
       {children}
     </div>
   );

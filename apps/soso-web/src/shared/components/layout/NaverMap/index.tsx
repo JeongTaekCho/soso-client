@@ -17,7 +17,7 @@ interface CustomMap extends naver.maps.Map {
 
 export default function NaverMap({ width, height, markerEvent }: NaverMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const { setMap, center, zoom, map, markers } = useMapStore();
+  const { setMap, center, minZoom, zoom, map, markers } = useMapStore();
 
   // 초기화 함수 (한 번만 실행)
   const initMap = () => {
@@ -27,6 +27,8 @@ export default function NaverMap({ width, height, markerEvent }: NaverMapProps) 
       center: new naver.maps.LatLng(center.lat, center.lng),
       zoom: zoom,
     }) as CustomMap;
+
+    newMap.setOptions('minZoom', minZoom);
 
     newMap.customMarkers = [];
     setMap(newMap);
