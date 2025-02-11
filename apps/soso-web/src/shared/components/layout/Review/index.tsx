@@ -10,9 +10,10 @@ import { useState } from 'react';
 
 interface ReviewProps {
   isMe?: boolean;
+  isBorder?: boolean;
 }
-export default function Review({ isMe }: ReviewProps) {
-  const [isWrite, setIsWrtie] = useState(false);
+export default function Review({ isMe, isBorder = true }: ReviewProps) {
+  const [isWrite, setIsWrtie] = useState(true);
   const [isWriteModal, setIsWriteModal] = useState(false);
   const { openDialog, closeDialog } = useDialog();
 
@@ -40,7 +41,11 @@ export default function Review({ isMe }: ReviewProps) {
   };
 
   return (
-    <Flex direction="col" gap={14} className="w-full border-b border-gray-100 pb-20 last:border-none">
+    <Flex
+      direction="col"
+      gap={14}
+      className={`w-full pb-20 last:border-none ${isBorder ? 'border-b border-gray-100' : 'border-none'}`}
+    >
       <Flex justify="between" align="center" className="w-full">
         <Flex align="center" gap={12} className="w-full">
           <ProfileImage imgUrl="/images/jojo.jpg" />
