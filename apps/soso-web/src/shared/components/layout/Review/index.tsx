@@ -77,7 +77,7 @@ export default function Review({ isMe, isBorder = true }: ReviewProps) {
                 src="/images/jojo.jpg"
                 width={72}
                 height={72}
-                objectFit="cover"
+                style={{ objectFit: 'cover' }}
                 alt="리뷰 이미지"
                 className="rounded-12"
               />
@@ -85,7 +85,7 @@ export default function Review({ isMe, isBorder = true }: ReviewProps) {
                 src="/images/jojo.jpg"
                 width={72}
                 height={72}
-                objectFit="cover"
+                style={{ objectFit: 'cover' }}
                 alt="리뷰 이미지"
                 className="rounded-12"
               />
@@ -93,7 +93,7 @@ export default function Review({ isMe, isBorder = true }: ReviewProps) {
                 src="/images/jojo.jpg"
                 width={72}
                 height={72}
-                objectFit="cover"
+                style={{ objectFit: 'cover' }}
                 alt="리뷰 이미지"
                 className="rounded-12"
               />

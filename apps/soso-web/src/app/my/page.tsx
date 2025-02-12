@@ -22,7 +22,7 @@ export default function MyPage() {
         <MyProfile />
       </div>
       <Divider height="10px" />
-      <Flex direction="col" gap={28} className="w-full px-16 py-20">
+      <Flex direction="col" gap={28} className="w-full px-16 pb-28 pt-20">
         <ProductLists />
       </Flex>
     </div>

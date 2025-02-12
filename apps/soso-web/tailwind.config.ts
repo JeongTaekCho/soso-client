@@ -71,6 +71,7 @@ const config: Config = {
       })(),
       boxShadow: {
         'sns-btn': '0px 4px 8px rgba(27, 27, 27, 0.16)',
+        'filter-select': '1px 2px 9px 3px rgba(0, 0, 0, 0.14)',
       },
       backdropBlur: {
         '10': '10px',
@@ -236,6 +237,15 @@ const config: Config = {
           position: 'absolute',
           left: '50%',
           bottom: '10px',
+          padding: '0 20px',
+          width: '100%',
+          maxWidth: '600px',
+          transform: 'translateX(-50%)',
+        },
+        '.bottom-fixed-button': {
+          position: 'fixed',
+          left: '50%',
+          bottom: '70px',
           padding: '0 20px',
           width: '100%',
           maxWidth: '600px',
