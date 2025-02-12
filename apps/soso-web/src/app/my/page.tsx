@@ -1,4 +1,5 @@
 import MyProfile from '@/app/my/components/MyProfile';
+import ProductLists from '@/app/my/components/ProductLists';
 import Divider from '@/shared/components/divider/Divider';
 import SettingIcon from '@/shared/components/icons/SettingIcon';
 import Flex from '@/shared/components/layout/Flex';
@@ -21,8 +22,8 @@ export default function MyPage() {
         <MyProfile />
       </div>
       <Divider height="10px" />
-      <Flex direction="col" gap={28} className="w-full py-20">
-        찜 목록
+      <Flex direction="col" gap={28} className="w-full px-16 py-20">
+        <ProductLists />
       </Flex>
     </div>
   );

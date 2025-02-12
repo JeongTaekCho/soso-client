@@ -13,7 +13,7 @@ export default function ProfileImage({ imgUrl, size, className }: ProfileImage) 
       width={size || 48}
       height={size || 48}
       className={clsx('rounded-full border border-gray-100 bg-gray-100', className)}
-      alt="유저 프로필"
+      alt="프로필"
     />
   );
 }
