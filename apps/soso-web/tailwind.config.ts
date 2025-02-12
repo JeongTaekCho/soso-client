@@ -241,6 +241,15 @@ const config: Config = {
           maxWidth: '600px',
           transform: 'translateX(-50%)',
         },
+        '.bottom-fixed-button': {
+          position: 'fixed',
+          left: '50%',
+          bottom: '70px',
+          padding: '0 20px',
+          width: '100%',
+          maxWidth: '600px',
+          transform: 'translateX(-50%)',
+        },
         '.position-center': {
           position: 'absolute',
           left: '50%',

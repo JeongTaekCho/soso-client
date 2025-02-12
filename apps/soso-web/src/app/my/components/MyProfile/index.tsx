@@ -13,7 +13,7 @@ export default function MyProfile() {
           </p>
         </Flex>
         <Link
-          href="/my/setting/edit"
+          href="/my/edit"
           className="flex h-34 w-52 items-center justify-center rounded-10 bg-gray-50 text-gray-400 font-body2_m"
         >
           수정

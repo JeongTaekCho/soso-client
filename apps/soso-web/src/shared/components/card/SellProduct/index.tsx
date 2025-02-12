@@ -25,7 +25,12 @@ export default function SellProduct({ product, checkbox, isCheck, onClick }: Sel
             isCheck ? 'border border-main bg-orange-light' : 'bg-gray-50'
           )}
         >
-          <Image src={`/images/product/${product.value}.svg`} fill objectFit="cover" alt="판매상품 이미지" />
+          <Image
+            src={`/images/product/${product.value}.svg`}
+            fill
+            style={{ objectFit: 'cover' }}
+            alt="판매상품 이미지"
+          />
         </Flex>
         <p className="text-gray-500 font-body2_m">{product.name}</p>
       </Flex>
