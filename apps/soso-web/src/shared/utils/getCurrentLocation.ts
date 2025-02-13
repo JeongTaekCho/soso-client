@@ -1,7 +1,8 @@
 export const getCurrentLocation = (): Promise<{ lat: number; lng: number }> => {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
-      reject(new Error('Geolocation is not supported by this browser.'));
+      console.warn('Geolocation is not supported by this browser.');
+      resolve({ lat: 37.4979, lng: 127.0276 }); // ✅ 기본 위치 (서울 강남)
       return;
     }
 
@@ -11,12 +12,17 @@ export const getCurrentLocation = (): Promise<{ lat: number; lng: number }> => {
         resolve({ lat: latitude, lng: longitude });
       },
       (error) => {
-        reject(new Error(`Error getting location: ${error.message}`));
+        if (error.code === error.PERMISSION_DENIED) {
+          console.warn('User denied Geolocation. Using default location.');
+          resolve({ lat: 37.5665, lng: 126.978 }); // ✅ 기본 위치 반환
+        } else {
+          reject(new Error(`Error getting location: ${error.message}`));
+        }
       },
       {
-        enableHighAccuracy: true, // 높은 정확도 요청
-        timeout: 5000, // 요청 타임아웃 (밀리초)
-        maximumAge: 0, // 캐싱된 위치 데이터를 사용하지 않음
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
       }
     );
   });

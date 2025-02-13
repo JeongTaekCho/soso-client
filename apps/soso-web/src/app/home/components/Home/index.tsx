@@ -46,7 +46,7 @@ export default function HomePage() {
   const goToSlide = (shopId: number) => {
     const slideIndex = shopData?.findIndex((shop) => shop.id === shopId);
     if (slideIndex !== -1 && swiperRef.current) {
-      swiperRef.current.slideToLoop(slideIndex, 300); // loop: true 환경에서 올바른 슬라이드 이동
+      swiperRef.current.slideToLoop(slideIndex, 300);
     }
   };
 
