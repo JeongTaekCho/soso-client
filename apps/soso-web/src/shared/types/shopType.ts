@@ -12,13 +12,15 @@ export interface ShopType {
 export interface OperatingHourType {
   id: number;
   phoneNumber: string;
-  mondayHours: string;
-  tuesdayHours: string;
-  wednesdayHours: string;
-  thursdayHours: string;
-  fridayHours: string;
-  saturdayHours: string;
-  sundayHours: string;
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  sunday: boolean;
+  startTime: string;
+  endTime: string;
 }
 
 export interface ProductType {
@@ -26,24 +28,33 @@ export interface ProductType {
   name: string;
 }
 
-export interface ReviewType {
-  id: number;
-  content: string;
-  createdAt: string;
-  images: {
-    id: number;
-    url: string;
-  }[];
-}
-
-export interface ShopDetailType {
+export interface ShopType {
   id: number;
   name: string;
+  type: number;
   reportStatus: number;
   lat: number;
   lng: number;
   location: string;
   operatingHours: OperatingHourType[];
   products: ProductType[];
-  reviews: ReviewType[];
+}
+
+export interface ReviewType {
+  id: number;
+  content: string;
+  createdAt: string;
+  images: string[];
+  user: {
+    uuid: string;
+    photoUrl: string;
+    nickName: string;
+  };
+}
+
+export interface ShopDetailType {
+  shop: ShopType;
+  userReviews: ReviewType[];
+  otherReviews: ReviewType[];
+  wishlist: boolean;
 }

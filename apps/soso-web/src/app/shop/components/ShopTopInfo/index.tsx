@@ -11,10 +11,14 @@ import ContentBox from '@/shared/components/layout/ContentBox';
 import Flex from '@/shared/components/layout/Flex';
 import AlertModal from '@/shared/components/modal/AlertModal';
 import BottomModal from '@/shared/components/modal/BottomModal';
+import { ShopDetailType } from '@/shared/types/shopType';
 import { useState } from 'react';
 
-export default function ShopTopInfo() {
-  const [isWish, setIsWish] = useState(false);
+interface ShopTopInfoProps {
+  shopData: ShopDetailType | undefined;
+}
+
+export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
   const [isFindModal, setIsFindModal] = useState(false);
   const [isReportModal, setIsReportModal] = useState(false);
 
@@ -27,15 +31,15 @@ export default function ShopTopInfo() {
   };
 
   const handleWishClick = () => {
-    setIsWish((prev) => !prev);
+    console.log('찜 클릭');
   };
 
   return (
     <ContentBox gap={32}>
-      <h2 className="w-full text-center text-black font-title1">위모먼트</h2>
+      <h2 className="w-full text-center text-black font-title1">{shopData?.shop.name}</h2>
       <Flex justify="between" align="center" className="w-full">
         <button onClick={handleWishClick} className="flex flex-1 flex-col items-center justify-center gap-2">
-          <WishIcon isActive={isWish} />
+          <WishIcon isActive={shopData?.wishlist} />
           <span className="text-gray-500 font-body2_m">찜</span>
         </button>
         <Divider width="1px" height="56px" bgColor="#E8EBED" />
