@@ -1,10 +1,11 @@
 import Flex from '@/shared/components/layout/Flex';
+import { PRODUCT_LIST } from '@/shared/constant/Product';
 import { ProductType } from '@/shared/types/shopType';
 import clsx from 'clsx';
 import Image from 'next/image';
 
 interface SellProductProps {
-  product: ProductType & { value: string };
+  product: ProductType;
   checkbox?: boolean;
   isCheck?: boolean;
   onClick?: (product: ProductType) => void;
@@ -25,12 +26,22 @@ export default function SellProduct({ product, checkbox, isCheck, onClick }: Sel
             isCheck ? 'border border-main bg-orange-light' : 'bg-gray-50'
           )}
         >
-          <Image
-            src={`/images/product/${product.value}.svg`}
-            fill
-            style={{ objectFit: 'cover' }}
-            alt="판매상품 이미지"
-          />
+          {product.id === 13 ? (
+            <Image
+              src={`/images/product/${isCheck ? 'pro_etc_active' : 'pro_etc'}.svg`}
+              width={24}
+              height={24}
+              style={{ width: '50%', height: 'auto', objectFit: 'contain' }}
+              alt="기타 판매상품 이미지"
+            />
+          ) : (
+            <Image
+              src={`/images/product/${PRODUCT_LIST[product.id - 1].value}.svg`}
+              fill
+              style={{ objectFit: 'cover' }}
+              alt="판매상품 이미지"
+            />
+          )}
         </Flex>
         <p className="text-gray-500 font-body2_m">{product.name}</p>
       </Flex>

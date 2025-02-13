@@ -6,12 +6,12 @@ export const PRODUCT_LIST = [
   },
   {
     id: 2,
-    name: '의류',
+    name: '의류/잡화',
     value: 'pro_cloth',
   },
   {
     id: 3,
-    name: '컵',
+    name: '머그컵/접시',
     value: 'pro_cup',
   },
   {
@@ -58,5 +58,10 @@ export const PRODUCT_LIST = [
     id: 12,
     name: '빈티지',
     value: 'pro_vintage',
+  },
+  {
+    id: 13,
+    name: '기차',
+    value: 'pro_etc',
   },
 ];

@@ -30,8 +30,8 @@ interface MapStore {
 
 const useMapStore = create<MapStore>((set, get) => ({
   center: {
-    lat: 37.4888,
-    lng: 127.0114263,
+    lat: 37.5665,
+    lng: 126.978,
   },
   zoom: 18,
   minZoom: 13,

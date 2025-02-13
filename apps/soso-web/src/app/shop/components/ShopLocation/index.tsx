@@ -5,7 +5,11 @@ import Flex from '@/shared/components/layout/Flex';
 import NaverMap from '@/shared/components/layout/NaverMap';
 import ContentTitle from '@/shared/components/text/ContentTitle';
 
-export default function ShopLocation() {
+interface ShopLocationProps {
+  location: string | undefined;
+}
+
+export default function ShopLocation({ location }: ShopLocationProps) {
   return (
     <ContentBox>
       <ContentTitle title="위치" />
@@ -13,7 +17,7 @@ export default function ShopLocation() {
         <NaverMap width="100%" height="100%" />
       </div>
       <Flex justify="between" align="center" className="w-full">
-        <p className="text-gray-600 font-body2_m">서울특별시 광진구 화양동 12-39 2층</p>
+        <p className="text-gray-600 font-body2_m">{location}</p>
         <IconButton label="복사하기" icon={<PasteIcon />} />
       </Flex>
     </ContentBox>

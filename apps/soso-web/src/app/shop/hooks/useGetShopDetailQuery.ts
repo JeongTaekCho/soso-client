@@ -6,5 +6,6 @@ export const useGetShopDetailQuery = (id: string) => {
   return useQuery<ShopDetailType>({
     queryKey: ['shopDetail', id],
     queryFn: () => getShopDetail(id),
+    enabled: !!id,
   });
 };

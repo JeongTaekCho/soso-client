@@ -29,11 +29,14 @@ export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonPro
         </Flex>
       </button>
       <BottomModal isOpen={isFindModal} onClose={handleToggleFindModal}>
-        <Flex direction="col" gap={18} className="relative w-full px-16 pb-28 pt-18">
-          <button onClick={handleToggleFindModal} className="absolute right-16 top-14">
-            <XIcon />
-          </button>
-          <h4 className="font-title3_bold">길찾기</h4>
+        <Flex direction="col" gap={18} className="relative w-full">
+          <Flex justify="between" align="center" className="w-full">
+            <h4 className="font-title3_bold">길찾기</h4>
+            <button onClick={handleToggleFindModal}>
+              <XIcon />
+            </button>
+          </Flex>
+
           <Flex direction="col" gap={12} className="w-full">
             <MapButton title="네이버 지도" onClick={() => window.open(naverUrl, '_blank')} />
             <MapButton title="카카오 지도" onClick={() => window.open(kakaoUrl, '_blank')} />
