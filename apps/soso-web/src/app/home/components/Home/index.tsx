@@ -50,6 +50,12 @@ export default function HomePage() {
     }
   };
 
+  useEffect(() => {
+    if (!shopData?.length) return;
+
+    setCenter(shopData[0].lat, shopData[0].lng);
+  }, [shopData]);
+
   return (
     <div>
       <Header type="search" top="20px" />

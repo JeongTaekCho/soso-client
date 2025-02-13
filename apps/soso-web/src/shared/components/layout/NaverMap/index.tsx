@@ -108,7 +108,6 @@ export default function NaverMap({ width, height, markerEvent }: NaverMapProps) 
         strategy="lazyOnload"
         type="text/javascript"
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&submodules=geocoder`}
-        onLoad={initMap}
       />
       <div ref={mapRef} id="map" style={mapStyle} />
     </>
