@@ -1,9 +1,22 @@
+'use client';
+
 import GoogleIcon from '@/shared/components/icons/GoogleIcon';
 import Flex from '@/shared/components/layout/Flex';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const { setUserType } = useAuthStore();
+
+  const handleGuestLogin = () => {
+    setUserType('guest');
+    router.push('/');
+  };
+
   return (
     <Flex justify="center" align="center" className="h-screenVh w-full">
       <Image
@@ -29,12 +42,12 @@ export default function LoginPage() {
           </div>
           Google로 시작하기
         </Link>
-        <Link
-          href={'/'}
+        <button
+          onClick={handleGuestLogin}
           className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"
         >
           로그인 없이 시작하기
-        </Link>
+        </button>
       </Flex>
     </Flex>
   );
