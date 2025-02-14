@@ -19,10 +19,15 @@ import ContentSubTitle from '@/shared/components/text/ContentSubTitle';
 import ContentTitle from '@/shared/components/text/ContentTitle';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
 import { useYoilStore } from '@/shared/store/useYoilStore';
+import { OperatingHourType } from '@/shared/types/shopType';
 import { ChangeEvent, useEffect, useState } from 'react';
 
-export default function ShopOperInfo() {
-  const { yoil, toggleYoil, addYoil, toggleAddYoil } = useYoilStore();
+interface ShopOperInfoProps {
+  operData: OperatingHourType[] | undefined;
+}
+
+export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
+  const { yoil, setCheckYoil, addYoil, toggleAddYoil } = useYoilStore();
   const [isBottomModal, setIsBottomModal] = useState(false);
 
   const {
@@ -46,11 +51,14 @@ export default function ShopOperInfo() {
   };
 
   useEffect(() => {
-    toggleYoil('yoil_monday');
-    toggleYoil('yoil_tuesday');
-    toggleYoil('yoil_wednesday');
-    toggleYoil('yoil_thursday');
-  }, []);
+    setCheckYoil('월', operData?.[0]?.monday || false);
+    setCheckYoil('화', operData?.[0]?.tuesday || false);
+    setCheckYoil('수', operData?.[0]?.wednesday || false);
+    setCheckYoil('목', operData?.[0]?.thursday || false);
+    setCheckYoil('금', operData?.[0]?.friday || false);
+    setCheckYoil('토', operData?.[0]?.saturday || false);
+    setCheckYoil('일', operData?.[0]?.sunday || false);
+  }, [operData]);
 
   return (
     <ContentBox>
@@ -72,18 +80,18 @@ export default function ShopOperInfo() {
           <Flex justify="center" align="center" gap={40} className="w-full rounded-12 bg-gray-50 py-16">
             <Flex align="center" gap={12} className="font-body1_m">
               <span className="text-gray-400">open</span>
-              <span className="text-gray-800">12:00</span>
+              <span className="text-gray-800">{operData?.[0].startTime.slice(0, -3)}</span>
             </Flex>
             <Divider width="1px" height="12px" bgColor="#C9CDD2" />
             <Flex align="center" gap={12} className="font-body1_m">
               <span className="text-gray-400">closed</span>
-              <span className="text-gray-800">19:00</span>
+              <span className="text-gray-800">{operData?.[0].endTime.slice(0, -3)}</span>
             </Flex>
           </Flex>
         </Flex>
         <Flex direction="col" gap={8} className="w-full">
           <ContentSubTitle title="전화번호" />
-          <p className="text-gray-800 font-body1_m">02-0000-0000</p>
+          <p className="text-gray-800 font-body1_m">{operData?.[0].phoneNumber}</p>
         </Flex>
       </Flex>
       <BottomModal isOpen={isBottomModal} onClose={handleToggleBottomModal}>

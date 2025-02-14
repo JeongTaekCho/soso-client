@@ -10,6 +10,7 @@ interface YoilStore {
   yoil: YoilType[];
   toggleYoil: (id: string) => void;
   setYoil: (updatedYoil: YoilType[]) => void;
+  setCheckYoil: (label: string, checked: boolean) => void;
   addYoil: YoilType[];
   toggleAddYoil: (id: string) => void;
   setAddYoil: (updatedYoil: YoilType[]) => void;
@@ -30,6 +31,10 @@ export const useYoilStore = create<YoilStore>((set) => ({
       yoil: state.yoil.map((day) => (day.id === id ? { ...day, checked: !day.checked } : day)),
     })),
   setYoil: (updatedYoil) => set(() => ({ yoil: updatedYoil })),
+  setCheckYoil: (label, checked) =>
+    set((state) => ({
+      yoil: state.yoil.map((day) => (day.label === label ? { ...day, checked } : day)),
+    })),
 
   addYoil: [
     { id: 'monday', label: '월', checked: false },
