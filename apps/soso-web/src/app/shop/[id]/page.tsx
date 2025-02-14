@@ -42,7 +42,7 @@ export default function ShopDetailPage({ params }: PageProps) {
       <Divider height="10px" bgColor="#F7F8F9" />
       <ShopProducts productData={shopDetailData?.shop.products} />
       <Divider height="10px" bgColor="#F7F8F9" />
-      <ShopReview />
+      <ShopReview shopData={shopDetailData} />
     </div>
   );
 }

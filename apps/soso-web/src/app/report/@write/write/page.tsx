@@ -1,5 +1,6 @@
 'use client';
 
+import { useReportStore } from '@/app/report/store/useReportStore';
 import Button from '@/shared/components/button/Button';
 import TimePickerButton from '@/shared/components/button/TimePickerButton';
 import Input from '@/shared/components/inputs/Input';
@@ -30,6 +31,7 @@ export default function ReportWrite() {
   const { previews, addFiles, removeFile } = useFileUpload();
 
   const { yoil, toggleYoil } = useYoilStore();
+  const { shop } = useReportStore();
 
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     const { id } = e.target as HTMLInputElement;
@@ -57,7 +59,7 @@ export default function ReportWrite() {
               <NaverMap width="100%" height="100%" />
             </div>
             <div className="flex h-52 w-full items-center rounded-14 bg-gray-100 px-16 text-gray-400 font-body1_m">
-              대구 광역시 북구 구암동 960-2
+              {shop.location}
             </div>
           </Flex>
         </Flex>
