@@ -7,7 +7,6 @@ import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
 import useMapStore from '@/shared/store/useMapStore';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 

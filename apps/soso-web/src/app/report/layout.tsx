@@ -10,7 +10,7 @@ export default function ReportLayout({ children, write, address }: ReportLayoutP
   return (
     <div>
       {write}
-      {address}
+      {/* {address} */}
       {children}
     </div>
   );
