@@ -6,6 +6,7 @@ import LinkIcon from '@/shared/components/icons/LinkIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function ReportPage() {
@@ -28,10 +29,13 @@ export default function ReportPage() {
               <NaverMap width="100%" height="100%" />
             </div>
             <Flex justify="between" align="center" className="w-full">
-              <button className="flex h-58 w-full items-center justify-between rounded-12 border border-gray-100 bg-white px-16 text-gray-800 font-body1_m">
+              <Link
+                href="/report/address"
+                className="flex h-58 w-full items-center justify-between rounded-12 border border-gray-100 bg-white px-16 text-gray-800 font-body1_m"
+              >
                 <span>주소로 찾기</span>
                 <LinkIcon />
-              </button>
+              </Link>
             </Flex>
           </Flex>
         </Flex>
