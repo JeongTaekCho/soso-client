@@ -86,7 +86,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
           <ReviewWrite isOpen={isWriteModal} onClose={handleToggleWriteModal} />
         </>
       ) : (
-        <MessageBox isMe={isMe}>
+        <MessageBox isMe={isMe} isWrite={isWrite}>
           <Flex direction="col" gap={16}>
             <p className="break-all text-gray-600 font-body2_m">{data?.content || ''}</p>
             {data && data?.images.length > 0 && (
