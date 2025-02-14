@@ -22,6 +22,7 @@ export default function ReportPage() {
   };
 
   useEffect(() => {
+    if (!shop.lat || !shop.lng) return;
     clearMarkers();
     setCenter(shop.lat, shop.lng);
     addMarker({
