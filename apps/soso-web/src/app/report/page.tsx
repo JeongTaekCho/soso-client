@@ -1,19 +1,34 @@
 'use client';
 
+import { useReportStore } from '@/app/report/store/useReportStore';
 import Button from '@/shared/components/button/Button';
-import Divider from '@/shared/components/divider/Divider';
 import LinkIcon from '@/shared/components/icons/LinkIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
+import useMapStore from '@/shared/store/useMapStore';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function ReportPage() {
   const router = useRouter();
 
+  const { shop } = useReportStore();
+  const { setCenter, addMarker, clearMarkers } = useMapStore();
+
   const handleNext = () => {
     router.push('/report/write');
   };
+
+  useEffect(() => {
+    clearMarkers();
+    setCenter(shop.lat, shop.lng);
+    addMarker({
+      id: 0,
+      position: { lat: shop.lat, lng: shop.lng },
+    });
+  }, [shop.lat, shop.lng]);
 
   return (
     <div>
@@ -28,10 +43,13 @@ export default function ReportPage() {
               <NaverMap width="100%" height="100%" />
             </div>
             <Flex justify="between" align="center" className="w-full">
-              <button className="flex h-58 w-full items-center justify-between rounded-12 border border-gray-100 bg-white px-16 text-gray-800 font-body1_m">
+              <Link
+                href="/report/address"
+                className="flex h-58 w-full items-center justify-between rounded-12 border border-gray-100 bg-white px-16 text-gray-800 font-body1_m"
+              >
                 <span>주소로 찾기</span>
                 <LinkIcon />
-              </button>
+              </Link>
             </Flex>
           </Flex>
         </Flex>
@@ -43,7 +61,7 @@ export default function ReportPage() {
               align="center"
               className="h-52 w-full rounded-14 bg-[#FBF6F4] text-gray-600 font-body1_m"
             >
-              대구 광역시 북구 구암동 960-2
+              {shop.location}
             </Flex>
             <Button title="여기가 맞아요" onClick={handleNext} />
           </Flex>

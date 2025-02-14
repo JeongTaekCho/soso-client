@@ -3,12 +3,16 @@ import { ReactNode } from 'react';
 interface ReportLayoutProps {
   children: ReactNode;
   write: ReactNode;
+  address: ReactNode;
 }
 
-export default function ReportLayout({ children, write }: ReportLayoutProps) {
+export default function ReportLayout({ children, write, address }: ReportLayoutProps) {
   return (
     <div>
-      <div className="fixed top-0 z-modal layout-center">{write}</div>
+      <div>
+        {write}
+        {address}
+      </div>
       {children}
     </div>
   );
