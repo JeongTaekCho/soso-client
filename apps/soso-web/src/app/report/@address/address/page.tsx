@@ -37,7 +37,7 @@ export default function FindAddress() {
 
   return (
     <div className="layout-center modal-page">
-      <Header title="주소" type="back" />
+      {/* <Header title="주소" type="back" />
       <Flex direction="col" gap={10} className="w-full px-8 pb-20 pt-76">
         <div className="w-full px-12">
           <Input
@@ -73,7 +73,7 @@ export default function FindAddress() {
             ))
           )}
         </Flex>
-      </Flex>
+      </Flex> */}
     </div>
   );
 }
