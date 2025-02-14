@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
 interface ReportLayoutProps {
   children: ReactNode;
@@ -6,11 +7,18 @@ interface ReportLayoutProps {
   address: ReactNode;
 }
 
+const WriteComponent = dynamic(() => import('@/app/report/@write/default'), { ssr: false });
+const AddressComponent = dynamic(() => import('@/app/report/@address/default'), { ssr: false });
+
 export default function ReportLayout({ children, write, address }: ReportLayoutProps) {
   return (
     <div>
-      {write}
-      {/* {address} */}
+      <Suspense fallback={<p>Loading...</p>}>
+        <AddressComponent />
+        <WriteComponent />
+        {address}
+        {write}
+      </Suspense>
       {children}
     </div>
   );
