@@ -28,7 +28,7 @@ export default function FindAddress() {
   const handleSelectAddress = (data: AddressType) => {
     setShop({
       ...shop,
-      location: data.address_name || data.road_address_name,
+      location: data.road_address_name || data.address_name,
       lat: Number(data.y),
       lng: Number(data.x),
     });

@@ -15,7 +15,8 @@ import AddFileUi from '@/shared/components/ui/AddFileUi';
 import { useFileUpload } from '@/shared/hooks/useFileUpload';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
 import { useYoilStore } from '@/shared/store/useYoilStore';
-import { ChangeEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function ReportWrite() {
   const [isDeclareModal, setIsDeclareModal] = useState(false);
@@ -33,6 +34,8 @@ export default function ReportWrite() {
   const { yoil, toggleYoil } = useYoilStore();
   const { shop } = useReportStore();
 
+  const router = useRouter();
+
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     const { id } = e.target as HTMLInputElement;
 
@@ -42,6 +45,12 @@ export default function ReportWrite() {
   const handleToggleTimeSettingModal = () => {
     setIsDeclareModal((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (!shop.location) {
+      router.back();
+    }
+  }, [shop]);
 
   return (
     <form className="modal-page">
