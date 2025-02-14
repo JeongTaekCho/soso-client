@@ -14,7 +14,7 @@ import { ChangeEvent, useState } from 'react';
 export default function FindAddress() {
   const [address, setAddress] = useState('');
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const debounceAddressValue = useDebounce(address, 250);
 
@@ -32,7 +32,7 @@ export default function FindAddress() {
       lat: Number(data.y),
       lng: Number(data.x),
     });
-    router.back();
+    // router.back();
   };
 
   return (
