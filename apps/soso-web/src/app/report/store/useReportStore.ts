@@ -63,7 +63,7 @@ export const useReportStore = create<ReportState>()(
     }),
     {
       name: 'report-storage',
-      storage: createJSONStorage(() => localStorage), // ✅ 타입 오류 해결
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
