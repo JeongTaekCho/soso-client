@@ -230,10 +230,9 @@ const config: Config = {
           height: 'calc(var(--vh) * 100)',
           width: '100%',
           maxWidth: '600px',
-          paddingBottom: '80px',
+          paddingBottom: '20px',
           backgroundColor: '#fff',
           zIndex: '800',
-          overflowY: 'auto',
         },
         '.bottom-button': {
           position: 'absolute',
