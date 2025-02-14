@@ -5,6 +5,7 @@ import ProductImage from '@/shared/components/ui/ProductImage';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
+import EmptyData from '@/shared/components/ui/EmptyData';
 
 interface ProductLayoutProps {
   data: any;
@@ -38,7 +39,7 @@ export default function ProductLayout({ data, title, placeholder }: ProductLayou
           ))}
         </Swiper>
       ) : (
-        <div className="w-full rounded-12 bg-gray-50 px-18 py-16 text-gray-400 font-body2_m">{placeholder}</div>
+        <EmptyData text={placeholder} />
       )}
     </Flex>
   );

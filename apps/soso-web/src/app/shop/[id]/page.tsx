@@ -38,11 +38,11 @@ export default function ShopDetailPage({ params }: PageProps) {
       <Divider height="10px" bgColor="#F7F8F9" />
       <ShopLocation location={shopDetailData?.shop.location} />
       <Divider height="10px" bgColor="#F7F8F9" />
-      <ShopOperInfo />
+      <ShopOperInfo operData={shopDetailData?.shop.operatingHours} />
       <Divider height="10px" bgColor="#F7F8F9" />
       <ShopProducts productData={shopDetailData?.shop.products} />
       <Divider height="10px" bgColor="#F7F8F9" />
-      <ShopReview />
+      <ShopReview shopData={shopDetailData} />
     </div>
   );
 }

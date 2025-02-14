@@ -1,5 +1,6 @@
 'use client';
 
+import { useReportStore } from '@/app/report/store/useReportStore';
 import Button from '@/shared/components/button/Button';
 import TimePickerButton from '@/shared/components/button/TimePickerButton';
 import Input from '@/shared/components/inputs/Input';
@@ -14,7 +15,8 @@ import AddFileUi from '@/shared/components/ui/AddFileUi';
 import { useFileUpload } from '@/shared/hooks/useFileUpload';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
 import { useYoilStore } from '@/shared/store/useYoilStore';
-import { ChangeEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function ReportWrite() {
   const [isDeclareModal, setIsDeclareModal] = useState(false);
@@ -30,6 +32,9 @@ export default function ReportWrite() {
   const { previews, addFiles, removeFile } = useFileUpload();
 
   const { yoil, toggleYoil } = useYoilStore();
+  const { shop } = useReportStore();
+
+  const router = useRouter();
 
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     const { id } = e.target as HTMLInputElement;
@@ -40,6 +45,12 @@ export default function ReportWrite() {
   const handleToggleTimeSettingModal = () => {
     setIsDeclareModal((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (!shop.location) {
+      router.back();
+    }
+  }, [shop]);
 
   return (
     <form className="modal-page">
@@ -57,7 +68,7 @@ export default function ReportWrite() {
               <NaverMap width="100%" height="100%" />
             </div>
             <div className="flex h-52 w-full items-center rounded-14 bg-gray-100 px-16 text-gray-400 font-body1_m">
-              대구 광역시 북구 구암동 960-2
+              {shop.location}
             </div>
           </Flex>
         </Flex>

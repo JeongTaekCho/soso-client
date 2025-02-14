@@ -63,7 +63,7 @@ export const useReportStore = create<ReportState>()(
     }),
     {
       name: 'report-storage',
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
