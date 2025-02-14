@@ -62,9 +62,9 @@ export default function ReportPage() {
               align="center"
               className="h-52 w-full rounded-14 bg-[#FBF6F4] text-gray-600 font-body1_m"
             >
-              {shop.location}
+              {shop.location || '-'}
             </Flex>
-            <Button title="여기가 맞아요" onClick={handleNext} />
+            <Button title="여기가 맞아요" onClick={handleNext} disabled={!shop.location} />
           </Flex>
         </Flex>
       </Flex>
