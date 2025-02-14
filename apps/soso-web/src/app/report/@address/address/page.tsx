@@ -14,7 +14,7 @@ import { ChangeEvent, useState } from 'react';
 export default function FindAddress() {
   const [address, setAddress] = useState('');
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const debounceAddressValue = useDebounce(address, 250);
 
@@ -32,12 +32,12 @@ export default function FindAddress() {
       lat: Number(data.y),
       lng: Number(data.x),
     });
-    // router.back();
+    router.back();
   };
 
   return (
     <div className="layout-center modal-page">
-      {/* <Header title="주소" type="back" />
+      <Header title="주소" type="back" />
       <Flex direction="col" gap={10} className="w-full px-8 pb-20 pt-76">
         <div className="w-full px-12">
           <Input
@@ -73,7 +73,7 @@ export default function FindAddress() {
             ))
           )}
         </Flex>
-      </Flex> */}
+      </Flex>
     </div>
   );
 }

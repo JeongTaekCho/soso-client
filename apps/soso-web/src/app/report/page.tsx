@@ -21,15 +21,19 @@ export default function ReportPage() {
     router.push('/report/write');
   };
 
-  // useEffect(() => {
-  //   if (!shop.lat || !shop.lng) return;
-  //   clearMarkers();
-  //   setCenter(shop.lat, shop.lng);
-  //   addMarker({
-  //     id: 0,
-  //     position: { lat: shop.lat, lng: shop.lng },
-  //   });
-  // }, [shop.lat, shop.lng]);
+  const handleAddressSearchLink = () => {
+    router.push('/report/address');
+  };
+
+  useEffect(() => {
+    if (!shop.lat || !shop.lng) return;
+    clearMarkers();
+    setCenter(shop.lat, shop.lng);
+    addMarker({
+      id: 0,
+      position: { lat: shop.lat, lng: shop.lng },
+    });
+  }, [shop.lat, shop.lng]);
 
   return (
     <div>
@@ -44,13 +48,13 @@ export default function ReportPage() {
               <NaverMap width="100%" height="100%" />
             </div>
             <Flex justify="between" align="center" className="w-full">
-              <Link
-                href="/report/address"
+              <button
+                onClick={handleAddressSearchLink}
                 className="flex h-58 w-full items-center justify-between rounded-12 border border-gray-100 bg-white px-16 text-gray-800 font-body1_m"
               >
                 <span>주소로 찾기</span>
                 <LinkIcon />
-              </Link>
+              </button>
             </Flex>
           </Flex>
         </Flex>
