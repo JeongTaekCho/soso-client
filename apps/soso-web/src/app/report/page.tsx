@@ -21,15 +21,15 @@ export default function ReportPage() {
     router.push('/report/write');
   };
 
-  useEffect(() => {
-    if (!shop.lat || !shop.lng) return;
-    clearMarkers();
-    setCenter(shop.lat, shop.lng);
-    addMarker({
-      id: 0,
-      position: { lat: shop.lat, lng: shop.lng },
-    });
-  }, [shop.lat, shop.lng]);
+  // useEffect(() => {
+  //   if (!shop.lat || !shop.lng) return;
+  //   clearMarkers();
+  //   setCenter(shop.lat, shop.lng);
+  //   addMarker({
+  //     id: 0,
+  //     position: { lat: shop.lat, lng: shop.lng },
+  //   });
+  // }, [shop.lat, shop.lng]);
 
   return (
     <div>
