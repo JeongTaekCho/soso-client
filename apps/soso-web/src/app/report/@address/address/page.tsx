@@ -38,7 +38,7 @@ export default function FindAddress() {
   return (
     <div className="layout-center modal-page">
       <Header title="주소" type="back" />
-      <Flex direction="col" gap={10} className="w-full px-8 pb-20 pt-76">
+      <Flex direction="col" gap={10} className="h-full w-full px-8 pb-20 pt-76">
         <div className="w-full px-12">
           <Input
             onChange={handleChangeAddress}
@@ -48,7 +48,7 @@ export default function FindAddress() {
           />
         </div>
         <Divider height="1px" />
-        <Flex direction="col" className="w-full">
+        <Flex direction="col" className="w-full flex-1 overflow-y-auto">
           {!searchData?.length ? (
             <p className="mt-20 w-full text-center text-14 font-normal text-[#27282C]">
               검색어에 해당하는 주소가 존재하지 않습니다.

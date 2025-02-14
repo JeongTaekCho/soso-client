@@ -53,9 +53,9 @@ export default function ReportWrite() {
   }, [shop]);
 
   return (
-    <form className="modal-page">
+    <form className="flex flex-col modal-page">
       <Header type="back" title="제보하기" />
-      <Flex direction="col" gap={28} className="w-full px-20 pt-76">
+      <Flex direction="col" gap={28} className="w-full overflow-y-auto px-20 pt-76">
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">상점 이름</h3>
           <Input placeholder="상점 이름을 입력해 주세요." />
@@ -113,7 +113,9 @@ export default function ReportWrite() {
           <h3 className="text-gray-800 font-title4_semi">판매상품</h3>
           <AddFileUi previewArr={previews} addFiles={addFiles} removeFile={removeFile} />
         </Flex>
-        <Button type="submit" title="등록하기" />
+        <div className="w-full">
+          <Button height="56px" type="submit" title="등록하기" />
+        </div>
       </Flex>
       <BottomModal isOpen={isDeclareModal} onClose={handleToggleTimeSettingModal}>
         운영 시간 모달
