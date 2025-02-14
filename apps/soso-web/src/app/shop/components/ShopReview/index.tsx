@@ -1,3 +1,5 @@
+'use client';
+
 import IconButton from '@/shared/components/button/IconButton';
 import LinkIcon from '@/shared/components/icons/LinkIcon';
 import ContentBox from '@/shared/components/layout/ContentBox';
@@ -6,12 +8,20 @@ import Review from '@/shared/components/layout/Review';
 import ContentTitle from '@/shared/components/text/ContentTitle';
 import EmptyData from '@/shared/components/ui/EmptyData';
 import { ShopDetailType } from '@/shared/types/shopType';
+import { useRouter } from 'next/navigation';
 
 interface ShopReviewProps {
   shopData: ShopDetailType | undefined;
+  id?: string;
 }
 
-export default function ShopReview({ shopData }: ShopReviewProps) {
+export default function ShopReview({ shopData, id }: ShopReviewProps) {
+  const router = useRouter();
+
+  const handleGoReviewPage = () => {
+    router.push(`/shop/${id}/review`);
+  };
+
   return (
     <ContentBox>
       <Flex justify="between" align="center" className="w-full">
@@ -22,7 +32,7 @@ export default function ShopReview({ shopData }: ShopReviewProps) {
           </span>
         </Flex>
         {shopData && shopData?.otherReviews.length + shopData?.userReviews.length > 1 && (
-          <IconButton label="전체보기" icon={<LinkIcon width="16" height="16" />} />
+          <IconButton onClick={handleGoReviewPage} label="전체보기" icon={<LinkIcon width="16" height="16" />} />
         )}
       </Flex>
       <Flex direction="col" gap={20} className="w-full">
