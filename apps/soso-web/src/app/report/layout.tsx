@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 
 interface ReportLayoutProps {
   children: ReactNode;
@@ -9,10 +9,12 @@ interface ReportLayoutProps {
 export default function ReportLayout({ children, write, address }: ReportLayoutProps) {
   return (
     <div>
-      <div>
-        {write}
-        {address}
-      </div>
+      <Suspense fallback={<p>Loading...</p>}>
+        <div>
+          {write}
+          {address}
+        </div>
+      </Suspense>
       {children}
     </div>
   );
