@@ -6,5 +6,6 @@ export const useGetShopQuery = (lat?: number, lng?: number) => {
   return useQuery<ShopType[]>({
     queryKey: ['shop', lat, lng],
     queryFn: () => getShop(lat, lng),
+    enabled: !!lat && !!lng,
   });
 };

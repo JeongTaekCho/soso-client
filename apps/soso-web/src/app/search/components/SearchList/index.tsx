@@ -4,11 +4,13 @@ import PlaceCard from '@/shared/components/card/PlaceCard';
 import Flex from '@/shared/components/layout/Flex';
 import useDebounce from '@/shared/hooks/useDebounce';
 import { useGetShopQuery } from '@/shared/hooks/useGetShopQuery';
+import { useLocationStore } from '@/shared/store/useLocationStore';
 import { useSearchStore } from '@/shared/store/useSearchStore';
 
 export default function SearchList() {
   const { searchValue } = useSearchStore();
-  const { data } = useGetShopQuery();
+  const { lat, lng } = useLocationStore();
+  const { data } = useGetShopQuery(lat, lng);
 
   const searchDebounceValue = useDebounce(searchValue, 300);
 
