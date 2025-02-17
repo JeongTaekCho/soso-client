@@ -34,7 +34,8 @@ export default function LoginPage() {
         className="fixed bottom-100 left-1/2 w-full -translate-x-1/2 px-16"
       >
         <Link
-          href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/google`}
+          href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/test`}
+          // href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/google`}
           className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"
         >
           <div className="absolute left-14 top-1/2 -translate-y-1/2">

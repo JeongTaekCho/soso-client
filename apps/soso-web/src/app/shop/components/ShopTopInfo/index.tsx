@@ -1,6 +1,7 @@
 'use client';
 
 import ReportModal from '@/app/shop/components/ShopTopInfo/components/ReportModal';
+import { useToggleWishMutation } from '@/app/shop/hooks/useToggleWishMutation';
 import MapButton from '@/shared/components/button/RoadFindButton/components/MapButton';
 import Divider from '@/shared/components/divider/Divider';
 import LoadFindIcon from '@/shared/components/icons/LoadFindIcon';
@@ -21,6 +22,7 @@ interface ShopTopInfoProps {
 export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
   const [isFindModal, setIsFindModal] = useState(false);
   const [isReportModal, setIsReportModal] = useState(false);
+  const { mutate: toggleWishMutate } = useToggleWishMutation(Number(shopData?.shop.id));
 
   const handleToggleFindModal = () => {
     setIsFindModal((prev) => !prev);
@@ -31,7 +33,9 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
   };
 
   const handleWishClick = () => {
-    console.log('찜 클릭');
+    if (!shopData?.shop.id) return;
+
+    toggleWishMutate(shopData?.shop.id);
   };
 
   return (

@@ -14,7 +14,7 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       token:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMTAyNzg0OTM3Nzk2NTU2OTk2MjYyIiwiaWF0IjoxNzM5NTE5NjcyLCJleHAiOjE3NDMxMTk2NzJ9.4d-xDlR-XUj8sEdiezF_inB7HKcZOYBP84XdPyaD2Z8',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMTAyNzg0OTM3Nzk2NTU2OTk2MjYyIiwiaWF0IjoxNzM5NzU4NTM3LCJleHAiOjE3Mzk3NjAzMzd9.41xe_ZbDrVGtZoc7U_uPc6bMDRYqVzzKhT_y-Ia4cY8',
       userType: 'new',
       isHydrated: false,
       setToken: (token) => set({ token }),

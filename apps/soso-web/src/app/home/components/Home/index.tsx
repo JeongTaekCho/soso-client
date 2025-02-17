@@ -7,19 +7,23 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import useMapStore from '@/shared/store/useMapStore';
+import { useLocationStore } from '@/shared/store/useLocationStore';
+import ResearchButton from '@/app/home/components/Home/components/ResearchButton';
 
 const NaverMap = dynamic(() => import('../../../../shared/components/layout/NaverMap'), { ssr: false });
 
 export default function HomePage() {
-  const { data: shopData } = useGetShopQuery();
+  const { lat, lng, setLocation } = useLocationStore();
+  const { map, addMarker, setCenter, clearMarkers } = useMapStore();
+  const [isMove, setIsMove] = useState(false);
+
+  const { data: shopData } = useGetShopQuery(lat, lng);
   const swiperRef = useRef<any>(null);
 
   const [currentShop, setCurrentShop] = useState<any | null>(null);
-  const { map, addMarker, setCenter } = useMapStore();
 
-  // 슬라이드 변경 이벤트 핸들러
   const handleSlideChange = (swiper: any) => {
-    const activeIndex = swiper.realIndex; // 복제 슬라이드를 제외한 실제 인덱스
+    const activeIndex = swiper.realIndex;
     const selectedShop = shopData?.[activeIndex];
     if (selectedShop) {
       setCurrentShop(selectedShop);
@@ -30,9 +34,25 @@ export default function HomePage() {
     }
   };
 
-  // 초기 마커 추가 로직
+  const handleClickResearch = () => {
+    const location = map?.getCenter();
+
+    setLocation(Number(location?.lat()), Number(location?.lng()));
+    setIsMove(false);
+  };
+
+  const goToSlide = (shopId: number) => {
+    const slideIndex = shopData?.findIndex((shop) => shop.id === shopId);
+    if (slideIndex !== -1 && swiperRef.current) {
+      swiperRef.current.slideToLoop(slideIndex, 300);
+    }
+  };
+
   useEffect(() => {
-    if (!shopData?.length || !map) return;
+    if (!shopData?.length || !map) {
+      clearMarkers();
+      return;
+    }
 
     shopData.forEach((shop) => {
       addMarker({
@@ -42,23 +62,31 @@ export default function HomePage() {
     });
   }, [shopData, map, addMarker]);
 
-  // 마커 클릭 시 슬라이드 이동
-  const goToSlide = (shopId: number) => {
-    const slideIndex = shopData?.findIndex((shop) => shop.id === shopId);
-    if (slideIndex !== -1 && swiperRef.current) {
-      swiperRef.current.slideToLoop(slideIndex, 300);
+  useEffect(() => {
+    if (shopData?.length) {
+      setCenter(shopData?.[0].lat, shopData?.[0].lng);
+    } else {
+      setCenter(lat, lng);
     }
-  };
+  }, [shopData, lat, lng]);
 
   useEffect(() => {
-    if (!shopData?.length) return;
+    if (!map) return;
 
-    setCenter(shopData[0].lat, shopData[0].lng);
-  }, [shopData]);
+    const handleDrag = () => {
+      const center = map.getCenter();
+      setCenter(center.lat(), center.lng());
+      setIsMove(true);
+    };
+
+    naver.maps.Event.addListener(map, 'dragend', handleDrag);
+  }, [map]);
 
   return (
     <div>
       <Header type="search" top="20px" />
+      {isMove && <ResearchButton onClick={handleClickResearch} className="fixed left-0 top-0 z-important" />}
+
       <NaverMap
         markerEvent={(_marker, data) => {
           goToSlide(data.id);
