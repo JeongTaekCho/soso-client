@@ -72,6 +72,7 @@ const config: Config = {
       boxShadow: {
         'sns-btn': '0px 4px 8px rgba(27, 27, 27, 0.16)',
         'filter-select': '1px 2px 9px 3px rgba(0, 0, 0, 0.14)',
+        button: '1px 2px 6px 3px rgba(0, 0, 0, 0.08)',
       },
       backdropBlur: {
         '10': '10px',
