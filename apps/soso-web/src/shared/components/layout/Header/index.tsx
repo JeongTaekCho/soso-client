@@ -3,13 +3,12 @@
 import BackIcon from '@/shared/components/icons/BackIcon.tsx';
 import XIcon from '@/shared/components/icons/XIcon';
 import Flex from '@/shared/components/layout/Flex';
-import HeaderSearch from '@/shared/components/layout/Header/components/HeaderSearch';
 import useBack from '@/shared/hooks/useBack';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
 interface HeaderProps {
-  type?: 'close' | 'back' | 'customBack' | 'search' | 'customBtn';
+  type?: 'close' | 'back' | 'customBack' | 'customBtn';
   title?: string;
   customBtn?: ReactNode;
   top?: string;
@@ -32,7 +31,7 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
         </Flex>
       )}
 
-      {type && type !== 'search' && type !== 'customBtn' && (
+      {type && type !== 'customBtn' && (
         <Flex justify="between" align="center" className="relative h-full w-full">
           <div>
             <button type="button">{type === 'close' && <XIcon />}</button>
@@ -48,11 +47,6 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
         <Flex justify="between" align="center" className="h-full w-full">
           <h1 className="font-title3_bold">{title}</h1>
           <div>{customBtn}</div>
-        </Flex>
-      )}
-      {type === 'search' && (
-        <Flex className="h-full w-full" align="center">
-          <HeaderSearch />
         </Flex>
       )}
     </div>
