@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { InputHTMLAttributes } from 'react';
+import { forwardRef, InputHTMLAttributes } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   width?: string;
@@ -7,23 +7,30 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-export default function Input({ width, height, placeholder, className, onChange, ...props }: InputProps) {
-  return (
-    <div
-      style={{
-        width: width || '100%',
-        height: height || '52px',
-      }}
-    >
-      <input
-        placeholder={placeholder}
-        className={clsx(
-          'h-full w-full rounded-12 bg-gray-50 px-16 py-14 font-body1_m placeholder:text-gray-400 focus:outline-main',
-          className
-        )}
-        onChange={onChange}
-        {...props}
-      />
-    </div>
-  );
-}
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ width, height, placeholder, className, onChange, ...props }, ref) => {
+    return (
+      <div
+        style={{
+          width: width || '100%',
+          height: height || '52px',
+        }}
+      >
+        <input
+          ref={ref} // 🔥 ref 연결
+          placeholder={placeholder}
+          className={clsx(
+            'h-full w-full rounded-12 bg-gray-50 px-16 py-14 font-body1_m placeholder:text-gray-400 focus:outline-main',
+            className
+          )}
+          onChange={onChange}
+          {...props}
+        />
+      </div>
+    );
+  }
+);
+
+Input.displayName = 'Input';
+
+export default Input;

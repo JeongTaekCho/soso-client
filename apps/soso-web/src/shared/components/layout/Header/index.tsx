@@ -3,7 +3,7 @@
 import BackIcon from '@/shared/components/icons/BackIcon.tsx';
 import XIcon from '@/shared/components/icons/XIcon';
 import Flex from '@/shared/components/layout/Flex';
-import HeaderSearch from '@/shared/components/layout/Header/components/HeaderSearch';
+import HeaderSearch from '@/shared/components/inputs/components/HeaderSearch';
 import useBack from '@/shared/hooks/useBack';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';

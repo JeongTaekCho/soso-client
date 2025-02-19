@@ -1,10 +1,10 @@
 import SearchList from '@/app/search/components/SearchList';
-import Header from '@/shared/components/layout/Header';
+import HeaderSearch from '@/shared/components/inputs/components/HeaderSearch';
 
 export default function SearchPage() {
   return (
     <div>
-      <Header type="search" />
+      <HeaderSearch />
       <SearchList />
     </div>
   );

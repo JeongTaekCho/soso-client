@@ -9,6 +9,10 @@ import { useEffect, useRef, useState } from 'react';
 import useMapStore from '@/shared/store/useMapStore';
 import { useLocationStore } from '@/shared/store/useLocationStore';
 import ResearchButton from '@/app/home/components/Home/components/ResearchButton';
+import HeaderSearch from '@/shared/components/inputs/components/HeaderSearch';
+import SearchIcon from '@/shared/components/icons/SearchIcon';
+import Input from '@/shared/components/inputs/Input';
+import Link from 'next/link';
 
 const NaverMap = dynamic(() => import('../../../../shared/components/layout/NaverMap'), { ssr: false });
 
@@ -84,7 +88,23 @@ export default function HomePage() {
 
   return (
     <div>
-      <Header type="search" top="20px" />
+      <Link href="/search" className="fixed top-0 z-sticky w-full max-w-screen p-16">
+        <div className="relative h-46 w-full">
+          <div className="absolute left-10 top-[52%] -translate-y-1/2">
+            <SearchIcon fill="#9EA4AA" />
+          </div>
+          <div
+            style={{
+              width: '100%',
+              height: '52px',
+            }}
+          >
+            <div className="h-full w-full rounded-12 bg-white px-16 py-14 pl-46 text-gray-400 font-body1_m focus:outline-main">
+              찾고있는 소품샵이 있나요?
+            </div>
+          </div>
+        </div>
+      </Link>
       {isMove && <ResearchButton onClick={handleClickResearch} className="fixed left-0 top-0 z-important" />}
 
       <NaverMap

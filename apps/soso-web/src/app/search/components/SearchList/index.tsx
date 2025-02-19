@@ -15,7 +15,7 @@ export default function SearchList() {
   const searchDebounceValue = useDebounce(searchValue, 300);
 
   return (
-    <Flex direction="col" gap={18} className="mt-12 w-full">
+    <Flex direction="col" gap={18} className="mt-20 w-full">
       {!searchDebounceValue && <h3 className="px-20 font-title3_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
       {data && data?.length > 0 ? (
         <Flex direction="col" className="w-full">
