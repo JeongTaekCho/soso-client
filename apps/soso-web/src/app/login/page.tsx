@@ -1,15 +1,55 @@
+'use client';
+
+import GoogleIcon from '@/shared/components/icons/GoogleIcon';
 import Flex from '@/shared/components/layout/Flex';
+import { useAuthStore } from '@/shared/store/useAuthStore';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const { setUserType } = useAuthStore();
+
+  const handleGuestLogin = () => {
+    setUserType('guest');
+    router.push('/');
+  };
+
   return (
     <Flex justify="center" align="center" className="h-screenVh w-full">
-      <Link
-        href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/google`}
-        className="flex h-56 w-full items-center justify-center rounded-16 bg-gray-50 font-body1_m"
+      <Image
+        width={205}
+        height={120}
+        style={{ width: '68%', height: 'auto' }}
+        src="/images/logo.svg"
+        alt="소소 로고"
+        className="mb-[200px]"
+      />
+      <Flex
+        direction="col"
+        gap={12}
+        justify="center"
+        className="fixed bottom-100 left-1/2 w-full -translate-x-1/2 px-16"
       >
-        구글 로그인
-      </Link>
+        <Link
+          href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/test`}
+          // href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/google`}
+          className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"
+        >
+          <div className="absolute left-14 top-1/2 -translate-y-1/2">
+            <GoogleIcon />
+          </div>
+          Google로 시작하기
+        </Link>
+        <button
+          onClick={handleGuestLogin}
+          className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"
+        >
+          로그인 없이 시작하기
+        </button>
+      </Flex>
     </Flex>
   );
 }

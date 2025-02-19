@@ -52,8 +52,8 @@ export default function InfoSetting() {
           <Flex direction="col" gap={8} className="w-full">
             <Input placeholder="닉네임을 입력해 주세요." {...register('nickname')} />
             <Flex direction="col" gap={2}>
-              <ValidationText text="2자 이상 10자 이하" isError={isError.lengthError} />
-              <ValidationText text="한글,영문, 숫자 가능" isError={isError.patternError} />
+              <ValidationText text="2자 이상 10자 이하로 입력해 주세요." isError={isError.lengthError} />
+              <ValidationText text="한글,영문, 숫자만 가능합니다." isError={isError.patternError} />
             </Flex>
           </Flex>
           <div className="bottom-button">

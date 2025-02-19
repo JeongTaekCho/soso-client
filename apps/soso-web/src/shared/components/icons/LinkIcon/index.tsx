@@ -5,7 +5,7 @@ export default function LinkIcon({ width, height }: IconProps) {
     <svg
       width={width || '24'}
       height={height || '24'}
-      viewBox="0 0 24 24"
+      viewBox={`0 0 24 24`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -19,7 +19,7 @@ export default function LinkIcon({ width, height }: IconProps) {
       </g>
       <defs>
         <clipPath id="clip0_324_3354">
-          <rect width={width || '24'} height={height || '24'} fill="white" />
+          <rect width={'24'} height={'24'} fill="white" />
         </clipPath>
       </defs>
     </svg>

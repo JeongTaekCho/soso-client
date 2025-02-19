@@ -1,8 +1,28 @@
-interface FetchOptions extends RequestInit {}
+interface CustomFetchOptions extends RequestInit {
+  body?: any;
+  headers?: HeadersInit;
+}
 
-export const customFetch = async (url: string, options: FetchOptions = {}) => {
+export const customFetch = async (url: string, options: CustomFetchOptions = {}, timeout = 5000): Promise<any> => {
+  // ✅ localStorage에서 토큰 가져오기
+  const authStorage = localStorage.getItem('auth-storage');
+  let token = '';
+
+  if (authStorage) {
+    try {
+      const parsedData = JSON.parse(authStorage);
+      token = parsedData?.state?.token || '';
+    } catch (error) {
+      console.error('토큰 파싱 오류:', error);
+    }
+  }
+
+  const isFormData = options.body instanceof FormData;
+
+  // ✅ 기본 헤더 설정 (토큰이 있을 경우 Authorization 추가)
   const defaultHeaders: HeadersInit = {
-    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}), // ✅ 토큰이 있으면 추가
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
   };
 
   const finalOptions: RequestInit = {
@@ -11,19 +31,29 @@ export const customFetch = async (url: string, options: FetchOptions = {}) => {
       ...defaultHeaders,
       ...options.headers,
     },
+    body: isFormData ? options.body : JSON.stringify(options.body),
   };
 
+  if (isFormData) {
+    delete (finalOptions.headers as any)['Content-Type'];
+  }
+
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${url}`, finalOptions);
+    const response = await fetch(url, finalOptions);
 
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const error = new Error(`HTTP error! Status: ${response.status}`);
+      (error as any).status = response.status;
+      throw error;
     }
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Fetch API 에러:', error);
+    return response.json();
+  } catch (error: any) {
+    if (error.name === 'AbortError') {
+      console.error('Fetch request timed out');
+    } else {
+      console.error('Fetch API 에러:', error);
+    }
     throw error;
   }
 };

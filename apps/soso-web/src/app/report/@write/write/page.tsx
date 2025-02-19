@@ -1,6 +1,6 @@
 'use client';
 
-import AddButton from '@/shared/components/button/AddButton';
+import { useReportStore } from '@/app/report/store/useReportStore';
 import Button from '@/shared/components/button/Button';
 import TimePickerButton from '@/shared/components/button/TimePickerButton';
 import Input from '@/shared/components/inputs/Input';
@@ -15,13 +15,8 @@ import AddFileUi from '@/shared/components/ui/AddFileUi';
 import { useFileUpload } from '@/shared/hooks/useFileUpload';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
 import { useYoilStore } from '@/shared/store/useYoilStore';
-import { ChangeEvent, useState } from 'react';
-
-interface YoilType {
-  id: string;
-  label: string;
-  checked: boolean;
-}
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function ReportWrite() {
   const [isDeclareModal, setIsDeclareModal] = useState(false);
@@ -37,6 +32,9 @@ export default function ReportWrite() {
   const { previews, addFiles, removeFile } = useFileUpload();
 
   const { yoil, toggleYoil } = useYoilStore();
+  const { shop } = useReportStore();
+
+  const router = useRouter();
 
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     const { id } = e.target as HTMLInputElement;
@@ -48,10 +46,16 @@ export default function ReportWrite() {
     setIsDeclareModal((prev) => !prev);
   };
 
+  useEffect(() => {
+    if (!shop.location) {
+      router.back();
+    }
+  }, [shop]);
+
   return (
-    <form className="modal-page">
+    <form className="flex flex-col modal-page">
       <Header type="back" title="제보하기" />
-      <Flex direction="col" gap={28} className="w-full px-20 pt-76">
+      <Flex direction="col" gap={28} className="w-full overflow-y-auto px-20 pt-76">
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">상점 이름</h3>
           <Input placeholder="상점 이름을 입력해 주세요." />
@@ -64,7 +68,7 @@ export default function ReportWrite() {
               <NaverMap width="100%" height="100%" />
             </div>
             <div className="flex h-52 w-full items-center rounded-14 bg-gray-100 px-16 text-gray-400 font-body1_m">
-              대구 광역시 북구 구암동 960-2
+              {shop.location}
             </div>
           </Flex>
         </Flex>
@@ -109,7 +113,9 @@ export default function ReportWrite() {
           <h3 className="text-gray-800 font-title4_semi">판매상품</h3>
           <AddFileUi previewArr={previews} addFiles={addFiles} removeFile={removeFile} />
         </Flex>
-        <Button type="submit" title="등록하기" />
+        <div className="w-full">
+          <Button height="56px" type="submit" title="등록하기" />
+        </div>
       </Flex>
       <BottomModal isOpen={isDeclareModal} onClose={handleToggleTimeSettingModal}>
         운영 시간 모달
