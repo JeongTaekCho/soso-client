@@ -83,7 +83,7 @@ export default function HomePage() {
         id: 9999,
         position: { lat: currentLocation.lat, lng: currentLocation.lng },
         icon: {
-          content: `<div style="width:24px; height:24px" class="animate-glow"><img width='24' height='24' src="/images/marker/current_marker.png" alt="지도 마커" ></img></div>`,
+          content: `<div style="width:24px; height:24px" class="animate-glow"><img width='24' height='24' src="/images/marker/current_marker.svg" alt="지도 마커" ></img></div>`,
         },
         zIndex: 20,
       });
@@ -102,8 +102,8 @@ export default function HomePage() {
         icon: {
           content:
             selectedShopId === shop.id
-              ? `<div style="width:48px; height:48px"><img width='48' height='48' src="/images/marker/map_active_marker.png" alt="지도 마커" ></img></div>`
-              : `<div style="width:32px; height:32px"><img width='32' height='32' src="/images/marker/map_marker.png" alt="지도 마커" ></img></div>`,
+              ? `<div style="width:48px; height:48px"><img width='48' height='48' src="/images/marker/map_active_marker.svg" alt="지도 마커" ></img></div>`
+              : `<div style="width:32px; height:32px"><img width='32' height='32' src="/images/marker/map_marker.svg" alt="지도 마커" ></img></div>`,
         },
         zIndex: selectedShopId === shop.id ? 10 : 1,
       });

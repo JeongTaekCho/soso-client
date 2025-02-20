@@ -8,6 +8,7 @@ import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
 import { useClearMap } from '@/shared/hooks/useClearMap';
 import useMapStore from '@/shared/store/useMapStore';
+import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -34,6 +35,24 @@ export default function ReportPage() {
       position: { lat: shop.lat, lng: shop.lng },
     });
   }, [shop.lat, shop.lng]);
+
+  useEffect(() => {
+    const currentAddMarker = async () => {
+      const currentLocation = await getCurrentLocation();
+
+      if (currentLocation === 'denied') return;
+      addMarker({
+        id: 9999,
+        position: { lat: currentLocation.lat, lng: currentLocation.lng },
+        icon: {
+          content: `<div style="width:24px; height:24px" class="animate-glow"><img width='24' height='24' src="/images/marker/current_marker.svg" alt="지도 마커" ></img></div>`,
+        },
+        zIndex: 20,
+      });
+    };
+
+    currentAddMarker();
+  }, []);
 
   useClearMap();
 
