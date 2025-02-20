@@ -6,7 +6,6 @@ export const ToggleWish = async (id: number) => {
     body: {
       shopId: id,
     },
-    credentials: 'include',
   });
 
   return result;

@@ -2,7 +2,7 @@ import { useDialog } from '@/shared/context/DialogContext';
 import { useLocationStore } from '@/shared/store/useLocationStore';
 import { useEffect } from 'react';
 
-const LocationHandler = () => {
+const useLocationHandler = () => {
   const { setLocation, resetLocation } = useLocationStore();
   const { openDialog } = useDialog();
 
@@ -46,4 +46,4 @@ const LocationHandler = () => {
   return null;
 };
 
-export default LocationHandler;
+export default useLocationHandler;

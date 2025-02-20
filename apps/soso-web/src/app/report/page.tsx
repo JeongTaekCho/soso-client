@@ -6,6 +6,7 @@ import LinkIcon from '@/shared/components/icons/LinkIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
+import { useClearMap } from '@/shared/hooks/useClearMap';
 import useMapStore from '@/shared/store/useMapStore';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -34,6 +35,8 @@ export default function ReportPage() {
     });
   }, [shop.lat, shop.lng]);
 
+  useClearMap();
+
   return (
     <div>
       <Header title="제보하기" />
@@ -44,7 +47,7 @@ export default function ReportPage() {
           </Flex>
           <Flex direction="col" gap={12} className="w-full px-20">
             <div className="h-[185px] w-full overflow-hidden rounded-16">
-              <NaverMap width="100%" height="100%" />
+              <NaverMap width="100%" height="100%" isCurrent />
             </div>
             <Flex justify="between" align="center" className="w-full">
               <button
