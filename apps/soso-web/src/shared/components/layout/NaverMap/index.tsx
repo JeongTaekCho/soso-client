@@ -55,7 +55,7 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
         position: new naver.maps.LatLng(markerData.position.lat, markerData.position.lng),
         map: map,
         icon: markerData.icon || {
-          content: `<div style="width:48px; height:48px"><img width='48' height='48' src="/images/marker/map_marker.png" alt="지도 마커" ></img></div>`,
+          content: `<div style="width:48px; height:48px"><img width='48' height='48' src="/images/marker/map_marker.svg" alt="지도 마커" ></img></div>`,
         },
         zIndex: markerData.zIndex || 1,
       });
