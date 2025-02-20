@@ -75,6 +75,21 @@ export default function HomePage() {
 
   useEffect(() => {
     clearMarkers();
+    const currentAddMarker = async () => {
+      const currentLocation = await getCurrentLocation();
+
+      if (currentLocation === 'denied') return;
+      addMarker({
+        id: 9999,
+        position: { lat: currentLocation.lat, lng: currentLocation.lng },
+        icon: {
+          content: `<div style="width:24px; height:24px" class="animate-glow"><img width='24' height='24' src="/images/marker/current_marker.png" alt="지도 마커" ></img></div>`,
+        },
+        zIndex: 20,
+      });
+    };
+
+    currentAddMarker();
 
     if (!shopData?.length || !map) {
       return;

@@ -110,6 +110,16 @@ const config: Config = {
       backgroundImage: {
         'gradient-custom1': 'linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%)',
       },
+      keyframes: {
+        glow: {
+          '0%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.1)', opacity: '0.7' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+      },
+      animation: {
+        glow: 'glow 1.5s infinite ease-in-out',
+      },
     },
   },
   plugins: [
