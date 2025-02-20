@@ -17,13 +17,13 @@ interface PageProps {
 
 export default function ShopDetailPage({ params }: PageProps) {
   const { id } = use(params);
-  const { setCenter, addMarker, map } = useMapStore();
+  const { setCenter, addMarker, map, clearMarkers } = useMapStore();
 
   const { data: shopDetailData, isLoading } = useGetShopDetailQuery(id);
 
   useEffect(() => {
     if (isLoading || !shopDetailData || !map) return;
-
+    clearMarkers();
     addMarker({
       id: shopDetailData?.shop.id,
       position: { lat: shopDetailData?.shop.lat, lng: shopDetailData?.shop.lng },

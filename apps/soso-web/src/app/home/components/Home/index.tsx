@@ -134,6 +134,7 @@ export default function HomePage() {
         markerEvent={(_marker, data) => {
           goToSlide(data.id);
         }}
+        isCurrent
       />
       <div className="fixed bottom-76 left-1/2 flex w-full w-screen -translate-x-1/2 flex-col items-end gap-20 overflow-hidden layout-center">
         <div className="px-16">

@@ -1,5 +1,6 @@
 'use client';
 
+import useLocationHandler from '@/shared/hooks/useLocationHandler';
 import useMapStore from '@/shared/store/useMapStore';
 import Script from 'next/script';
 import { useEffect, useRef } from 'react';
@@ -7,7 +8,8 @@ import { useEffect, useRef } from 'react';
 interface NaverMapProps {
   width?: string;
   height?: string;
-  markerEvent?: (marker: naver.maps.Marker, data: any) => void; // 마커 이벤트 콜백 추가
+  markerEvent?: (marker: naver.maps.Marker, data: any) => void;
+  isCurrent?: boolean;
 }
 
 // 사용자 정의 타입 확장
@@ -15,7 +17,10 @@ interface CustomMap extends naver.maps.Map {
   customMarkers?: naver.maps.Marker[];
 }
 
-export default function NaverMap({ width, height, markerEvent }: NaverMapProps) {
+export default function NaverMap({ width, height, markerEvent, isCurrent }: NaverMapProps) {
+  if (isCurrent) {
+    useLocationHandler();
+  }
   const mapRef = useRef<HTMLDivElement>(null);
   const { setMap, center, minZoom, zoom, map, markers } = useMapStore();
 
