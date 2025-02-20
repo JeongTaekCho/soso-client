@@ -1,84 +1,74 @@
-# Turborepo starter
+# 소소 (소중한 소품샵)
 
-This is an official starter Turborepo.
+## 📌 프로젝트 개요
 
-## Using this example
+**소소 (소중한 소품샵)**
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
-```
+## 🏗️ 기술 스택
 
-## What's inside?
+- **프레임워크**: Next.js 15
+- **스타일링**: Tailwind CSS
+- **상태관리**: Zustand
+- **데이터 요청**: TanStack Query
+- **버전 관리**: Git & Git Flow
 
-This Turborepo includes the following packages/apps:
+---
 
-### Apps and Packages
+## 📜 코드 컨벤션
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+일관된 코드 스타일을 유지하고 가독성을 높이기 위해 다음 규칙을 따릅니다.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### ✅ 함수
 
-### Utilities
+- **단일 책임 원칙(SRP)** 을 준수하여 작성합니다.
+- `const functionName = () => {}` 형태를 사용합니다.
 
-This Turborepo has some additional tools already setup for you:
+### ✅ Hook
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- 연관성이 있는 기능만 하나의 hook에서 묶어 관리합니다.
 
-### Build
+### ✅ 삼항 연산자
 
-To build all apps and packages, run the following command:
+- 가독성을 높이기 위해 조건을 변수화하여 사용합니다.
 
-```
-cd my-turborepo
-pnpm build
-```
+### ✅ 네이밍 규칙
 
-### Develop
+- **변수명**: `카멜케이스(camelCase)`
+- **상수명**: `대문자 스네이크케이스(UPPER_SNAKE_CASE)`
+- **함수명**: `handle + 이벤트 동작 + 명확한 이름` (예: `handleClickButton`)
+- **파일명**:
+  - **API 파일**: 동사 (예: `fetchData.ts`)
+  - **TanStack Query 관련 파일**: `use + 동사 + Query(Mutation)` (예: `useFetchDataQuery.ts`)
 
-To develop all apps and packages, run the following command:
+---
 
-```
-cd my-turborepo
-pnpm dev
-```
+## 🚀 Git 컨벤션
 
-### Remote Caching
+버전 관리는 **Git Flow** 전략을 따르며, 다음 컨벤션을 준수합니다.
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+### ✅ 커밋 메시지 형식
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Feat: 작업내용
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+### ✅ Pull Request 규칙
 
-```
-cd my-turborepo
-npx turbo login
-```
+- PR 제목은 **마지막 커밋 메시지**를 사용합니다.
+- PR 설명에는 작업한 내용을 기술합니다.
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+---
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## 🛠️ 설치 및 실행 방법
 
-```
-npx turbo link
-```
+# 1. 레포지토리 클론
 
-## Useful Links
+# 2. 프로젝트 디렉토리 이동
 
-Learn more about the power of Turborepo:
+# 3. 패키지 설치
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+yarn install or npm install
+
+# 4. 개발 서버 실행
+
+yarn dev or npm run dev
