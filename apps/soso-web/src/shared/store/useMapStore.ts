@@ -7,6 +7,10 @@ interface Marker {
     lng: number;
   };
   data?: any;
+  icon?: {
+    content: string;
+  };
+  zIndex?: number;
 }
 
 interface MapStore {

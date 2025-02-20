@@ -25,17 +25,15 @@ export default function HomePage() {
   const { data: shopData } = useGetShopQuery(lat, lng);
   const swiperRef = useRef<any>(null);
 
-  const [currentShop, setCurrentShop] = useState<any | null>(null);
+  const [selectedShopId, setSelectedShopId] = useState<number | null>(null);
 
   const handleSlideChange = (swiper: any) => {
     const activeIndex = swiper.realIndex;
     const selectedShop = shopData?.[activeIndex];
     if (selectedShop) {
-      setCurrentShop(selectedShop);
-      if (map) {
-        setCenter(selectedShop.lat, selectedShop.lng);
-        map.setZoom(18);
-      }
+      setSelectedShopId(selectedShop.id);
+      setCenter(selectedShop.lat, selectedShop.lng);
+      map?.setZoom(18);
     }
   };
 
@@ -76,8 +74,9 @@ export default function HomePage() {
   };
 
   useEffect(() => {
+    clearMarkers();
+
     if (!shopData?.length || !map) {
-      clearMarkers();
       return;
     }
 
@@ -85,9 +84,16 @@ export default function HomePage() {
       addMarker({
         id: shop.id,
         position: { lat: shop.lat, lng: shop.lng },
+        icon: {
+          content:
+            selectedShopId === shop.id
+              ? `<div style="width:48px; height:48px"><img width='48' height='48' src="/images/marker/map_active_marker.png" alt="지도 마커" ></img></div>`
+              : `<div style="width:32px; height:32px"><img width='32' height='32' src="/images/marker/map_marker.png" alt="지도 마커" ></img></div>`,
+        },
+        zIndex: selectedShopId === shop.id ? 10 : 1,
       });
     });
-  }, [shopData, map, addMarker]);
+  }, [shopData, map, addMarker, selectedShopId]);
 
   useEffect(() => {
     if (shopData?.length) {
