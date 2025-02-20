@@ -1,7 +1,6 @@
 'use client';
 
 import AuthComponent from '@/shared/components/config/AuthComponent';
-import LocationHandler from '@/shared/components/config/LocationHandler';
 import BottomNavigation from '@/shared/components/layout/BottomNavigation';
 import TanstackQueryProvider from '@/shared/components/provider/TanstackQueryProvider';
 import { DialogProvider } from '@/shared/context/DialogContext';
@@ -34,7 +33,6 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
     <div>
       <TanstackQueryProvider>
         <DialogProvider>
-          <LocationHandler />
           <AuthComponent />
           <div
             className={`m-auto h-screenVh w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'pt-56'} shadow-md`}
