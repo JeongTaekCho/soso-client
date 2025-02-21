@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 interface DialogModalProps {
   type: 'alert' | 'confirm';
   title: string;
-  message: string | ReactNode;
+  message?: string | ReactNode;
   onConfirm?: () => void;
   onClose: () => void;
   leftLabel?: string;

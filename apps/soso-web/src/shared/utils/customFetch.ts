@@ -2,6 +2,17 @@ interface CustomFetchOptions extends RequestInit {
   body?: any;
 }
 
+export class CustomError extends Error {
+  status: number;
+  data: any;
+
+  constructor(message: string, status: number, data?: any) {
+    super(message);
+    this.status = status;
+    this.data = data;
+  }
+}
+
 export const customFetch = async (url: string, options: CustomFetchOptions = {}): Promise<any> => {
   const isFormData = options.body instanceof FormData;
 
@@ -16,19 +27,20 @@ export const customFetch = async (url: string, options: CustomFetchOptions = {})
       ...options.headers,
     },
     body: isFormData ? options.body : JSON.stringify(options.body),
-    credentials: 'include', // ✅ 반드시 포함 (쿠키 전송)
+    credentials: 'include',
   };
 
   try {
     const response = await fetch(url, finalOptions);
 
     if (!response.ok) {
-      throw new Error(`HTTP 오류! 상태 코드: ${response.status}`);
+      const errorData = await response.json().catch(() => null);
+      throw new CustomError(errorData?.message || '서버 오류 발생', response.status, errorData);
     }
 
     return response.json();
   } catch (error) {
-    console.error('Fetch 오류:', error);
+    console.log('Fetch 오류:', error);
     throw error;
   }
 };
