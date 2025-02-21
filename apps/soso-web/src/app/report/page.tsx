@@ -7,7 +7,6 @@ import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
 import { CURRENT_LOCATION_MARKER_ID, REPORT_MARKER_ID } from '@/shared/constant/location';
-import { useClearMap } from '@/shared/hooks/useClearMap';
 import useMapStore from '@/shared/store/useMapStore';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { useRouter } from 'next/navigation';
@@ -40,6 +39,9 @@ export default function ReportPage() {
   useEffect(() => {
     const currentAddMarker = async () => {
       const currentLocation = await getCurrentLocation();
+      if ((!shop.lat || !shop.lng) && currentLocation !== 'denied') {
+        setCenter(currentLocation.lat, currentLocation.lng);
+      }
 
       if (currentLocation === 'denied') return;
       addMarker({
@@ -54,8 +56,6 @@ export default function ReportPage() {
 
     currentAddMarker();
   }, [map, shop.lat, shop.lng]);
-
-  useClearMap();
 
   return (
     <div>

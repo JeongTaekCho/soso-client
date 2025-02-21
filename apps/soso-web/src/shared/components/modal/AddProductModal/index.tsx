@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Button from '@/shared/components/button/Button';
 import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
 import SellProduct from '@/shared/components/card/SellProduct';
@@ -6,6 +7,7 @@ import BottomModal from '@/shared/components/modal/BottomModal';
 import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
 import { PRODUCT_LIST } from '@/shared/constant/Product';
 import useProductListStore from '@/shared/store/useProductListStore';
+import { ProductType } from '@/shared/types/shopType';
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -15,20 +17,22 @@ interface AddProductModalProps {
 }
 
 export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: AddProductModalProps) {
-  const { addProductList, toggleProduct, clearProductList, setProductList } = useProductListStore();
+  const { selectedProducts, setProductList, toggleProduct, resetSelectedProducts } = useProductListStore();
+
+  useEffect(() => {
+    if (isOpen) {
+      resetSelectedProducts();
+    }
+  }, [isOpen, resetSelectedProducts]);
 
   const handleCloseModal = () => {
     onClose();
-    clearProductList();
   };
 
   const handleSetProductList = () => {
     setProductList();
     handleCloseModal();
-
-    if (onClick) {
-      onClick();
-    }
+    if (onClick) onClick();
   };
 
   return (
@@ -40,17 +44,17 @@ export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: Ad
         </Flex>
         <Flex direction="col" gap={38} align="center">
           <Flex align="center" wrap gap={8}>
-            {PRODUCT_LIST.map((product) => (
+            {PRODUCT_LIST.map((product: ProductType) => (
               <SellProduct
                 key={product.id}
                 product={product}
                 checkbox
-                onClick={() => toggleProduct({ id: product.id, name: product.name })}
-                isCheck={addProductList.some((p) => p.id === product.id)}
+                onClick={() => toggleProduct(product)}
+                isCheck={selectedProducts.some((p) => p.id === product.id)}
               />
             ))}
           </Flex>
-          <Button onClick={handleSetProductList} title="추가하기" disabled={!addProductList.length} />
+          <Button onClick={handleSetProductList} title="추가하기" disabled={!selectedProducts.length} />
         </Flex>
       </Flex>
     </BottomModal>

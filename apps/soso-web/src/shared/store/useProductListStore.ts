@@ -1,33 +1,33 @@
-// src/shared/store/useProductStore.ts
 import { ProductType } from '@/shared/types/shopType';
 import { create } from 'zustand';
 
 interface ProductStoreState {
-  addProductList: ProductType[];
   productList: ProductType[];
+  selectedProducts: ProductType[];
   setProductList: () => void;
   toggleProduct: (product: ProductType) => void;
+  resetSelectedProducts: () => void;
   clearProductList: () => void;
 }
 
-const useProductListStore = create<ProductStoreState>((set) => ({
+const useProductListStore = create<ProductStoreState>((set, get) => ({
   productList: [],
-  addProductList: [],
+  selectedProducts: [],
 
-  setProductList: () => set((state) => ({ productList: [...state.addProductList] })),
+  setProductList: () => set((state) => ({ productList: [...state.selectedProducts] })),
 
   toggleProduct: (product) =>
     set((state) => {
-      const isProductInList = state.addProductList.some((p) => p.id === product.id);
-
+      const isProductInList = state.selectedProducts.some((p) => p.id === product.id);
       const updatedList = isProductInList
-        ? state.addProductList.filter((p) => p.id !== product.id)
-        : [...state.addProductList, product];
+        ? state.selectedProducts.filter((p) => p.id !== product.id)
+        : [...state.selectedProducts, product];
 
-      return { addProductList: updatedList };
+      return { selectedProducts: updatedList };
     }),
 
-  clearProductList: () => set({ addProductList: [] }),
+  resetSelectedProducts: () => set({ selectedProducts: [...get().productList] }),
+  clearProductList: () => set({ productList: [], selectedProducts: [] }),
 }));
 
 export default useProductListStore;

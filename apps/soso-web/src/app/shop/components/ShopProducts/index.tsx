@@ -37,7 +37,7 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
         <EmptyData text="등록된 상품이 없습니다." />
       )}
 
-      <AddProductModal isOpen={isBottomModal} onClose={handleToggleBottomModal} />
+      <AddProductModal isEdit isOpen={isBottomModal} onClose={handleToggleBottomModal} />
     </ContentBox>
   );
 }
