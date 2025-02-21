@@ -6,7 +6,7 @@ import LinkIcon from '@/shared/components/icons/LinkIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
-import { useClearMap } from '@/shared/hooks/useClearMap';
+import { CURRENT_LOCATION_MARKER_ID, REPORT_MARKER_ID } from '@/shared/constant/location';
 import useMapStore from '@/shared/store/useMapStore';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { useRouter } from 'next/navigation';
@@ -16,7 +16,7 @@ export default function ReportPage() {
   const router = useRouter();
 
   const { shop } = useReportStore();
-  const { setCenter, addMarker, clearMarkers } = useMapStore();
+  const { map, setCenter, addMarker, clearMarkers } = useMapStore();
 
   const handleNext = () => {
     router.push('/report/write');
@@ -27,22 +27,15 @@ export default function ReportPage() {
   };
 
   useEffect(() => {
-    if (!shop.lat || !shop.lng) return;
-    clearMarkers();
-    setCenter(shop.lat, shop.lng);
-    addMarker({
-      id: 0,
-      position: { lat: shop.lat, lng: shop.lng },
-    });
-  }, [shop.lat, shop.lng]);
-
-  useEffect(() => {
     const currentAddMarker = async () => {
       const currentLocation = await getCurrentLocation();
+      if ((!shop.lat || !shop.lng) && currentLocation !== 'denied') {
+        setCenter(currentLocation.lat, currentLocation.lng);
+      }
 
       if (currentLocation === 'denied') return;
       addMarker({
-        id: 9999,
+        id: CURRENT_LOCATION_MARKER_ID,
         position: { lat: currentLocation.lat, lng: currentLocation.lng },
         icon: {
           content: `<div style="width:24px; height:24px" class="animate-glow"><img width='24' height='24' src="/images/marker/current_marker.svg" alt="지도 마커" ></img></div>`,
@@ -51,10 +44,16 @@ export default function ReportPage() {
       });
     };
 
+    clearMarkers();
     currentAddMarker();
-  }, []);
 
-  useClearMap();
+    if (!shop.lat || !shop.lng) return;
+    setCenter(shop.lat, shop.lng);
+    addMarker({
+      id: REPORT_MARKER_ID,
+      position: { lat: shop.lat, lng: shop.lng },
+    });
+  }, [shop.lat, shop.lng, map]);
 
   return (
     <div>

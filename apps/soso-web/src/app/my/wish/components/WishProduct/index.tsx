@@ -12,7 +12,7 @@ export default function WishProduct() {
   return (
     <div className={clsx('flex flex-col gap-8', width)}>
       <div className="relative aspect-square w-full">
-        <Image src={'/images/sample.png'} fill style={{ objectFit: 'cover' }} alt="프로덕트 이미지" />
+        <Image src={'/images/default_item.png'} fill style={{ objectFit: 'cover' }} alt="프로덕트 이미지" />
       </div>
       <p className="max-w-full truncate text-gray-600 font-body1_m">세상에서 가장 귀여운 소품</p>
     </div>

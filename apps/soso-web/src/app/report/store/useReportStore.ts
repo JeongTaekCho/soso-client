@@ -3,8 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface Shop {
   name: string;
-  lat: number;
-  lng: number;
+  lat: number | null;
+  lng: number | null;
   location: string;
 }
 
@@ -33,15 +33,39 @@ interface ReportState {
   setShop: (shop: Shop) => void;
   setOperatingHours: (operatingHours: OperatingHours) => void;
   setProduct: (products: Product[]) => void;
+  resetReport: () => void;
 }
 
-export const useReportStore = create<ReportState>()(
-  persist(
-    (set) => ({
+export const useReportStore = create<ReportState>()((set) => ({
+  shop: {
+    name: '',
+    lat: null,
+    lng: null,
+    location: '',
+  },
+  operatingHours: {
+    phoneNumber: '',
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+    sunday: false,
+    startTime: '10:00',
+    endTime: '20:00',
+  },
+  products: [],
+  setShop: (shop) => set({ shop }),
+  setOperatingHours: (operatingHours) => set({ operatingHours }),
+  setProduct: (products) => set({ products }),
+
+  resetReport: () =>
+    set({
       shop: {
         name: '',
-        lat: 37.5665,
-        lng: 126.978,
+        lat: null,
+        lng: null,
         location: '',
       },
       operatingHours: {
@@ -57,13 +81,5 @@ export const useReportStore = create<ReportState>()(
         endTime: '20:00',
       },
       products: [],
-      setShop: (shop) => set({ shop }),
-      setOperatingHours: (operatingHours) => set({ operatingHours }),
-      setProduct: (products) => set({ products }),
     }),
-    {
-      name: 'report-storage',
-      storage: createJSONStorage(() => sessionStorage),
-    }
-  )
-);
+}));

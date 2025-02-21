@@ -3,23 +3,25 @@
 import { useReportStore } from '@/app/report/store/useReportStore';
 import Button from '@/shared/components/button/Button';
 import TimePickerButton from '@/shared/components/button/TimePickerButton';
+import SellProduct from '@/shared/components/card/SellProduct';
 import Input from '@/shared/components/inputs/Input';
 import TimePicker from '@/shared/components/inputs/TimePicker';
 import YoilCheckbox from '@/shared/components/inputs/YoilCheckbox';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
+import AddProductModal from '@/shared/components/modal/AddProductModal';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import ModalPortal from '@/shared/components/modal/ModalPortal';
-import AddFileUi from '@/shared/components/ui/AddFileUi';
-import { useFileUpload } from '@/shared/hooks/useFileUpload';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
+import useProductListStore from '@/shared/store/useProductListStore';
 import { useYoilStore } from '@/shared/store/useYoilStore';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function ReportWrite() {
   const [isDeclareModal, setIsDeclareModal] = useState(false);
+  const [isAddProductModal, setIsAddProductModal] = useState(false);
   const {
     openTime,
     closeTime,
@@ -29,12 +31,13 @@ export default function ReportWrite() {
     handleOpenTimePicker,
     handleTimePicker,
   } = useTimePicker();
-  const { previews, addFiles, removeFile } = useFileUpload();
+  const { productList, clearProductList } = useProductListStore();
 
   const { yoil, toggleYoil } = useYoilStore();
   const { shop } = useReportStore();
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     const { id } = e.target as HTMLInputElement;
@@ -46,11 +49,21 @@ export default function ReportWrite() {
     setIsDeclareModal((prev) => !prev);
   };
 
+  const handleToggleAddProductModal = () => {
+    setIsAddProductModal((prev) => !prev);
+  };
+
   useEffect(() => {
     if (!shop.location) {
       router.back();
     }
   }, [shop]);
+
+  useEffect(() => {
+    return () => {
+      clearProductList();
+    };
+  }, [pathname, clearProductList]);
 
   return (
     <form className="flex flex-col modal-page">
@@ -111,7 +124,22 @@ export default function ReportWrite() {
         </Flex>
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">판매상품</h3>
-          <AddFileUi previewArr={previews} addFiles={addFiles} removeFile={removeFile} />
+          <Flex align="start" wrap gap={8} className="w-full">
+            {productList &&
+              productList?.length > 0 &&
+              productList?.map((product) => <SellProduct key={product.id} product={product} />)}
+
+            <button
+              type="button"
+              onClick={handleToggleAddProductModal}
+              className="flex aspect-square w-[calc(25%-6px)] cursor-pointer items-center justify-center rounded-12 bg-gray-50"
+            >
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 1V21" stroke="#C9CDD2" strokeWidth="1.3" strokeLinecap="round" />
+                <path d="M21 11L1 11" stroke="#C9CDD2" strokeWidth="1.3" strokeLinecap="round" />
+              </svg>
+            </button>
+          </Flex>
         </Flex>
         <div className="w-full">
           <Button height="56px" type="submit" title="등록하기" />
@@ -127,6 +155,7 @@ export default function ReportWrite() {
           value={timePickerType === 'open' ? openTime : closeTime}
         />
       </ModalPortal>
+      <AddProductModal isOpen={isAddProductModal} onClose={handleToggleAddProductModal} />
     </form>
   );
 }

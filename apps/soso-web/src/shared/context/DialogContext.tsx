@@ -7,7 +7,7 @@ type DialogType = 'alert' | 'confirm';
 interface DialogOptions {
   type: DialogType;
   title: string;
-  message: string | ReactNode;
+  message?: string | ReactNode;
   onConfirm?: () => void;
   onCancel?: () => void;
 }

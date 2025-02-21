@@ -88,19 +88,20 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
       ) : (
         <MessageBox isMe={isMe} isWrite={isWrite}>
           <Flex direction="col" gap={16}>
-            <p className="break-all text-gray-600 font-body2_m">{data?.content || ''}</p>
+            <pre className="whitespace-pre-wrap break-all font-['Pretendard'] text-gray-600 font-body2_m">
+              {data?.content || ''}
+            </pre>
             {data && data?.images.length > 0 && (
               <Flex align="center" gap={8}>
                 {data?.images.map((image) => (
-                  <Image
-                    key={image}
-                    src={getSafeImageUrl(image, '/images/sample.png') || ''}
-                    width={72}
-                    height={72}
-                    style={{ objectFit: 'cover' }}
-                    alt="리뷰 이미지"
-                    className="rounded-12"
-                  />
+                  <div className="relative h-72 w-72" key={`image-${image.id}`}>
+                    <Image
+                      fill
+                      src={getSafeImageUrl(image.url) || ''}
+                      alt="리뷰 이미지"
+                      className="rounded-12 object-cover"
+                    />
+                  </div>
                 ))}
               </Flex>
             )}
