@@ -3,8 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface Shop {
   name: string;
-  lat: number;
-  lng: number;
+  lat: number | null;
+  lng: number | null;
   location: string;
 }
 
@@ -40,8 +40,8 @@ export const useReportStore = create<ReportState>()(
     (set) => ({
       shop: {
         name: '',
-        lat: 37.5665,
-        lng: 126.978,
+        lat: null,
+        lng: null,
         location: '',
       },
       operatingHours: {

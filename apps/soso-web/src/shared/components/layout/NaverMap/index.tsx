@@ -61,7 +61,7 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
       });
 
       naver.maps.Event.addListener(newMarker, 'click', () => {
-        map.panTo(newMarker.getPosition()); // 지도 중심 이동
+        map.panTo(newMarker.getPosition());
         if (markerEvent) {
           markerEvent(newMarker, markerData);
         }

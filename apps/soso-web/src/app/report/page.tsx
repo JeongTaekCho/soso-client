@@ -6,6 +6,7 @@ import LinkIcon from '@/shared/components/icons/LinkIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
+import { CURRENT_LOCATION_MARKER_ID, REPORT_MARKER_ID } from '@/shared/constant/location';
 import { useClearMap } from '@/shared/hooks/useClearMap';
 import useMapStore from '@/shared/store/useMapStore';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
@@ -16,7 +17,7 @@ export default function ReportPage() {
   const router = useRouter();
 
   const { shop } = useReportStore();
-  const { setCenter, addMarker, clearMarkers } = useMapStore();
+  const { map, setCenter, addMarker, clearMarkers } = useMapStore();
 
   const handleNext = () => {
     router.push('/report/write');
@@ -31,7 +32,7 @@ export default function ReportPage() {
     clearMarkers();
     setCenter(shop.lat, shop.lng);
     addMarker({
-      id: 0,
+      id: REPORT_MARKER_ID,
       position: { lat: shop.lat, lng: shop.lng },
     });
   }, [shop.lat, shop.lng]);
@@ -42,7 +43,7 @@ export default function ReportPage() {
 
       if (currentLocation === 'denied') return;
       addMarker({
-        id: 9999,
+        id: CURRENT_LOCATION_MARKER_ID,
         position: { lat: currentLocation.lat, lng: currentLocation.lng },
         icon: {
           content: `<div style="width:24px; height:24px" class="animate-glow"><img width='24' height='24' src="/images/marker/current_marker.svg" alt="지도 마커" ></img></div>`,
@@ -52,7 +53,7 @@ export default function ReportPage() {
     };
 
     currentAddMarker();
-  }, []);
+  }, [map, shop.lat, shop.lng]);
 
   useClearMap();
 
