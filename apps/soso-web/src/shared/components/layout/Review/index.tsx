@@ -94,7 +94,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
                 {data?.images.map((image) => (
                   <Image
                     key={image}
-                    src={getSafeImageUrl(image, '/images/sample.png') || ''}
+                    src={getSafeImageUrl(image, '/images/default_item.png') || ''}
                     width={72}
                     height={72}
                     style={{ objectFit: 'cover' }}
