@@ -1,5 +1,6 @@
 'use client';
 
+import { useAddShopProductMutation } from '@/app/shop/components/ShopProducts/hooks/useAddShopProductMutation';
 import IconButton from '@/shared/components/button/IconButton';
 import SellProduct from '@/shared/components/card/SellProduct';
 import ProposalIcon from '@/shared/components/icons/ProposalIcon';
@@ -11,6 +12,7 @@ import EmptyData from '@/shared/components/ui/EmptyData';
 import { PRODUCT_LIST } from '@/shared/constant/Product';
 import useProductListStore from '@/shared/store/useProductListStore';
 import { ProductType } from '@/shared/types/shopType';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 interface ShopProductsProps {
@@ -18,9 +20,26 @@ interface ShopProductsProps {
 }
 export default function ShopProducts({ productData }: ShopProductsProps) {
   const [isBottomModal, setIsBottomModal] = useState(false);
+  const { selectedProducts } = useProductListStore();
+  const { id } = useParams();
+
+  const { mutate: addShopProductMutate } = useAddShopProductMutation();
+
+  console.log(selectedProducts);
 
   const handleToggleBottomModal = () => {
     setIsBottomModal((prev) => !prev);
+  };
+
+  const handleAddProduct = () => {
+    const data = {
+      shopId: Number(id),
+      products: selectedProducts.map((el) => {
+        return { id: el.id, name: el.name };
+      }),
+    };
+
+    addShopProductMutate(data);
   };
 
   return (
@@ -37,7 +56,7 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
         <EmptyData text="등록된 상품이 없습니다." />
       )}
 
-      <AddProductModal isEdit isOpen={isBottomModal} onClose={handleToggleBottomModal} />
+      <AddProductModal isEdit onClick={handleAddProduct} isOpen={isBottomModal} onClose={handleToggleBottomModal} />
     </ContentBox>
   );
 }
