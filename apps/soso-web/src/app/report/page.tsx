@@ -27,16 +27,6 @@ export default function ReportPage() {
   };
 
   useEffect(() => {
-    if (!shop.lat || !shop.lng) return;
-    clearMarkers();
-    setCenter(shop.lat, shop.lng);
-    addMarker({
-      id: REPORT_MARKER_ID,
-      position: { lat: shop.lat, lng: shop.lng },
-    });
-  }, [shop.lat, shop.lng]);
-
-  useEffect(() => {
     const currentAddMarker = async () => {
       const currentLocation = await getCurrentLocation();
       if ((!shop.lat || !shop.lng) && currentLocation !== 'denied') {
@@ -54,8 +44,16 @@ export default function ReportPage() {
       });
     };
 
+    clearMarkers();
     currentAddMarker();
-  }, [map, shop.lat, shop.lng]);
+
+    if (!shop.lat || !shop.lng) return;
+    setCenter(shop.lat, shop.lng);
+    addMarker({
+      id: REPORT_MARKER_ID,
+      position: { lat: shop.lat, lng: shop.lng },
+    });
+  }, [shop.lat, shop.lng, map]);
 
   return (
     <div>
