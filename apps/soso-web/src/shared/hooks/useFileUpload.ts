@@ -35,3 +35,28 @@ export const useFileUpload = (maxFiles: number = 10) => {
 
   return { files, previews, addFiles, removeFile };
 };
+
+export const useSingleFileUpload = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+
+  // ✅ 싱글 파일 업로드 (기존 파일을 덮어씀)
+  const setSingleFile = (newFile: File) => {
+    if (file) {
+      URL.revokeObjectURL(preview!); // 기존 파일 미리보기 해제
+    }
+    setFile(newFile);
+    setPreview(URL.createObjectURL(newFile));
+  };
+
+  // ✅ 싱글 파일 삭제
+  const removeSingleFile = () => {
+    if (file) {
+      URL.revokeObjectURL(preview!);
+    }
+    setFile(null);
+    setPreview(null);
+  };
+
+  return { file, preview, setSingleFile, removeSingleFile };
+};
