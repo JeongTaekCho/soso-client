@@ -13,6 +13,7 @@ import Link from 'next/link';
 import GpsButton from '@/app/home/components/Home/components/GpsButton';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { useDialog } from '@/shared/context/DialogContext';
+import { CURRENT_LOCATION_MARKER_ID } from '@/shared/constant/location';
 
 const NaverMap = dynamic(() => import('../../../../shared/components/layout/NaverMap'), { ssr: false });
 
@@ -80,7 +81,7 @@ export default function HomePage() {
 
       if (currentLocation === 'denied') return;
       addMarker({
-        id: 9999,
+        id: CURRENT_LOCATION_MARKER_ID,
         position: { lat: currentLocation.lat, lng: currentLocation.lng },
         icon: {
           content: `<div style="width:24px; height:24px" class="animate-glow"><img width='24' height='24' src="/images/marker/current_marker.svg" alt="지도 마커" ></img></div>`,

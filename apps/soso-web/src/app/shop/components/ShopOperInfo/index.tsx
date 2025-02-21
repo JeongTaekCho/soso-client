@@ -168,7 +168,7 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
                 <Input placeholder="전화번호를 입력해 주세요." />
               </InputContent>
             </Flex>
-            <Button title="수정하기" />
+            <Button title="제안하기" />
           </Flex>
         </Flex>
       </BottomModal>

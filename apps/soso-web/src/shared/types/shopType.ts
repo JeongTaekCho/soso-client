@@ -44,7 +44,10 @@ export interface ReviewType {
   id: number;
   content: string;
   createdAt: string;
-  images: string[];
+  images: {
+    id: number;
+    url: string;
+  }[];
   user: {
     uuid: string;
     photoUrl: string;

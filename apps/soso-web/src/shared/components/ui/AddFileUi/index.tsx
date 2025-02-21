@@ -7,9 +7,10 @@ interface AddFileUiProps {
   previewArr: string[];
   removeFile: (index: number) => void;
   addFiles: (newFiles: File[]) => void;
+  maxLength?: number;
 }
 
-export default function AddFileUi({ previewArr, addFiles, removeFile }: AddFileUiProps) {
+export default function AddFileUi({ previewArr, addFiles, removeFile, maxLength = 3 }: AddFileUiProps) {
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
@@ -31,7 +32,7 @@ export default function AddFileUi({ previewArr, addFiles, removeFile }: AddFileU
           </div>
         ))}
       </Flex>
-      <AddButton onChange={handleChangeFile} />
+      {previewArr.length < maxLength && <AddButton onChange={handleChangeFile} />}
     </Flex>
   );
 }
