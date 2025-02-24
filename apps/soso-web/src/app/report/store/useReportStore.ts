@@ -36,6 +36,12 @@ interface ReportState {
   resetReport: () => void;
 }
 
+export interface ReportRequestType {
+  shop: Shop;
+  operatingHours: OperatingHours;
+  products: Product[];
+}
+
 export const useReportStore = create<ReportState>()((set) => ({
   shop: {
     name: '',
