@@ -1,5 +1,6 @@
 'use client';
 
+import { usePostReportMutation } from '@/app/report/hooks/usePostReportMutation';
 import { useReportStore } from '@/app/report/store/useReportStore';
 import Button from '@/shared/components/button/Button';
 import TimePickerButton from '@/shared/components/button/TimePickerButton';
@@ -13,6 +14,7 @@ import NaverMap from '@/shared/components/layout/NaverMap';
 import AddProductModal from '@/shared/components/modal/AddProductModal';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import ModalPortal from '@/shared/components/modal/ModalPortal';
+import useInput from '@/shared/hooks/useInput';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
 import useProductListStore from '@/shared/store/useProductListStore';
 import { useYoilStore } from '@/shared/store/useYoilStore';
@@ -33,8 +35,13 @@ export default function ReportWrite() {
   } = useTimePicker();
   const { productList, clearProductList } = useProductListStore();
 
+  const { value: shopName, onChange: handleChangeShopName } = useInput('');
+  const { value: phoneNumber, onChange: handleChangePhoneNumber } = useInput('');
+
   const { yoil, toggleYoil } = useYoilStore();
-  const { shop } = useReportStore();
+  const { shop, setShop, operatingHours, setOperatingHours, products, setProduct } = useReportStore();
+
+  const { mutate: postReportMutate } = usePostReportMutation();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -53,6 +60,16 @@ export default function ReportWrite() {
     setIsAddProductModal((prev) => !prev);
   };
 
+  const handleSubmitReport = () => {
+    const data = {
+      shop,
+      operatingHours,
+      products,
+    };
+
+    postReportMutate(data);
+  };
+
   useEffect(() => {
     if (!shop.location) {
       router.back();
@@ -65,13 +82,49 @@ export default function ReportWrite() {
     };
   }, [pathname, clearProductList]);
 
+  const convertTimeFormat = (timeString: string): string => {
+    const [period, time] = timeString.split(' ');
+    const [hour, minute] = time.split(':').map(Number);
+
+    if (period === '오전') {
+      return time;
+    } else if (period === '오후') {
+      const convertedHour = hour === 12 ? 12 : hour + 12;
+      return `${convertedHour}:${minute.toString().padStart(2, '0')}`;
+    }
+
+    return timeString;
+  };
+
+  useEffect(() => {
+    setShop({ ...shop, name: shopName });
+    setOperatingHours({
+      ...operatingHours,
+      monday: yoil[0].checked,
+      tuesday: yoil[1].checked,
+      wednesday: yoil[2].checked,
+      thursday: yoil[3].checked,
+      friday: yoil[4].checked,
+      saturday: yoil[5].checked,
+      sunday: yoil[6].checked,
+      phoneNumber,
+      startTime: convertTimeFormat(openTime),
+      endTime: convertTimeFormat(closeTime),
+    });
+
+    const customProducts = productList.map((el) => {
+      return { id: el.id, name: el.name };
+    });
+    setProduct(customProducts);
+  }, [shopName, yoil, openTime, closeTime, phoneNumber, productList]);
+
   return (
     <form className="flex flex-col modal-page">
       <Header type="back" title="제보하기" />
       <Flex direction="col" gap={28} className="w-full overflow-y-auto px-20 pt-76">
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">상점 이름</h3>
-          <Input placeholder="상점 이름을 입력해 주세요." />
+          <Input placeholder="상점 이름을 입력해 주세요." value={shopName} onChange={handleChangeShopName} />
         </Flex>
 
         <Flex direction="col" gap={8} className="w-full">
@@ -118,7 +171,7 @@ export default function ReportWrite() {
             </Flex>
             <Flex direction="col" gap={6} className="w-full">
               <h3 className="text-gray-500 font-body1_m">전화번호</h3>
-              <Input placeholder="전화번호를 입력해 주세요." />
+              <Input placeholder="전화번호를 입력해 주세요." value={phoneNumber} onChange={handleChangePhoneNumber} />
             </Flex>
           </Flex>
         </Flex>
@@ -142,7 +195,7 @@ export default function ReportWrite() {
           </Flex>
         </Flex>
         <div className="w-full">
-          <Button height="56px" type="submit" title="등록하기" />
+          <Button height="56px" type="button" title="등록하기" onClick={handleSubmitReport} />
         </div>
       </Flex>
       <BottomModal isOpen={isDeclareModal} onClose={handleToggleTimeSettingModal}>
