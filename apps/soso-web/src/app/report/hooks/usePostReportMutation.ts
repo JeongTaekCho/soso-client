@@ -6,18 +6,20 @@ import { useRouter } from 'next/navigation';
 
 export const usePostReportMutation = () => {
   const { openToast } = useToast();
-  const router = useRouter();
   const { resetReport } = useReportStore();
+  const router = useRouter();
 
   return useMutation({
     mutationKey: ['postReport'],
     mutationFn: (data: ReportRequestType) => postReport(data),
     onSuccess: () => {
-      resetReport();
-      router.back();
       openToast({
         message: '소중한 소품샵을 등록해 주셔서 감사합니다.',
       });
+      resetReport();
+      setTimeout(() => {
+        router.push('/');
+      }, 10);
     },
   });
 };

@@ -1,5 +1,6 @@
 'use client';
 
+import { usePostShopOperatingMutation } from '@/app/shop/components/ShopOperInfo/hooks/usePostShopOperatingMutation';
 import Button from '@/shared/components/button/Button';
 import IconButton from '@/shared/components/button/IconButton';
 import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
@@ -18,9 +19,13 @@ import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
 import ContentSubTitle from '@/shared/components/text/ContentSubTitle';
 import ContentTitle from '@/shared/components/text/ContentTitle';
 import EmptyData from '@/shared/components/ui/EmptyData';
+import { useDialog } from '@/shared/context/DialogContext';
+import { useToast } from '@/shared/context/ToastContext';
+import useInput from '@/shared/hooks/useInput';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
 import { useYoilStore } from '@/shared/store/useYoilStore';
 import { OperatingHourType } from '@/shared/types/shopType';
+import { useParams } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 interface ShopOperInfoProps {
@@ -28,8 +33,9 @@ interface ShopOperInfoProps {
 }
 
 export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
-  const { yoil, setCheckYoil, addYoil, toggleAddYoil } = useYoilStore();
+  const { yoil, setCheckYoil, addYoil, toggleAddYoil, resetAddYoil } = useYoilStore();
   const [isBottomModal, setIsBottomModal] = useState(false);
+  const { id } = useParams();
 
   const {
     openTime,
@@ -39,7 +45,13 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
     handleCloseTimePicker,
     handleOpenTimePicker,
     handleTimePicker,
+    resetTimePicker,
   } = useTimePicker();
+
+  const { value: phoneNumber, onChange: handleChangePhoneNumber, setValue: setPhoneNumber } = useInput('');
+  const { openDialog } = useDialog();
+
+  const { mutate: postOperatingMutate } = usePostShopOperatingMutation();
 
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     const { id } = e.target as HTMLInputElement;
@@ -49,6 +61,48 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
 
   const handleToggleBottomModal = () => {
     setIsBottomModal((prev) => !prev);
+  };
+
+  const handleResetOperating = () => {
+    resetAddYoil();
+    setPhoneNumber('');
+    resetTimePicker();
+  };
+
+  const handleSubmitOperating = () => {
+    const data = {
+      shopId: Number(id),
+      operatingHours: {
+        phoneNumber,
+        startTime: openTime,
+        endTime: closeTime,
+        monday: addYoil[0].checked,
+        tuesday: addYoil[1].checked,
+        wednesday: addYoil[2].checked,
+        thursday: addYoil[3].checked,
+        friday: addYoil[4].checked,
+        saturday: addYoil[5].checked,
+        sunday: addYoil[6].checked,
+      },
+    };
+
+    postOperatingMutate(data, {
+      onSuccess: () => {
+        handleResetOperating();
+        handleToggleBottomModal();
+        openDialog({
+          type: 'alert',
+          title: '제안 완료',
+          message: (
+            <span>
+              소중한 유저님이 등록해주신 정보는
+              <br />
+              확인 후 업데이트 될 예정입니다.
+            </span>
+          ),
+        });
+      },
+    });
   };
 
   useEffect(() => {
@@ -165,10 +219,10 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
                 </Flex>
               </InputContent>
               <InputContent label="전화번호">
-                <Input placeholder="전화번호를 입력해 주세요." />
+                <Input placeholder="전화번호를 입력해 주세요." value={phoneNumber} onChange={handleChangePhoneNumber} />
               </InputContent>
             </Flex>
-            <Button title="제안하기" />
+            <Button title="제안하기" type="button" onClick={handleSubmitOperating} />
           </Flex>
         </Flex>
       </BottomModal>

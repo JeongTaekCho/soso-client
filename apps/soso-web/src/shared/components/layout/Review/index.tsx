@@ -1,5 +1,6 @@
 'use client';
 
+import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery';
 import Flex from '@/shared/components/layout/Flex';
 import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
 import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite';
@@ -25,6 +26,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const { id } = useParams();
 
   const { mutate: deleteReviewMutate } = useDeleteReviewMutation();
+  const { refetch: detailRefetch } = useGetShopDetailQuery(String(id));
 
   const handleToggleWriteModal = () => {
     setIsWriteModal((prev) => !prev);
@@ -35,6 +37,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
     deleteReviewMutate(String(id), {
       onSuccess: () => {
         closeDialog();
+        detailRefetch();
       },
     });
   };
