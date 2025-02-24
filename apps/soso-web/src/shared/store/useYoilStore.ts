@@ -14,6 +14,7 @@ interface YoilStore {
   addYoil: YoilType[];
   toggleAddYoil: (id: string) => void;
   setAddYoil: (updatedYoil: YoilType[]) => void;
+  resetAddYoil: () => void;
 }
 
 export const useYoilStore = create<YoilStore>((set) => ({
@@ -49,5 +50,18 @@ export const useYoilStore = create<YoilStore>((set) => ({
     set((state) => ({
       addYoil: state.addYoil.map((day) => (day.id === id ? { ...day, checked: !day.checked } : day)),
     })),
-  setAddYoil: (updatedYoil) => set(() => ({ yoil: updatedYoil })),
+  setAddYoil: (updatedYoil) => set(() => ({ addYoil: updatedYoil })),
+
+  resetAddYoil: () =>
+    set(() => ({
+      addYoil: [
+        { id: 'monday', label: '월', checked: false },
+        { id: 'tuesday', label: '화', checked: false },
+        { id: 'wednesday', label: '수', checked: false },
+        { id: 'thursday', label: '목', checked: false },
+        { id: 'friday', label: '금', checked: false },
+        { id: 'saturday', label: '토', checked: false },
+        { id: 'sunday', label: '일', checked: false },
+      ],
+    })),
 }));
