@@ -10,7 +10,7 @@ export interface ShopType {
 }
 
 export interface OperatingHourType {
-  id: number;
+  id?: number;
   phoneNumber: string;
   monday: boolean;
   tuesday: boolean;

@@ -53,17 +53,17 @@ export default function ReportPage() {
       id: REPORT_MARKER_ID,
       position: { lat: shop.lat, lng: shop.lng },
     });
-  }, [shop.lat, shop.lng, map]);
+  }, [shop, map]);
 
   return (
     <div>
       <Header title="제보하기" />
       <Flex direction="col" gap={60} className="w-full py-20">
         <Flex direction="col" gap={20} className="w-full">
-          <Flex direction="col" gap={12} className="w-full px-20">
+          <Flex direction="col" gap={12} className="w-full px-16">
             <h4 className="text-gray-500 font-body1_m">소중한 소품샵을 등록해 주세요.</h4>
           </Flex>
-          <Flex direction="col" gap={12} className="w-full px-20">
+          <Flex direction="col" gap={12} className="w-full px-16">
             <div className="h-[185px] w-full overflow-hidden rounded-16">
               <NaverMap width="100%" height="100%" isCurrent />
             </div>
@@ -78,7 +78,7 @@ export default function ReportPage() {
             </Flex>
           </Flex>
         </Flex>
-        <Flex direction="col" gap={12} className="w-full px-20">
+        <Flex direction="col" gap={12} className="w-full px-16">
           <h4 className="text-black font-title4_semi">이 위치가 맞나요?</h4>
           <Flex direction="col" gap={12} className="w-full">
             <Flex

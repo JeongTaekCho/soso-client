@@ -1,0 +1,50 @@
+'use client';
+
+import { createContext, useContext, useState, ReactNode } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface ToastOptions {
+  message: string;
+  duration?: number;
+}
+
+interface ToastContextType {
+  openToast: (options: ToastOptions) => void;
+}
+
+const ToastContext = createContext<ToastContextType | null>(null);
+
+export const ToastProvider = ({ children }: { children: ReactNode }) => {
+  const [toast, setToast] = useState<ToastOptions | null>(null);
+
+  const openToast = (options: ToastOptions) => {
+    setToast(options);
+    setTimeout(() => setToast(null), options.duration || 3000);
+  };
+
+  return (
+    <ToastContext.Provider value={{ openToast }}>
+      {children}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            className="fixed bottom-72 left-1/2 z-modal w-full max-w-screen px-16"
+            initial={{ opacity: 0, y: 30, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 20, x: '-50%' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <div className="w-full rounded-12 bg-gray-800 px-16 py-14 text-white font-body2_m">{toast.message}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </ToastContext.Provider>
+  );
+};
+
+// Toast 컨텍스트 사용을 위한 커스텀 훅
+export const useToast = () => {
+  const context = useContext(ToastContext);
+  if (!context) throw new Error('useToast must be used within a ToastProvider');
+  return context;
+};

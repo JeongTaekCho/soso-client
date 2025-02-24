@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface Shop {
   name: string;
@@ -34,6 +33,12 @@ interface ReportState {
   setOperatingHours: (operatingHours: OperatingHours) => void;
   setProduct: (products: Product[]) => void;
   resetReport: () => void;
+}
+
+export interface ReportRequestType {
+  shop: Shop;
+  operatingHours: OperatingHours;
+  products: Product[];
 }
 
 export const useReportStore = create<ReportState>()((set) => ({

@@ -1,14 +1,17 @@
 'use client';
 
+import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery';
 import Flex from '@/shared/components/layout/Flex';
 import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
 import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite';
+import { useDeleteReviewMutation } from '@/shared/components/layout/Review/hooks/useDeleteReviewMutation';
 import ProfileImage from '@/shared/components/ui/ProfileImage';
 import { useDialog } from '@/shared/context/DialogContext';
 import { ReviewType } from '@/shared/types/shopType';
 import { formatStringDate } from '@/shared/utils/formatStringDate';
 import { getSafeImageUrl } from '@/shared/utils/getSafeImageUrl';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 interface ReviewProps {
@@ -20,13 +23,23 @@ interface ReviewProps {
 export default function Review({ isMe, isWrite = false, isBorder = true, data }: ReviewProps) {
   const [isWriteModal, setIsWriteModal] = useState(false);
   const { openDialog, closeDialog } = useDialog();
+  const { id } = useParams();
+
+  const { mutate: deleteReviewMutate } = useDeleteReviewMutation();
+  const { refetch: detailRefetch } = useGetShopDetailQuery(String(id));
 
   const handleToggleWriteModal = () => {
     setIsWriteModal((prev) => !prev);
   };
 
   const handleReviewDelete = () => {
-    closeDialog();
+    if (!id) return;
+    deleteReviewMutate(String(id), {
+      onSuccess: () => {
+        closeDialog();
+        detailRefetch();
+      },
+    });
   };
 
   const handleOpenDeleteModal = () => {

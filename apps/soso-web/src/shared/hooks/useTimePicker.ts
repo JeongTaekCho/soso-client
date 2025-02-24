@@ -1,8 +1,11 @@
 import { useState } from 'react';
 
 export const useTimePicker = () => {
-  const [openTime, setOpenTime] = useState('오전 10:00');
-  const [closeTime, setCloseTime] = useState('오후 07:00');
+  const INITIAL_OPEN_TIME = '오전 10:00';
+  const INITIAL_CLOSE_TIME = '오후 07:00';
+
+  const [openTime, setOpenTime] = useState(INITIAL_OPEN_TIME);
+  const [closeTime, setCloseTime] = useState(INITIAL_CLOSE_TIME);
   const [isTimePicker, setIsTimePicker] = useState(false);
   const [timePickerType, setTimePickerType] = useState<'open' | 'close'>('open');
 
@@ -19,8 +22,16 @@ export const useTimePicker = () => {
     setTimePickerType(type);
     setIsTimePicker(true);
   };
+
   const handleCloseTimePicker = () => {
     setIsTimePicker(false);
+  };
+
+  const resetTimePicker = () => {
+    setOpenTime(INITIAL_OPEN_TIME);
+    setCloseTime(INITIAL_CLOSE_TIME);
+    setIsTimePicker(false);
+    setTimePickerType('open');
   };
 
   return {
@@ -31,5 +42,6 @@ export const useTimePicker = () => {
     handleOpenTimePicker,
     handleCloseTimePicker,
     handleTimePicker,
+    resetTimePicker,
   };
 };
