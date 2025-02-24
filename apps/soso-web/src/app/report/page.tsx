@@ -30,7 +30,6 @@ export default function ReportPage() {
     const currentAddMarker = async () => {
       const currentLocation = await getCurrentLocation();
       if ((!shop.lat || !shop.lng) && currentLocation !== 'denied') {
-        console.log(currentLocation.lat);
         setCenter(currentLocation.lat, currentLocation.lng);
       }
 
