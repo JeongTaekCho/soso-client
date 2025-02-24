@@ -24,6 +24,10 @@ import { ChangeEvent, useEffect, useState } from 'react';
 export default function ReportWrite() {
   const [isDeclareModal, setIsDeclareModal] = useState(false);
   const [isAddProductModal, setIsAddProductModal] = useState(false);
+
+  const { value: shopName, onChange: handleChangeShopName } = useInput('');
+  const { value: phoneNumber, onChange: handleChangePhoneNumber } = useInput('');
+
   const {
     openTime,
     closeTime,
@@ -34,10 +38,6 @@ export default function ReportWrite() {
     handleTimePicker,
   } = useTimePicker();
   const { productList, clearProductList } = useProductListStore();
-
-  const { value: shopName, onChange: handleChangeShopName } = useInput('');
-  const { value: phoneNumber, onChange: handleChangePhoneNumber } = useInput('');
-
   const { yoil, toggleYoil } = useYoilStore();
   const { shop, setShop, operatingHours, setOperatingHours, products, setProduct } = useReportStore();
 
@@ -121,7 +121,7 @@ export default function ReportWrite() {
   return (
     <form className="flex flex-col modal-page">
       <Header type="back" title="제보하기" />
-      <Flex direction="col" gap={28} className="w-full overflow-y-auto px-20 pt-76">
+      <Flex direction="col" gap={28} className="w-full overflow-y-auto px-16 pt-76">
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">상점 이름</h3>
           <Input placeholder="상점 이름을 입력해 주세요." value={shopName} onChange={handleChangeShopName} />
