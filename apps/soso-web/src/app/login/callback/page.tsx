@@ -5,9 +5,11 @@ import { useSearchParams } from 'next/navigation';
 import { useGetTokenMutation } from '@/app/login/callback/hooks/useGetTokenMutation';
 
 const AuthCallback = () => {
-  <Suspense fallback={'로딩중'}>
-    <AuthCallbackContent />
-  </Suspense>;
+  return (
+    <Suspense fallback={'로딩중'}>
+      <AuthCallbackContent />
+    </Suspense>
+  );
 };
 
 const AuthCallbackContent = () => {
