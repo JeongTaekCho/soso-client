@@ -1,13 +1,20 @@
 import { getToken } from '@/app/login/callback/api/getToken';
-import { GetTokenRequest } from '@/app/login/callback/types';
+import { GetTokenRequestType } from '@/app/login/callback/types';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 export const useGetTokenMutation = () => {
+  const router = useRouter();
+  const { setToken, setRefreshToken } = useAuthStore();
+
   return useMutation({
     mutationKey: ['getToken'],
-    mutationFn: (data: GetTokenRequest) => getToken(data),
+    mutationFn: (data: GetTokenRequestType) => getToken(data),
     onSuccess: (data) => {
-      console.log(data);
+      setToken(data.accessToken);
+      setRefreshToken(data.refreshToken);
+      router.push('/');
     },
   });
 };

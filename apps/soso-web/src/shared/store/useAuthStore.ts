@@ -3,8 +3,10 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface AuthState {
   token: string | null;
+  refreshToken: string | null;
   isHydrated: boolean;
   setToken: (token: string) => void;
+  setRefreshToken: (refreshToken: string) => void;
   clearToken: () => void;
 }
 
@@ -12,8 +14,10 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       token: '',
+      refreshToken: '',
       isHydrated: false,
       setToken: (token) => set({ token }),
+      setRefreshToken: (refreshToken) => set({ refreshToken }),
       clearToken: () => set({ token: null }),
     }),
     {
