@@ -7,6 +7,7 @@ export interface ShopType {
   location: string;
   operatingHours: OperatingHourType[];
   products: ProductType[];
+  image: string | null;
 }
 
 export interface OperatingHourType {

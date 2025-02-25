@@ -4,17 +4,24 @@ import GoogleIcon from '@/shared/components/icons/GoogleIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
+  const [redirectUri, setRedirectUri] = useState('');
+
   const router = useRouter();
 
   const handleGuestLogin = () => {
     router.push('/');
   };
 
-  const redirectUri = `${window.location.origin}/login/callback`;
+  useEffect(() => {
+    setRedirectUri(`${window.location.origin}/login/callback`);
+  }, []);
 
   const googleLogin = () => {
+    if (!redirectUri) return;
+
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
     const scope = encodeURIComponent('openid profile email');
 

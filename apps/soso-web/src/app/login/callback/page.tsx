@@ -1,19 +1,32 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useGetTokenMutation } from '@/app/login/callback/hooks/useGetTokenMutation';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useGetTokenMutation } from '@/app/login/callback/hooks/useGetTokenMutation';
 
 const AuthCallback = () => {
+  <Suspense fallback={'로딩중'}>
+    <AuthCallbackContent />
+  </Suspense>;
+};
+
+const AuthCallbackContent = () => {
   const searchParams = useSearchParams();
-  const code = searchParams.get('code');
+  const [code, setCode] = useState<string | null>(null);
+  const [redirectUri, setRedirectUri] = useState('');
 
   const { mutate: getTokenMutate } = useGetTokenMutation();
-  const [redirectUri, setRedirectUri] = useState('');
 
   useEffect(() => {
     setRedirectUri(`${window.location.origin}/login/callback`);
   }, []);
+
+  useEffect(() => {
+    const authCode = searchParams.get('code');
+    if (authCode) {
+      setCode(authCode);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (!code || !redirectUri) return;
@@ -26,7 +39,7 @@ const AuthCallback = () => {
     getTokenMutate(data);
   }, [code, redirectUri]);
 
-  return <div>로딩중 들어갈 예정...</div>;
+  return <div>로딩중...</div>;
 };
 
 export default AuthCallback;
