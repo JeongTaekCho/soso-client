@@ -13,7 +13,7 @@ export class CustomError extends Error {
   }
 }
 
-export const customFetch = async (url: string, options: CustomFetchOptions = {}): Promise<any> => {
+export const customFetch = async (endPoint: string, options: CustomFetchOptions = {}): Promise<any> => {
   const isFormData = options.body instanceof FormData;
 
   const defaultHeaders: HeadersInit = {
@@ -31,7 +31,7 @@ export const customFetch = async (url: string, options: CustomFetchOptions = {})
   };
 
   try {
-    const response = await fetch(url, finalOptions);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`, finalOptions);
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);

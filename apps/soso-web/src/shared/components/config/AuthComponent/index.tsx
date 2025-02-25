@@ -7,17 +7,14 @@ import { useEffect } from 'react';
 export default function AuthComponent() {
   const router = useRouter();
 
-  const { isHydrated, userType } = useAuthStore();
+  const { isHydrated, token } = useAuthStore();
 
-  // useEffect(() => {
-  //   if (!isHydrated) return;
-
-  //   if (userType === 'login' || userType === 'guest') {
-  //     return;
-  //   }
-
-  //   router.push('/login');
-  // }, [userType, isHydrated]);
+  useEffect(() => {
+    if (!isHydrated || !token) return;
+    if (token) {
+      router.push('/');
+    }
+  }, [token, isHydrated]);
 
   return null;
 }

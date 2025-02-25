@@ -2,7 +2,7 @@ import { ShopOperatingRequestType } from '@/app/shop/components/ShopOperInfo/typ
 import { customFetch } from '@/shared/utils/customFetch';
 
 export const postShopOperating = async (data: ShopOperatingRequestType) => {
-  const result = customFetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/submit/operating`, {
+  const result = customFetch(`/submit/operating`, {
     method: 'POST',
     body: data,
   });
