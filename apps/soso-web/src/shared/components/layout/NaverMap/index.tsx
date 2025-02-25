@@ -1,9 +1,10 @@
 'use client';
 
+import Loading from '@/shared/components/loading/Loading';
 import useLocationHandler from '@/shared/hooks/useLocationHandler';
 import useMapStore from '@/shared/store/useMapStore';
 import Script from 'next/script';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface NaverMapProps {
   width?: string;
@@ -21,10 +22,12 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
   if (isCurrent) {
     useLocationHandler();
   }
+
   const mapRef = useRef<HTMLDivElement>(null);
   const { setMap, center, minZoom, zoom, map, markers } = useMapStore();
 
-  // 초기화 함수 (한 번만 실행)
+  const [loading, setLoading] = useState(true);
+
   const initMap = () => {
     if (!window.naver || !mapRef.current) return;
 
@@ -34,9 +37,10 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
     }) as CustomMap;
 
     newMap.setOptions('minZoom', minZoom);
-
     newMap.customMarkers = [];
     setMap(newMap);
+
+    setLoading(false);
   };
 
   // 마커 업데이트
@@ -92,13 +96,11 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
 
   useEffect(() => {
     if (!map) return;
-
     map.panTo(new naver.maps.LatLng(center.lat, center.lng)); // 지도 중심 이동
   }, [map, center]);
 
   useEffect(() => {
     if (!map) return;
-
     map.setZoom(zoom);
   }, [zoom]);
 
@@ -115,6 +117,9 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
         type="text/javascript"
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&submodules=geocoder`}
       />
+
+      {loading && <Loading />}
+
       <div ref={mapRef} id="map" style={mapStyle} />
     </>
   );

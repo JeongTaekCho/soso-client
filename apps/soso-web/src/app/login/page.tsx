@@ -2,6 +2,7 @@
 
 import GoogleIcon from '@/shared/components/icons/GoogleIcon';
 import Flex from '@/shared/components/layout/Flex';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [redirectUri, setRedirectUri] = useState('');
 
   const router = useRouter();
+  const { isHydrated, token } = useAuthStore();
 
   const handleGuestLogin = () => {
     router.push('/');
@@ -28,6 +30,13 @@ export default function LoginPage() {
     const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
     window.location.href = authUrl;
   };
+
+  useEffect(() => {
+    if (!isHydrated || !token) return;
+    if (token) {
+      router.push('/');
+    }
+  }, [token, isHydrated]);
 
   return (
     <Flex justify="center" align="center" className="h-screenVh w-full">
