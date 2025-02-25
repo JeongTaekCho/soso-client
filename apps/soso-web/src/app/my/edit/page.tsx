@@ -54,8 +54,6 @@ export default function ProfileEditPage() {
       };
     }
 
-    console.log(request);
-
     patchUserMutate(request);
   };
 

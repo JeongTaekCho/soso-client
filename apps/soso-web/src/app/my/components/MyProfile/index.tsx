@@ -8,8 +8,6 @@ import Link from 'next/link';
 export default function MyProfile() {
   const { data: userData } = useGetUserProfileQuery();
 
-  console.log(userData);
-
   return (
     <Flex direction="col" gap={20} className="w-full pb-16 pt-20">
       <Flex justify="between" align="center" className="w-full">
