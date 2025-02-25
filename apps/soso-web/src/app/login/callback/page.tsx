@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useGetTokenMutation } from '@/app/login/callback/hooks/useGetTokenMutation';
+import Loading from '@/shared/components/loading/Loading';
 
 const AuthCallback = () => {
   return (
@@ -41,7 +42,7 @@ const AuthCallbackContent = () => {
     getTokenMutate(data);
   }, [code, redirectUri]);
 
-  return <div>로딩중...</div>;
+  return <Loading text="로그인 중입니다." />;
 };
 
 export default AuthCallback;
