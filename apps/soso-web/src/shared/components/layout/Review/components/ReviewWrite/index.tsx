@@ -11,6 +11,7 @@ import { ReviewRequestType } from '@/shared/components/layout/Review/components/
 import BottomModal from '@/shared/components/modal/BottomModal';
 import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
 import AddFileUi from '@/shared/components/ui/AddFileUi';
+import { useToast } from '@/shared/context/ToastContext';
 import { useFileUpload } from '@/shared/hooks/useFileUpload';
 import { useParams } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -26,6 +27,7 @@ export default function ReviewWrite({ isOpen, onClose }: ReviewWriteProps) {
 
   const { files, previews, addFiles, removeFile } = useFileUpload(3);
   const { id } = useParams();
+  const { openToast } = useToast();
 
   const { mutate: postReviewMutate } = usePostReviewMutation();
   const { refetch: detailRefetch } = useGetShopDetailQuery(String(id));
@@ -52,6 +54,9 @@ export default function ReviewWrite({ isOpen, onClose }: ReviewWriteProps) {
       onSuccess: () => {
         detailRefetch();
         onClose();
+        openToast({
+          message: '리뷰가 등록되었습니다.',
+        });
       },
     });
   };

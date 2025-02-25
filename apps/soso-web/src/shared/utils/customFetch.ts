@@ -13,11 +13,25 @@ export class CustomError extends Error {
   }
 }
 
-export const customFetch = async (url: string, options: CustomFetchOptions = {}): Promise<any> => {
+export const customFetch = async (endPoint: string, options: CustomFetchOptions = {}): Promise<any> => {
+  let token: string | null = null;
+  if (typeof window !== 'undefined') {
+    const authStorage = localStorage.getItem('auth-storage');
+    if (authStorage) {
+      try {
+        const parsedAuth = JSON.parse(authStorage);
+        token = parsedAuth?.state?.token || null;
+      } catch (error) {
+        console.error('토큰 파싱 오류:', error);
+      }
+    }
+  }
+
   const isFormData = options.body instanceof FormData;
 
   const defaultHeaders: HeadersInit = {
     ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
   const finalOptions: RequestInit = {
@@ -27,11 +41,10 @@ export const customFetch = async (url: string, options: CustomFetchOptions = {})
       ...options.headers,
     },
     body: isFormData ? options.body : JSON.stringify(options.body),
-    credentials: 'include',
   };
 
   try {
-    const response = await fetch(url, finalOptions);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`, finalOptions);
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);

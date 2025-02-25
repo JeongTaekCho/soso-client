@@ -25,8 +25,6 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
 
   const { mutate: addShopProductMutate } = useAddShopProductMutation();
 
-  console.log(selectedProducts);
-
   const handleToggleBottomModal = () => {
     setIsBottomModal((prev) => !prev);
   };

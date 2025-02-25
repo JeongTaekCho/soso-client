@@ -1,12 +1,15 @@
 'use client';
 
+import { usePatchUserProfileMutation } from '@/app/my/edit/hooks/usePatchUserProfileMutation';
+import { PatchUserRequestType } from '@/app/my/edit/types';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/inputs/Input';
 import ProfileUpload from '@/shared/components/inputs/ProfileUpload';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import ValidationText from '@/shared/components/text/ValidationText';
-import { useRouter } from 'next/navigation';
+import { useSingleFileUpload } from '@/shared/hooks/useFileUpload';
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
@@ -15,14 +18,15 @@ export default function ProfileEditPage() {
     lengthError: true,
     patternError: true,
   });
+  const { preview, file, setSingleFile } = useSingleFileUpload();
+  const { data: userData } = useGetUserProfileQuery();
+  const { mutate: patchUserMutate } = usePatchUserProfileMutation();
 
-  const router = useRouter();
-
-  const { register, handleSubmit, watch } = useForm({
+  const { register, handleSubmit, watch, setValue } = useForm({
     mode: 'onChange',
   });
 
-  const nickname = watch('nickname');
+  const nickname = watch('nickName');
 
   useEffect(() => {
     const lengthError = nickname?.length < 2 || nickname?.length > 10;
@@ -36,29 +40,46 @@ export default function ProfileEditPage() {
   }, [nickname]);
 
   const handleClick: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-    // router.push('/');
+    let request: PatchUserRequestType;
+    if (userData?.nickName !== data.nickName) {
+      request = {
+        nickName: data.nickName,
+      };
+    }
+
+    if (file) {
+      request = {
+        ...request,
+        file,
+      };
+    }
+
+    patchUserMutate(request);
   };
+
+  useEffect(() => {
+    if (!userData) return;
+    setValue('nickName', userData?.nickName);
+  }, [userData]);
+
+  const isDisabled =
+    isError.lengthError || isError.patternError || !nickname || (userData?.nickName === nickname && !file);
 
   return (
     <div>
       <Header title="프로필 수정" type="back" />
       <Flex direction="col" align="center" gap={50} className="w-full px-16 py-20">
-        <ProfileUpload />
+        <ProfileUpload prevImage={userData?.photoUrl} preview={preview} setSingleFile={setSingleFile} />
         <form className="w-full" onSubmit={handleSubmit(handleClick)}>
           <Flex direction="col" gap={8} className="w-full">
-            <Input placeholder="닉네임을 입력해 주세요." {...register('nickname')} defaultValue={'기존닉네임'} />
+            <Input placeholder="닉네임을 입력해 주세요." {...register('nickName')} defaultValue={'기존닉네임'} />
             <Flex direction="col" gap={2}>
               <ValidationText text="2자 이상 10자 이하로 입력해 주세요." isError={isError.lengthError} />
               <ValidationText text="한글,영문, 숫자만 가능합니다." isError={isError.patternError} />
             </Flex>
           </Flex>
           <div className="bottom-fixed-button">
-            <Button
-              type="submit"
-              title="변경 완료"
-              disabled={isError.lengthError || isError.patternError || !nickname}
-            />
+            <Button type="submit" title="변경 완료" disabled={isDisabled} />
           </div>
         </form>
       </Flex>

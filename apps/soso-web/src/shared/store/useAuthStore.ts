@@ -3,22 +3,21 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface AuthState {
   token: string | null;
-  userType: 'new' | 'guest' | 'login';
+  refreshToken: string | null;
   isHydrated: boolean;
   setToken: (token: string) => void;
-  setUserType: (type: 'new' | 'guest' | 'login') => void;
+  setRefreshToken: (refreshToken: string) => void;
   clearToken: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      token:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMTAyNzg0OTM3Nzk2NTU2OTk2MjYyIiwiaWF0IjoxNzM5NzU4NTM3LCJleHAiOjE3Mzk3NjAzMzd9.41xe_ZbDrVGtZoc7U_uPc6bMDRYqVzzKhT_y-Ia4cY8',
-      userType: 'new',
+      token: '',
+      refreshToken: '',
       isHydrated: false,
       setToken: (token) => set({ token }),
-      setUserType: (type) => set({ userType: type }),
+      setRefreshToken: (refreshToken) => set({ refreshToken }),
       clearToken: () => set({ token: null }),
     }),
     {

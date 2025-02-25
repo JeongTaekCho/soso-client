@@ -10,6 +10,8 @@ interface DialogOptions {
   message?: string | ReactNode;
   onConfirm?: () => void;
   onCancel?: () => void;
+  leftLabel?: string;
+  rightLabel?: string;
 }
 
 interface DialogContextType {

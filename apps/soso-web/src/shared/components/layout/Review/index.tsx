@@ -7,6 +7,7 @@ import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrit
 import { useDeleteReviewMutation } from '@/shared/components/layout/Review/hooks/useDeleteReviewMutation';
 import ProfileImage from '@/shared/components/ui/ProfileImage';
 import { useDialog } from '@/shared/context/DialogContext';
+import { useToast } from '@/shared/context/ToastContext';
 import { ReviewType } from '@/shared/types/shopType';
 import { formatStringDate } from '@/shared/utils/formatStringDate';
 import { getSafeImageUrl } from '@/shared/utils/getSafeImageUrl';
@@ -23,21 +24,25 @@ interface ReviewProps {
 export default function Review({ isMe, isWrite = false, isBorder = true, data }: ReviewProps) {
   const [isWriteModal, setIsWriteModal] = useState(false);
   const { openDialog, closeDialog } = useDialog();
+  const { openToast } = useToast();
   const { id } = useParams();
 
   const { mutate: deleteReviewMutate } = useDeleteReviewMutation();
-  const { refetch: detailRefetch } = useGetShopDetailQuery(String(id));
+  const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id));
 
   const handleToggleWriteModal = () => {
     setIsWriteModal((prev) => !prev);
   };
 
   const handleReviewDelete = () => {
-    if (!id) return;
-    deleteReviewMutate(String(id), {
+    if (!detailData?.userReviews[0].id) return;
+    deleteReviewMutate(String(detailData?.userReviews[0].id), {
       onSuccess: () => {
         closeDialog();
         detailRefetch();
+        openToast({
+          message: '리뷰가 삭제 되었습니다.',
+        });
       },
     });
   };
