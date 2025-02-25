@@ -1,7 +1,7 @@
 import { customFetch } from '@/shared/utils/customFetch';
 
 export const ToggleWish = async (id: number) => {
-  const result = await customFetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/wishlist`, {
+  const result = await customFetch(`/wishlist`, {
     method: 'POST',
     body: {
       shopId: id,

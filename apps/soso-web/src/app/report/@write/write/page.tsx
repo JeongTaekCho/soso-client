@@ -195,7 +195,7 @@ export default function ReportWrite() {
           </Flex>
         </Flex>
         <div className="w-full">
-          <Button height="56px" type="button" title="등록하기" onClick={handleSubmitReport} />
+          <Button height="56px" type="button" title="등록하기" onClick={handleSubmitReport} disabled={!shopName} />
         </div>
       </Flex>
       <BottomModal isOpen={isDeclareModal} onClose={handleToggleTimeSettingModal}>

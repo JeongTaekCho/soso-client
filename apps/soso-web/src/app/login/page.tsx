@@ -2,19 +2,24 @@
 
 import GoogleIcon from '@/shared/components/icons/GoogleIcon';
 import Flex from '@/shared/components/layout/Flex';
-import { useAuthStore } from '@/shared/store/useAuthStore';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const { setUserType } = useAuthStore();
-
   const handleGuestLogin = () => {
-    setUserType('guest');
     router.push('/');
+  };
+
+  const redirectUri = `${window.location.origin}/login/callback`;
+
+  const googleLogin = () => {
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    const scope = encodeURIComponent('openid profile email');
+
+    const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
+    window.location.href = authUrl;
   };
 
   return (
@@ -33,16 +38,15 @@ export default function LoginPage() {
         justify="center"
         className="fixed bottom-100 left-1/2 w-full -translate-x-1/2 px-16"
       >
-        <Link
-          href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/test`}
-          // href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/google`}
+        <button
+          onClick={googleLogin}
           className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"
         >
           <div className="absolute left-14 top-1/2 -translate-y-1/2">
             <GoogleIcon />
           </div>
           Google로 시작하기
-        </Link>
+        </button>
         <button
           onClick={handleGuestLogin}
           className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"

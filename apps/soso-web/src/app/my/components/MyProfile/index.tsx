@@ -1,15 +1,23 @@
+'use client';
+
 import Flex from '@/shared/components/layout/Flex';
 import ProfileImage from '@/shared/components/ui/ProfileImage';
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
 import Link from 'next/link';
 
 export default function MyProfile() {
+  const { data: userData } = useGetUserProfileQuery();
+
+  console.log(userData);
+
   return (
     <Flex direction="col" gap={20} className="w-full pb-16 pt-20">
       <Flex justify="between" align="center" className="w-full">
         <Flex align="center" gap={12}>
-          <ProfileImage />
+          <ProfileImage imgUrl={userData?.photoUrl} />
           <p className="text-black font-title3_bold">
-            닉네임<span className="font-title3_m">님</span>
+            {userData?.nickName}
+            <span className="font-title3_m">님</span>
           </p>
         </Flex>
         <Link
