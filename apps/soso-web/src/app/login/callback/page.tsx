@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetTokenMutation } from '@/app/login/callback/hooks/useGetTokenMutation';
 import { useSearchParams } from 'next/navigation';
 
@@ -9,17 +9,22 @@ const AuthCallback = () => {
   const code = searchParams.get('code');
 
   const { mutate: getTokenMutate } = useGetTokenMutation();
+  const [redirectUri, setRedirectUri] = useState('');
 
   useEffect(() => {
-    if (!code) return;
+    setRedirectUri(`${window.location.origin}/login/callback`);
+  }, []);
+
+  useEffect(() => {
+    if (!code || !redirectUri) return;
 
     const data = {
       code,
-      redirectUri: `${window.location.origin}/login/callback`,
+      redirectUri,
     };
 
     getTokenMutate(data);
-  }, [code]);
+  }, [code, redirectUri]);
 
   return <div>로딩중 들어갈 예정...</div>;
 };
