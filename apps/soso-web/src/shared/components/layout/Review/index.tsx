@@ -8,6 +8,7 @@ import { useDeleteReviewMutation } from '@/shared/components/layout/Review/hooks
 import ProfileImage from '@/shared/components/ui/ProfileImage';
 import { useDialog } from '@/shared/context/DialogContext';
 import { useToast } from '@/shared/context/ToastContext';
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 import { ReviewType } from '@/shared/types/shopType';
 import { formatStringDate } from '@/shared/utils/formatStringDate';
@@ -34,6 +35,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
 
   const { mutate: deleteReviewMutate } = useDeleteReviewMutation();
   const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id));
+  const { data: userData } = useGetUserProfileQuery();
 
   const handleToggleWriteModal = () => {
     const confirm = () => {
@@ -89,7 +91,12 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
     >
       <Flex justify="between" align="center" className="w-full">
         <Flex align="center" gap={12} className="flex-1">
-          <ProfileImage imgUrl={(isMe ? '' : getSafeImageUrl(data?.user.photoUrl)) || '/images/default_profile.png'} />
+          <ProfileImage
+            imgUrl={
+              (isMe ? getSafeImageUrl(userData?.photoUrl) : getSafeImageUrl(data?.user.photoUrl)) ||
+              '/images/default_profile.png'
+            }
+          />
           <Flex direction="col" className="flex-1">
             <p className="text-gray-800 font-body2_m">{data?.user.nickName || ''}</p>
             <p className="text-gray-400 font-caption">{formatStringDate(data?.createdAt)}</p>
