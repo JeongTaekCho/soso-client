@@ -33,7 +33,6 @@ const AuthCallbackContent = () => {
 
   useEffect(() => {
     if (!code || !redirectUri) return;
-
     const data = {
       code,
       redirectUri,

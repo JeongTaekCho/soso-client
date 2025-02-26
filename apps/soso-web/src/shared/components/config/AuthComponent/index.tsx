@@ -14,8 +14,6 @@ export default function AuthComponent() {
 
   const { isHydrated, token } = useAuthStore();
 
-  console.log(userData);
-
   const confirm = () => {
     closeDialog();
     router.push('/login');
