@@ -5,8 +5,8 @@ interface AuthState {
   token: string | null;
   refreshToken: string | null;
   isHydrated: boolean;
-  setToken: (token: string) => void;
-  setRefreshToken: (refreshToken: string) => void;
+  setToken: (token: string | null) => void;
+  setRefreshToken: (refreshToken: string | null) => void;
   clearToken: () => void;
 }
 
