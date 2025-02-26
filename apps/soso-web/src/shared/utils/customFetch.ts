@@ -1,3 +1,6 @@
+import { getRefreshToken } from '@/shared/api/getRefreshToken';
+import { useAuthStore } from '@/shared/store/useAuthStore';
+
 interface CustomFetchOptions extends RequestInit {
   body?: any;
 }
@@ -14,18 +17,7 @@ export class CustomError extends Error {
 }
 
 export const customFetch = async (endPoint: string, options: CustomFetchOptions = {}): Promise<any> => {
-  let token: string | null = null;
-  if (typeof window !== 'undefined') {
-    const authStorage = localStorage.getItem('auth-storage');
-    if (authStorage) {
-      try {
-        const parsedAuth = JSON.parse(authStorage);
-        token = parsedAuth?.state?.token || null;
-      } catch (error) {
-        console.error('토큰 파싱 오류:', error);
-      }
-    }
-  }
+  const { token, setToken, refreshToken, setRefreshToken } = useAuthStore.getState();
 
   const isFormData = options.body instanceof FormData;
 
@@ -45,6 +37,15 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
 
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`, finalOptions);
+
+    if (response.status === 401) {
+      console.warn('401 에러 발생, 토큰 갱신 시도 중...');
+      const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken);
+
+      if (newToken) {
+        return customFetch(endPoint, options); // 새로운 토큰으로 다시 요청
+      }
+    }
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
