@@ -1,5 +1,9 @@
+import { getRefreshToken } from '@/shared/api/getRefreshToken';
+import { useAuthStore } from '@/shared/store/useAuthStore';
+
 interface CustomFetchOptions extends RequestInit {
   body?: any;
+  retryCount?: number; // ✅ 재시도 횟수 추가
 }
 
 export class CustomError extends Error {
@@ -14,18 +18,8 @@ export class CustomError extends Error {
 }
 
 export const customFetch = async (endPoint: string, options: CustomFetchOptions = {}): Promise<any> => {
-  let token: string | null = null;
-  if (typeof window !== 'undefined') {
-    const authStorage = localStorage.getItem('auth-storage');
-    if (authStorage) {
-      try {
-        const parsedAuth = JSON.parse(authStorage);
-        token = parsedAuth?.state?.token || null;
-      } catch (error) {
-        console.error('토큰 파싱 오류:', error);
-      }
-    }
-  }
+  const { token, setToken, refreshToken, setRefreshToken } = useAuthStore.getState();
+  const retryCount = options.retryCount ?? 0;
 
   const isFormData = options.body instanceof FormData;
 
@@ -46,6 +40,14 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`, finalOptions);
 
+    // if (response.status === 401 && refreshToken) {
+    //   const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken);
+
+    //   if (newToken) {
+    //     return customFetch(endPoint, { ...options, retryCount: retryCount + 1 });
+    //   }
+    // }
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
       throw new CustomError(errorData?.message || '서버 오류 발생', response.status, errorData);
@@ -53,7 +55,7 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
 
     return response.json();
   } catch (error) {
-    console.log('Fetch 오류:', error);
+    console.error('Fetch 오류:', error);
     throw error;
   }
 };

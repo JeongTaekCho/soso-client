@@ -1,5 +1,6 @@
 'use client';
 
+import SearchItem from '@/app/search/components/SearchList/components/SearchItem';
 import { useGetShopSearchListQuery } from '@/app/search/components/SearchList/hooks/useGetShopSearchListQuery';
 import PlaceCard from '@/shared/components/card/PlaceCard';
 import Flex from '@/shared/components/layout/Flex';
@@ -9,11 +10,53 @@ import { useSearchStore } from '@/shared/store/useSearchStore';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, FreeMode } from 'swiper/modules';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 
 interface Location {
   lat: number;
   lng: number;
 }
+
+const SEARCH_HISTORY = [
+  {
+    name: '소품샵1',
+  },
+  {
+    name: '소품샵2',
+  },
+  {
+    name: 'A LIST OF THINGS 리스트오브띵즈',
+  },
+  {
+    name: '소품샵4',
+  },
+  {
+    name: '소품샵5',
+  },
+  {
+    name: '소품샵6',
+  },
+  {
+    name: '소품샵7',
+  },
+  {
+    name: '소품샵8',
+  },
+  {
+    name: '소품샵9',
+  },
+  {
+    name: '소품샵10',
+  },
+  {
+    name: '소품샵11',
+  },
+  {
+    name: '소품샵12',
+  },
+];
 
 export default function SearchList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +67,8 @@ export default function SearchList() {
 
   const { data: shopSortData } = useGetShopQuery(currentLocation?.lat ?? null, currentLocation?.lng ?? null, true);
   const { data: shopSearchData } = useGetShopSearchListQuery(searchDebounceValue, currentPage, 10);
+
+  const { token } = useAuthStore();
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -46,6 +91,32 @@ export default function SearchList() {
 
   return (
     <Flex direction="col" gap={18} className="mt-20 w-full">
+      {!searchDebounceValue && (
+        <Flex direction="col" gap={12} className="mb-18 w-full px-20">
+          <Flex justify="between" align="center" className="w-full">
+            <h3 className="font-title3_bold">최근에 찾은 소품샵</h3>
+            {token && <button className="text-gray-400 font-caption">전체 삭제</button>}
+          </Flex>
+          {token ? (
+            <Swiper
+              modules={[Navigation, FreeMode]}
+              slidesPerView="auto"
+              spaceBetween={8}
+              freeMode={true}
+              grabCursor={true}
+              className="w-full"
+            >
+              {SEARCH_HISTORY.map((shop, index) => (
+                <SwiperSlide key={index} style={{ width: 'auto' }}>
+                  <SearchItem label={shop.name} onClose={() => {}} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <p className="text-gray-400 font-body2_m">로그인 후 가능한 서비스입니다.</p>
+          )}
+        </Flex>
+      )}
       {!searchDebounceValue && <h3 className="px-20 font-title3_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
       {!searchDebounceValue && (
         <Flex direction="col" className="w-full">

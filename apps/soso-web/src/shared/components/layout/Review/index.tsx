@@ -8,11 +8,12 @@ import { useDeleteReviewMutation } from '@/shared/components/layout/Review/hooks
 import ProfileImage from '@/shared/components/ui/ProfileImage';
 import { useDialog } from '@/shared/context/DialogContext';
 import { useToast } from '@/shared/context/ToastContext';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 import { ReviewType } from '@/shared/types/shopType';
 import { formatStringDate } from '@/shared/utils/formatStringDate';
 import { getSafeImageUrl } from '@/shared/utils/getSafeImageUrl';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface ReviewProps {
@@ -27,11 +28,30 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const { openToast } = useToast();
   const { id } = useParams();
 
+  const router = useRouter();
+
+  const { token } = useAuthStore();
+
   const { mutate: deleteReviewMutate } = useDeleteReviewMutation();
   const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id));
 
   const handleToggleWriteModal = () => {
-    setIsWriteModal((prev) => !prev);
+    const confirm = () => {
+      closeDialog();
+      router.push('/login');
+    };
+
+    if (token) {
+      setIsWriteModal((prev) => !prev);
+    } else {
+      openDialog({
+        type: 'alert',
+        title: '',
+        message: '로그인이 필요한 서비스입니다.',
+        rightLabel: '로그인/회원가입하기',
+        onConfirm: () => confirm(),
+      });
+    }
   };
 
   const handleReviewDelete = () => {

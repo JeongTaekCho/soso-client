@@ -3,4 +3,5 @@ export interface UserType {
   photoUrl: string;
   uuid: string;
   email: string;
+  isNew: boolean;
 }

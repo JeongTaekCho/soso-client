@@ -73,6 +73,7 @@ const config: Config = {
         'sns-btn': '0px 4px 8px rgba(27, 27, 27, 0.16)',
         'filter-select': '1px 2px 9px 3px rgba(0, 0, 0, 0.14)',
         button: '1px 2px 6px 3px rgba(0, 0, 0, 0.08)',
+        'place-card': '1px 2px 6px 3px rgba(0, 0, 0, 0.08)',
       },
       backdropBlur: {
         '10': '10px',
@@ -206,6 +207,12 @@ const config: Config = {
           lineHeight: '26px',
           letterSpacing: '-0.5px',
           fontWeight: '500',
+        },
+        '.font-body1_bold': {
+          fontSize: '16px',
+          lineHeight: '24px',
+          letterSpacing: '-0.3px',
+          fontWeight: '700',
         },
         '.font-body1_m': {
           fontSize: '16px',
