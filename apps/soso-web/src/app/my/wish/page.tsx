@@ -1,5 +1,6 @@
 'use client';
 
+import { useGetMyWishQuery } from '@/app/my/components/ProductLists/hooks/useGetMyWishQuery';
 import FilterSelectButton from '@/app/my/wish/components/FilterSelectButton';
 import WishProduct from '@/app/my/wish/components/WishProduct';
 import BottomArrowIcon from '@/shared/components/icons/BottomArrowIcon';
@@ -11,6 +12,8 @@ import { useRef, useState } from 'react';
 export default function MyWishPage() {
   const [area, setArea] = useState('전체 지역');
   const [isFilter, setIsFilter] = useState(false);
+
+  const { data: myWishData } = useGetMyWishQuery();
 
   const filterRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +41,7 @@ export default function MyWishPage() {
             <div ref={filterRef}>
               <Flex
                 direction="col"
-                className="shadow-filter-select absolute right-0 top-30 z-dropdown w-[126px] rounded-12 bg-white"
+                className="absolute right-0 top-30 z-dropdown w-[126px] rounded-12 bg-white shadow-filter-select"
               >
                 <FilterSelectButton label="전체 지역" active={area === '전체 지역'} onClick={handleChangeArea} />
                 <FilterSelectButton label="서울" active={area === '서울'} onClick={handleChangeArea} />
@@ -48,11 +51,7 @@ export default function MyWishPage() {
           )}
         </div>
         <Flex className="w-full" wrap gap={11}>
-          <WishProduct />
-          <WishProduct />
-          <WishProduct />
-          <WishProduct />
-          <WishProduct />
+          {myWishData?.map((wish) => <WishProduct key={wish.id} data={wish} />)}
         </Flex>
       </Flex>
     </div>

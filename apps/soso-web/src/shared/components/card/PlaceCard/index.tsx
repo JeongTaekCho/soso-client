@@ -39,7 +39,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
       <Flex className="relative h-full w-full rounded-16 bg-white px-18 py-16" align="end" justify="between">
         <Flex align="center" gap={12} className="w-full">
           <div className="relative h-64 min-w-64">
-            <Image src={data?.image || '/images/default_item.png'} style={{ objectFit: 'cover' }} fill alt="" />
+            <Image src={data?.image || '/images/default_item.svg'} style={{ objectFit: 'cover' }} fill alt="" />
           </div>
           <Flex direction="col" gap={8} className="min-w-0 flex-1">
             <h4 className="block w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap font-title4_semi">
@@ -65,7 +65,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
       <Flex className="h-full w-full rounded-16 bg-white px-18 py-16" align="center" justify="between">
         <Flex align="center" gap={12}>
           <div className="relative h-72 w-72">
-            <Image src={'/images/default_item.png'} style={{ objectFit: 'cover' }} fill alt="" />
+            <Image src={'/images/default_item.svg'} style={{ objectFit: 'cover' }} fill alt="" />
           </div>
           <Flex direction="col" gap={8}>
             <h4 className="font-title4_semi">{data.name}</h4>
