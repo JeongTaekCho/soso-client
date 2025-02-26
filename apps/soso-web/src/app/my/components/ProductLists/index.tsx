@@ -33,6 +33,17 @@ export default function ProductLists() {
       };
     }) || [];
 
+  const myShopList =
+    myShopData?.map((shop) => {
+      return {
+        id: shop.shop.id,
+        image: shop.shop.image,
+        name: shop.shop.name,
+        link: `/shop/${shop.shop.id}`,
+        type: shop.type,
+      };
+    }) || [];
+
   return (
     <Flex direction="col" gap={28} className="w-full">
       <ProductLayout data={myWishList} title="찜" placeholder="아직 찜한 소품샵이 없습니다." productLink="/my/wish" />
@@ -43,7 +54,7 @@ export default function ProductLists() {
         productLink="/my/review"
       />
       <ProductLayout
-        data={[]}
+        data={myShopList}
         title="내가 등록한 소품샵"
         placeholder="아직 등록된 소품샵이 없습니다."
         productLink="/my/shop"

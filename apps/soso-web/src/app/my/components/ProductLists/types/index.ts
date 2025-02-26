@@ -29,3 +29,14 @@ export interface MyReviewType {
 }
 
 export type GetMyReviewResponseType = MyReviewType[];
+
+export interface MyShopType {
+  uuid: string;
+  shopId: number;
+  type: number;
+  status: number;
+  rejectMessage: string | null;
+  shop: ShopType;
+}
+
+export type GetMyShopResponseType = MyShopType[];

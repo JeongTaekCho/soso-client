@@ -20,6 +20,7 @@ interface ProductLayoutProps {
   title: string;
   placeholder: string;
   productLink: string;
+  type?: number;
 }
 
 export default function ProductLayout({ data, title, placeholder, productLink }: ProductLayoutProps) {
