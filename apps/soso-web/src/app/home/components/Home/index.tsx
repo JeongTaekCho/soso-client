@@ -183,7 +183,12 @@ export default function HomePage() {
             </Swiper>
           ) : (
             <div className="px-24">
-              <Flex direction="col" gap={8} align="center" className="w-full rounded-16 bg-white px-18 py-12">
+              <Flex
+                direction="col"
+                gap={8}
+                align="center"
+                className="shadow-place-card w-full rounded-16 bg-white px-18 py-12"
+              >
                 <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
                 <Link
                   href="/report"

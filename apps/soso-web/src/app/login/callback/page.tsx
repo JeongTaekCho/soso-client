@@ -18,7 +18,7 @@ const AuthCallbackContent = () => {
   const [code, setCode] = useState<string | null>(null);
   const [redirectUri, setRedirectUri] = useState('');
 
-  const { mutate: getTokenMutate } = useGetTokenMutation();
+  const { mutate: getTokenMutate, isSuccess } = useGetTokenMutation();
 
   useEffect(() => {
     setRedirectUri(`${window.location.origin}/login/callback`);
@@ -41,7 +41,7 @@ const AuthCallbackContent = () => {
     getTokenMutate(data);
   }, [code, redirectUri]);
 
-  return <Loading text="로그인 중입니다." />;
+  return !isSuccess && <Loading text="로그인 중입니다." />;
 };
 
 export default AuthCallback;
