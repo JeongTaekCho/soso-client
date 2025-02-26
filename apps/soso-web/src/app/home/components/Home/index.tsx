@@ -14,6 +14,7 @@ import GpsButton from '@/app/home/components/Home/components/GpsButton';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { useDialog } from '@/shared/context/DialogContext';
 import { CURRENT_LOCATION_MARKER_ID } from '@/shared/constant/location';
+import Flex from '@/shared/components/layout/Flex';
 
 const NaverMap = dynamic(() => import('../../../../shared/components/layout/NaverMap'), { ssr: false });
 
@@ -163,23 +164,36 @@ export default function HomePage() {
           <GpsButton onClick={handleClickGps} />
         </div>
         <div className="w-full">
-          {' '}
-          <Swiper
-            slidesPerView={1.2}
-            spaceBetween={10}
-            loop={true}
-            centeredSlides={true}
-            onSlideChange={handleSlideChange}
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-            }}
-          >
-            {shopData?.map((shop) => (
-              <SwiperSlide key={shop.id}>
-                <PlaceCard width="100%" type="map" data={shop} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {shopData && shopData?.length > 0 ? (
+            <Swiper
+              slidesPerView={1.2}
+              spaceBetween={10}
+              loop={true}
+              centeredSlides={true}
+              onSlideChange={handleSlideChange}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+            >
+              {shopData?.map((shop) => (
+                <SwiperSlide key={shop.id}>
+                  <PlaceCard width="100%" type="map" data={shop} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <div className="px-24">
+              <Flex direction="col" gap={8} align="center" className="w-full rounded-16 bg-white px-18 py-12">
+                <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
+                <Link
+                  href="/report"
+                  className="flex w-full items-center justify-center rounded-8 bg-orange-light py-9 text-main font-body2_m"
+                >
+                  소중한 소품샵 제보하기
+                </Link>
+              </Flex>
+            </div>
+          )}
         </div>
       </div>
     </div>

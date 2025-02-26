@@ -3,6 +3,7 @@ import { useAuthStore } from '@/shared/store/useAuthStore';
 
 interface CustomFetchOptions extends RequestInit {
   body?: any;
+  retryCount?: number; // ✅ 재시도 횟수 추가
 }
 
 export class CustomError extends Error {
@@ -18,6 +19,7 @@ export class CustomError extends Error {
 
 export const customFetch = async (endPoint: string, options: CustomFetchOptions = {}): Promise<any> => {
   const { token, setToken, refreshToken, setRefreshToken } = useAuthStore.getState();
+  const retryCount = options.retryCount ?? 0;
 
   const isFormData = options.body instanceof FormData;
 
@@ -38,12 +40,15 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`, finalOptions);
 
-    if (response.status === 401) {
-      console.warn('401 에러 발생, 토큰 갱신 시도 중...');
+    if (response.status === 401 && refreshToken) {
+      if (retryCount >= 2) {
+        throw new CustomError('인증 실패: 다시 로그인하세요.', 401);
+      }
+
       const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken);
 
       if (newToken) {
-        return customFetch(endPoint, options); // 새로운 토큰으로 다시 요청
+        return customFetch(endPoint, { ...options, retryCount: retryCount + 1 });
       }
     }
 
@@ -54,7 +59,7 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
 
     return response.json();
   } catch (error) {
-    console.log('Fetch 오류:', error);
+    console.error('Fetch 오류:', error);
     throw error;
   }
 };

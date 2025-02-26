@@ -207,6 +207,12 @@ const config: Config = {
           letterSpacing: '-0.5px',
           fontWeight: '500',
         },
+        '.font-body1_bold': {
+          fontSize: '16px',
+          lineHeight: '24px',
+          letterSpacing: '-0.3px',
+          fontWeight: '700',
+        },
         '.font-body1_m': {
           fontSize: '16px',
           lineHeight: '24px',
