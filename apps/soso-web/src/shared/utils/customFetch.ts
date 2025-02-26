@@ -40,17 +40,13 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`, finalOptions);
 
-    if (response.status === 401 && refreshToken) {
-      if (retryCount >= 2) {
-        throw new CustomError('인증 실패: 다시 로그인하세요.', 401);
-      }
+    // if (response.status === 401 && refreshToken) {
+    //   const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken);
 
-      const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken);
-
-      if (newToken) {
-        return customFetch(endPoint, { ...options, retryCount: retryCount + 1 });
-      }
-    }
+    //   if (newToken) {
+    //     return customFetch(endPoint, { ...options, retryCount: retryCount + 1 });
+    //   }
+    // }
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
