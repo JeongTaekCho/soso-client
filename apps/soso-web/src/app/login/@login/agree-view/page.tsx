@@ -34,7 +34,7 @@ export default function AgreeView() {
 
   return (
     <div className="modal-page">
-      <Header type="back" />
+      <Header />
       <Flex direction="col" gap={38} className="px-20 pt-56">
         <h2 className="text-[#191919] font-title2_bold">
           소소 서비스 이용약관에

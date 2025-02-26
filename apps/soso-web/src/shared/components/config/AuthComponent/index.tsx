@@ -1,6 +1,7 @@
 'use client';
 
 import { useDialog } from '@/shared/context/DialogContext';
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -9,8 +10,11 @@ export default function AuthComponent() {
   const router = useRouter();
   const pathname = usePathname();
   const { openDialog, closeDialog } = useDialog();
+  const { data: userData } = useGetUserProfileQuery();
 
   const { isHydrated, token } = useAuthStore();
+
+  console.log(userData);
 
   const confirm = () => {
     closeDialog();
@@ -29,6 +33,14 @@ export default function AuthComponent() {
       });
     }
   }, [token, isHydrated, pathname]);
+
+  useEffect(() => {
+    if (!userData) return;
+
+    if (userData.isNew) {
+      router.push('/login/agree-view');
+    }
+  }, [userData]);
 
   return null;
 }

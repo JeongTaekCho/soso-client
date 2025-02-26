@@ -8,6 +8,9 @@ import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import ValidationText from '@/shared/components/text/ValidationText';
 import { useRouter } from 'next/navigation';
+import { useGetDuplicateNicknameQuery } from '@/shared/hooks/useGetDuplicateNicknameQuery';
+import useDebounce from '@/shared/hooks/useDebounce';
+import { usePostSaveNicknameMutation } from '@/app/login/@login/setting/hooks/usePostSaveNicknameMutation';
 
 export default function InfoSetting() {
   const [isError, setIsError] = useState({
@@ -21,7 +24,11 @@ export default function InfoSetting() {
     mode: 'onChange',
   });
 
-  const nickname = watch('nickname');
+  const nickname = watch('nickName');
+  const debounceNickname = useDebounce(nickname, 200);
+
+  const { data: isDuplicateNickname, isLoading } = useGetDuplicateNicknameQuery(debounceNickname);
+  const { mutate: saveNicknameMutate } = usePostSaveNicknameMutation();
 
   useEffect(() => {
     const lengthError = nickname?.length < 2 || nickname?.length > 10;
@@ -34,9 +41,10 @@ export default function InfoSetting() {
     }));
   }, [nickname]);
 
+  const isDisabled = isError.lengthError || isError.patternError || !nickname || isDuplicateNickname || isLoading;
+
   const handleClick: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-    router.push('/');
+    saveNicknameMutate(data);
   };
 
   return (
@@ -50,14 +58,15 @@ export default function InfoSetting() {
         </h2>
         <form className="w-full" onSubmit={handleSubmit(handleClick)}>
           <Flex direction="col" gap={8} className="w-full">
-            <Input placeholder="닉네임을 입력해 주세요." {...register('nickname')} />
+            <Input placeholder="닉네임을 입력해 주세요." {...register('nickName')} />
             <Flex direction="col" gap={2}>
               <ValidationText text="2자 이상 10자 이하로 입력해 주세요." isError={isError.lengthError} />
               <ValidationText text="한글,영문, 숫자만 가능합니다." isError={isError.patternError} />
+              <ValidationText text="중복된 닉네임입니다." isError={isDuplicateNickname} />
             </Flex>
           </Flex>
           <div className="bottom-button">
-            <Button type="submit" title="완료" disabled={isError.lengthError || isError.patternError || !nickname} />
+            <Button type="submit" title="완료" disabled={isDisabled} />
           </div>
         </form>
       </Flex>
