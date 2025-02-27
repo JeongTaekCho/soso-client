@@ -3,7 +3,6 @@ import { useAuthStore } from '@/shared/store/useAuthStore';
 
 interface CustomFetchOptions extends RequestInit {
   body?: any;
-  retryCount?: number; // ✅ 재시도 횟수 추가
 }
 
 export class CustomError extends Error {
@@ -18,8 +17,7 @@ export class CustomError extends Error {
 }
 
 export const customFetch = async (endPoint: string, options: CustomFetchOptions = {}): Promise<any> => {
-  const { token, setToken, refreshToken, setRefreshToken } = useAuthStore.getState();
-  const retryCount = options.retryCount ?? 0;
+  const { token, setToken, refreshToken, setRefreshToken, clearToken } = useAuthStore.getState();
 
   const isFormData = options.body instanceof FormData;
 
@@ -40,13 +38,16 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`, finalOptions);
 
-    // if (response.status === 401 && refreshToken) {
-    //   const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken);
+    if (response.status === 401 && refreshToken) {
+      const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken, clearToken);
 
-    //   if (newToken) {
-    //     return customFetch(endPoint, { ...options, retryCount: retryCount + 1 });
-    //   }
-    // }
+      if (newToken) {
+        return customFetch(endPoint, { ...options });
+      }
+
+      clearToken();
+      throw new CustomError('토큰 갱신 실패: 다시 로그인해주세요.', 401);
+    }
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
@@ -55,7 +56,7 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
 
     return response.json();
   } catch (error) {
-    console.error('Fetch 오류:', error);
+    console.error('🚨 Fetch 오류:', error);
     throw error;
   }
 };
