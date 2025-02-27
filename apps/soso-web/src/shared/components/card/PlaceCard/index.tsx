@@ -1,10 +1,11 @@
 import RoadFindButton from '@/shared/components/button/RoadFindButton';
 import Flex from '@/shared/components/layout/Flex';
-import { useLocationStore } from '@/shared/store/useLocationStore';
 import { ShopType } from '@/shared/types/shopType';
+import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { getDistance } from '@/shared/utils/getDistance';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface PlaceCardProps {
   width?: string;
@@ -13,7 +14,8 @@ interface PlaceCardProps {
   data: ShopType;
 }
 export default function PlaceCard({ width, height, type, data }: PlaceCardProps) {
-  const { lat, lng } = useLocationStore();
+  const [currentLat, setCurrentLat] = useState<number | null>(null);
+  const [currentLng, setCurrentLng] = useState<number | null>(null);
 
   const naverFindUrl = () => {
     if (!data) return;
@@ -26,6 +28,19 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
     return `https://map.kakao.com/link/to/${data.location},${data.lat},${data.lng}`;
     // return `nmap://route/public?slat=${currentLocation?.lat}&slng=${currentLocation?.lng}&dlat=${data?.lat}&dlng=${data?.lng}`; // 모바일
   };
+
+  useEffect(() => {
+    const setCurrentLocation = async () => {
+      const currentLocation = await getCurrentLocation();
+
+      if (currentLocation === 'denied') return;
+
+      setCurrentLat(Number(currentLocation.lat));
+      setCurrentLng(Number(currentLocation.lng));
+    };
+
+    setCurrentLocation();
+  }, []);
 
   return type === 'map' ? (
     <Link
@@ -45,7 +60,9 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
             <h4 className="block w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap font-title4_semi">
               {data.name}
             </h4>
-            <p className="text-gray-400 font-body1_m">{getDistance(Number(lat), Number(lng), data.lat, data.lng)}</p>
+            <p className="text-gray-400 font-body1_m">
+              {getDistance(Number(currentLat), Number(currentLng), data.lat, data.lng)}
+            </p>
           </Flex>
         </Flex>
         <div className="absolute bottom-16 right-18">
@@ -69,7 +86,9 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
           </div>
           <Flex direction="col" gap={8}>
             <h4 className="font-title4_semi">{data.name}</h4>
-            <p className="text-gray-400 font-body1_m">{getDistance(Number(lat), Number(lng), data.lat, data.lng)}</p>
+            <p className="text-gray-400 font-body1_m">
+              {getDistance(Number(currentLat), Number(currentLng), data.lat, data.lng)}
+            </p>
           </Flex>
         </Flex>
         <RoadFindButton naverUrl={naverFindUrl()} kakaoUrl={kakaoFindUrl()} />

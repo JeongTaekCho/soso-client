@@ -20,7 +20,7 @@ const NaverMap = dynamic(() => import('../../../../shared/components/layout/Nave
 
 export default function HomePage() {
   const { lat, lng, setLocation } = useLocationStore();
-  const { map, addMarker, setCenter, clearMarkers } = useMapStore();
+  const { map, addMarker, setCenter, clearMarkers, center } = useMapStore();
   const [isMove, setIsMove] = useState(false);
   const { openDialog } = useDialog();
 
@@ -187,7 +187,7 @@ export default function HomePage() {
                 direction="col"
                 gap={8}
                 align="center"
-                className="shadow-place-card w-full rounded-16 bg-white px-18 py-12"
+                className="w-full rounded-16 bg-white px-18 py-12 shadow-place-card"
               >
                 <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
                 <Link
