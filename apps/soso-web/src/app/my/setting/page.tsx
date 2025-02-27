@@ -1,11 +1,39 @@
+'use client';
+
 import LoginInfo from '@/app/my/setting/components/LoginInfo';
 import LinkButton from '@/shared/components/button/LinkButton';
 import Divider from '@/shared/components/divider/Divider';
 import LinkIcon from '@/shared/components/icons/LinkIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
+import { useDialog } from '@/shared/context/DialogContext';
+import { useToast } from '@/shared/context/ToastContext';
+import { useAuthStore } from '@/shared/store/useAuthStore';
+import { useRouter } from 'next/navigation';
 
 export default function SettingPage() {
+  const { clearToken } = useAuthStore();
+  const { openDialog, closeDialog } = useDialog();
+  const { openToast } = useToast();
+  const router = useRouter();
+
+  const handleOpenLogoutModal = () => {
+    openDialog({
+      type: 'confirm',
+      title: '로그아웃 하시겠습니까?',
+      onConfirm: handleLogout,
+    });
+  };
+
+  const handleLogout = () => {
+    clearToken();
+    closeDialog();
+    router.push('/login');
+    openToast({
+      message: '로그아웃되었습니다.',
+    });
+  };
+
   return (
     <div>
       <Header title="설정" type="back" />
@@ -23,7 +51,7 @@ export default function SettingPage() {
           className="cursor-default"
         />
         <Divider height="10px" />
-        <LinkButton title="로그아웃" icon={<LinkIcon />} />
+        <LinkButton onClick={handleOpenLogoutModal} title="로그아웃" icon={<LinkIcon />} />
         <LinkButton title="탈퇴하기" icon={<LinkIcon />} />
       </Flex>
     </div>
