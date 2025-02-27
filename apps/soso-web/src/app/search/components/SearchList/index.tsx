@@ -74,7 +74,7 @@ export default function SearchList() {
     const fetchLocation = async () => {
       const result = await getCurrentLocation();
       if (result === 'denied') {
-        setCurrentLocation(null); // 🔥 권한 거부 시 기본 위치 사용
+        setCurrentLocation(null);
       } else {
         setCurrentLocation(result);
       }
@@ -82,12 +82,6 @@ export default function SearchList() {
 
     fetchLocation();
   }, []);
-
-  // const { data: shopSortData } = useGetShopQuery(
-  //   37.5445867,
-  //   127.0559619,
-  //   true
-  // );
 
   return (
     <Flex direction="col" gap={18} className="mt-20 w-full">
