@@ -6,8 +6,5 @@ export const usePostShopOperatingMutation = () => {
   return useMutation({
     mutationKey: ['postShopOperating'],
     mutationFn: (data: ShopOperatingRequestType) => postShopOperating(data),
-    onSuccess: () => {
-      console.log('성공');
-    },
   });
 };

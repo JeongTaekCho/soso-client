@@ -6,13 +6,16 @@ import LinkIcon from '@/shared/components/icons/LinkIcon';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
+import FullMap from '@/shared/components/modal/FullMap';
 import { CURRENT_LOCATION_MARKER_ID, REPORT_MARKER_ID } from '@/shared/constant/location';
 import useMapStore from '@/shared/store/useMapStore';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ReportPage() {
+  const [isFullMap, setIsFullMap] = useState(false);
+
   const router = useRouter();
 
   const { shop } = useReportStore();
@@ -24,6 +27,10 @@ export default function ReportPage() {
 
   const handleAddressSearchLink = () => {
     router.push('/report/address');
+  };
+
+  const handleToggleFullMap = () => {
+    setIsFullMap((prev) => !prev);
   };
 
   useEffect(() => {
@@ -64,9 +71,14 @@ export default function ReportPage() {
             <h4 className="text-gray-500 font-body1_m">소중한 소품샵을 등록해 주세요.</h4>
           </Flex>
           <Flex direction="col" gap={12} className="w-full px-16">
-            <div className="h-[185px] w-full overflow-hidden rounded-16">
-              <NaverMap width="100%" height="100%" isCurrent />
-            </div>
+            {isFullMap ? (
+              <FullMap isOpen={isFullMap} onClose={handleToggleFullMap} />
+            ) : (
+              <div onClick={handleToggleFullMap} className="h-[185px] w-full overflow-hidden rounded-16">
+                <NaverMap width="100%" height="100%" isCurrent isDisabled />
+              </div>
+            )}
+
             <Flex justify="between" align="center" className="w-full">
               <button
                 onClick={handleAddressSearchLink}
