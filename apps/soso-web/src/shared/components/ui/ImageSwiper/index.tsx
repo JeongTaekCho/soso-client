@@ -5,10 +5,6 @@ import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Zoom } from 'swiper/modules';
 
-// Swiper 스타일 임포트
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import 'swiper/css/zoom';
 import './custom-swiper.css';
 import XIcon from '@/shared/components/icons/XIcon';
@@ -37,7 +33,6 @@ const ImageSwiper = ({ images, onClose, initialSlide = 0 }: ImageSwiperProps) =>
 
   return (
     <div className={`relative h-full w-full bg-black ${isFullScreen ? 'fixed inset-0 z-50' : ''}`}>
-      {/* 상단 헤더 */}
       <div className="absolute right-0 top-0 z-10 p-16">
         <button
           onClick={closeViewer}
@@ -47,7 +42,6 @@ const ImageSwiper = ({ images, onClose, initialSlide = 0 }: ImageSwiperProps) =>
         </button>
       </div>
 
-      {/* 스와이퍼 */}
       <Swiper
         modules={[Navigation, Pagination, Zoom]}
         slidesPerView={1}

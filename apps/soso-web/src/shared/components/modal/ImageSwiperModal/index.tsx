@@ -13,16 +13,13 @@ interface ImageSwiperModalProps {
 const ImageSwiperModal = ({ isOpen, onClose, images, initialSlide = 0 }: ImageSwiperModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
-  // 클라이언트 사이드에서만 렌더링되도록 함
   useEffect(() => {
     setIsMounted(true);
 
-    // 모달이 열릴 때 body 스크롤 방지
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     }
 
-    // 모달이 닫힐 때 body 스크롤 복원
     return () => {
       document.body.style.overflow = 'auto';
     };
