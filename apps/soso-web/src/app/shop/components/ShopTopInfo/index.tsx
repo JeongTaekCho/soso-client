@@ -25,7 +25,10 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
   const [isReportModal, setIsReportModal] = useState(false);
   const { mutate: toggleWishMutate } = useToggleWishMutation(Number(shopData?.shop.id));
 
-  const handleToggleFindModal = () => {
+  const handleOpenFindModal = () => {
+    setIsFindModal((prev) => !prev);
+  };
+  const handleCloseFindModal = () => {
     setIsFindModal((prev) => !prev);
   };
 
@@ -48,7 +51,7 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
           <span className="text-gray-500 font-body2_m">찜</span>
         </button>
         <Divider width="1px" height="56px" bgColor="#E8EBED" />
-        <button onClick={handleToggleFindModal} className="flex flex-1 flex-col items-center justify-center gap-2">
+        <button onClick={handleOpenFindModal} className="flex flex-1 flex-col items-center justify-center gap-2">
           <LoadFindIcon />
           <span className="text-gray-500 font-body2_m">길찾기</span>
         </button>
@@ -58,9 +61,9 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
           <span className="text-gray-500 font-body2_m">신고</span>
         </button>
       </Flex>
-      <BottomModal isOpen={isFindModal} onClose={handleToggleFindModal}>
+      <BottomModal isOpen={isFindModal} onClose={handleCloseFindModal}>
         <Flex direction="col" gap={18} className="relative w-full">
-          <button onClick={handleToggleFindModal} className="absolute right-16 top-14">
+          <button onClick={handleCloseFindModal} className="absolute right-16 top-14">
             <XIcon />
           </button>
           <h4 className="font-title3_bold">길찾기</h4>

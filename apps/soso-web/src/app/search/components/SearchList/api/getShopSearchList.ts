@@ -1,7 +1,11 @@
-import { ShopType } from '@/shared/types/shopType';
+import { GetSearchListResponse } from '@/app/search/components/SearchList/types';
 import { customFetch } from '@/shared/utils/customFetch';
 
-export const getShopSearchList = async (shopName: string, page: number, limit: number): Promise<ShopType[]> => {
+export const getShopSearchList = async (
+  shopName: string,
+  page: number,
+  limit: number
+): Promise<GetSearchListResponse> => {
   const result = await customFetch(`/shop/search?shopName=${shopName}&page=${page}&limit=${limit}`);
 
   return result.result;

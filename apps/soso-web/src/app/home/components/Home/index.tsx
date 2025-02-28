@@ -141,8 +141,6 @@ export default function HomePage() {
     }
   }, [prevShopId]);
 
-  console.log(prevShopId);
-
   useEffect(() => {
     if (!shopData || !map || !prevShopId) return;
 

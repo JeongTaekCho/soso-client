@@ -31,8 +31,12 @@ export default function ReportPage() {
     router.push('/report/address');
   };
 
-  const handleToggleFullMap = () => {
-    setIsFullMap((prev) => !prev);
+  const handleOpenFullMap = () => {
+    setIsFullMap(true);
+  };
+
+  const handleCloseFullMap = () => {
+    setIsFullMap(false);
   };
 
   useEffect(() => {
@@ -76,9 +80,9 @@ export default function ReportPage() {
           </Flex>
           <Flex direction="col" gap={12} className="w-full px-16">
             {isFullMap ? (
-              <FullMap isOpen={isFullMap} onClose={handleToggleFullMap} />
+              <FullMap isOpen={isFullMap} onClose={handleCloseFullMap} />
             ) : (
-              <div onClick={handleToggleFullMap} className="h-[185px] w-full overflow-hidden rounded-16">
+              <div onClick={handleOpenFullMap} className="h-[185px] w-full overflow-hidden rounded-16">
                 <NaverMap width="100%" height="100%" isCurrent isDisabled />
               </div>
             )}
