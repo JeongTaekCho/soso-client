@@ -70,7 +70,7 @@ export default function ProfileEditPage() {
     isError.patternError ||
     !nickname ||
     (userData?.nickName === nickname && !file) ||
-    isDuplicateNickname ||
+    (isDuplicateNickname && !file) ||
     isLoading;
 
   return (
