@@ -80,11 +80,15 @@ export default function ProfileEditPage() {
         <ProfileUpload prevImage={userData?.photoUrl} preview={preview} setSingleFile={setSingleFile} />
         <form className="w-full" onSubmit={handleSubmit(handleClick)}>
           <Flex direction="col" gap={8} className="w-full">
-            <Input placeholder="닉네임을 입력해 주세요." {...register('nickName')} defaultValue={'기존닉네임'} />
+            <Input placeholder="닉네임을 입력해 주세요." {...register('nickName')} defaultValue={''} />
             <Flex direction="col" gap={2}>
               <ValidationText text="2자 이상 10자 이하로 입력해 주세요." isError={isError.lengthError} />
               <ValidationText text="한글,영문, 숫자만 가능합니다." isError={isError.patternError} />
-              {isDuplicateNickname && <ValidationText text="중복된 닉네임입니다." isError={isDuplicateNickname} />}
+
+              <ValidationText
+                text="중복된 닉네임입니다."
+                isError={isDuplicateNickname && userData?.nickName !== debounceNickname}
+              />
             </Flex>
           </Flex>
           <div className="bottom-fixed-button">
