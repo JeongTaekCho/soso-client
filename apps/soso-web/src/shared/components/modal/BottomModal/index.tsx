@@ -1,5 +1,6 @@
 'use client';
 
+import { handleStopEvent } from '@/shared/utils/stopEvent';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MouseEvent, ReactNode, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
@@ -17,6 +18,11 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
     setMounted(true);
   }, []);
 
+  const handleClose = (e: MouseEvent<HTMLDivElement>) => {
+    handleStopEvent(e);
+    onClose(e);
+  };
+
   if (!mounted) return null;
 
   const modalRoot = document.getElementById('bottom-modal-root');
@@ -30,11 +36,11 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
           {/* 배경 */}
           <motion.div
             className="fixed inset-0 z-backdrop bg-black bg-opacity-50 layout-center"
-            onClick={onClose}
+            onClick={handleClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.1 }}
           />
 
           {/* 모달 */}
@@ -44,12 +50,12 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{
-              duration: 0.3,
+              duration: 0.1,
               type: 'spring',
               stiffness: 100,
               damping: 20,
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={handleStopEvent}
           >
             {children}
           </motion.div>

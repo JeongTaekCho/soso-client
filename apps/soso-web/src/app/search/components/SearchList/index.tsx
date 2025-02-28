@@ -121,16 +121,16 @@ export default function SearchList() {
           ))}
         </Flex>
       )}
-      {shopSearchData && shopSearchData?.length > 0 && (
+      {shopSearchData && shopSearchData?.data.length > 0 && (
         <Flex direction="col" className="w-full">
-          {shopSearchData?.map((shop) => (
+          {shopSearchData?.data.map((shop) => (
             <div key={shop.id} className="w-full border-b border-gray-100">
               <PlaceCard data={shop} />
             </div>
           ))}
         </Flex>
       )}
-      {shopSearchData && !shopSearchData.length && (
+      {shopSearchData && !shopSearchData.data.length && (
         <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
           <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
           <Link

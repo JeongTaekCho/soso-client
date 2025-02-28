@@ -47,7 +47,7 @@ export default function ProductLayout({ data, title, placeholder, productLink }:
           {data.map((item, index) => (
             <SwiperSlide style={{ width: '72px' }} key={index}>
               <Link href={item.link} className="flex w-full flex-col gap-6 truncate">
-                <ProductImage imgUrl={item.image || ''} size={72} />
+                <ProductImage imgUrl={item.image || '/images/default_item.svg'} size={72} />
                 <span className="block max-w-full truncate break-all px-4 text-gray-500 font-body2_m">{item.name}</span>
               </Link>
             </SwiperSlide>

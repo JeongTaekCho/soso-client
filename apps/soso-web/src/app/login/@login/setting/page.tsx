@@ -7,7 +7,6 @@ import Input from '@/shared/components/inputs/Input';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import ValidationText from '@/shared/components/text/ValidationText';
-import { useRouter } from 'next/navigation';
 import { useGetDuplicateNicknameQuery } from '@/shared/hooks/useGetDuplicateNicknameQuery';
 import useDebounce from '@/shared/hooks/useDebounce';
 import { usePostSaveNicknameMutation } from '@/app/login/@login/setting/hooks/usePostSaveNicknameMutation';
@@ -17,8 +16,6 @@ export default function InfoSetting() {
     lengthError: true,
     patternError: true,
   });
-
-  const router = useRouter();
 
   const { register, handleSubmit, watch } = useForm({
     mode: 'onChange',
@@ -62,6 +59,7 @@ export default function InfoSetting() {
             <Flex direction="col" gap={2}>
               <ValidationText text="2자 이상 10자 이하로 입력해 주세요." isError={isError.lengthError} />
               <ValidationText text="한글,영문, 숫자만 가능합니다." isError={isError.patternError} />
+              {}
               <ValidationText text="중복된 닉네임입니다." isError={isDuplicateNickname} />
             </Flex>
           </Flex>
