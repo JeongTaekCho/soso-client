@@ -1,5 +1,6 @@
 import RoadFindButton from '@/shared/components/button/RoadFindButton';
 import Flex from '@/shared/components/layout/Flex';
+import { useLocationStore } from '@/shared/store/useLocationStore';
 import { ShopType } from '@/shared/types/shopType';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { getDistance } from '@/shared/utils/getDistance';
@@ -16,6 +17,7 @@ interface PlaceCardProps {
 export default function PlaceCard({ width, height, type, data }: PlaceCardProps) {
   const [currentLat, setCurrentLat] = useState<number | null>(null);
   const [currentLng, setCurrentLng] = useState<number | null>(null);
+  const { setPrevLocation } = useLocationStore();
 
   const naverFindUrl = () => {
     if (!data) return;
@@ -42,9 +44,14 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
     setCurrentLocation();
   }, []);
 
+  const handleSavePrevLocation = (lat: number, lng: number, id: number) => {
+    setPrevLocation(lat, lng, id);
+  };
+
   return type === 'map' ? (
     <Link
       href={`/shop/${data.id}`}
+      onClick={() => handleSavePrevLocation(data.lat, data.lng, data.id)}
       style={{
         width: width || '327px',
         height: height || 'auto',
@@ -73,6 +80,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
   ) : (
     <Link
       href={`/shop/${data.id}`}
+      onClick={() => handleSavePrevLocation(data.lat, data.lng, data.id)}
       style={{
         width: width || '100%',
         height: height || 'auto',

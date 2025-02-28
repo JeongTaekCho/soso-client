@@ -2,16 +2,12 @@
 
 import SearchIcon from '@/shared/components/icons/SearchIcon';
 import Input from '@/shared/components/inputs/Input';
-import useDebounce from '@/shared/hooks/useDebounce';
 import { useSearchStore } from '@/shared/store/useSearchStore';
-import { usePathname } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef } from 'react';
 
 export default function HeaderSearch() {
   const { searchValue, setSearchValue } = useSearchStore();
-  const pathname = usePathname();
 
-  const searchDebounceValue = useDebounce(searchValue, 300);
   const inputRef = useRef<HTMLInputElement>(null); //
 
   const handleChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,12 +15,8 @@ export default function HeaderSearch() {
   };
 
   useEffect(() => {
-    setSearchValue('');
-  }, [pathname]);
-
-  useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus(); //
+      inputRef.current.focus();
     }
   }, []);
 

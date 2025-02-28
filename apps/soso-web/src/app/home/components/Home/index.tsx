@@ -15,16 +15,18 @@ import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { useDialog } from '@/shared/context/DialogContext';
 import { CURRENT_LOCATION_MARKER_ID } from '@/shared/constant/location';
 import Flex from '@/shared/components/layout/Flex';
+import { useSearchStore } from '@/shared/store/useSearchStore';
 
 const NaverMap = dynamic(() => import('../../../../shared/components/layout/NaverMap'), { ssr: false });
 
 export default function HomePage() {
-  const { lat, lng, setLocation } = useLocationStore();
-  const { map, addMarker, setCenter, clearMarkers, center } = useMapStore();
+  const { lat, lng, prevLat, prevLng, prevShopId, setPrevLocation, setLocation } = useLocationStore();
+  const { map, addMarker, setCenter, clearMarkers } = useMapStore();
+  const { setSearchValue } = useSearchStore();
   const [isMove, setIsMove] = useState(false);
   const { openDialog } = useDialog();
 
-  const { data: shopData } = useGetShopQuery(lat, lng);
+  const { data: shopData } = useGetShopQuery(prevLat || lat, prevLng || lng);
   const swiperRef = useRef<any>(null);
 
   const [selectedShopId, setSelectedShopId] = useState<number | null>(null);
@@ -35,12 +37,13 @@ export default function HomePage() {
     if (selectedShop) {
       setSelectedShopId(selectedShop.id);
       setCenter(selectedShop.lat, selectedShop.lng);
-      map?.setZoom(18);
     }
   };
 
   const handleClickResearch = () => {
     const location = map?.getCenter();
+
+    setPrevLocation(null, null, null);
 
     setLocation(Number(location?.lat()), Number(location?.lng()));
     setIsMove(false);
@@ -114,11 +117,11 @@ export default function HomePage() {
 
   useEffect(() => {
     if (shopData?.length) {
-      setCenter(shopData?.[0].lat, shopData?.[0].lng);
+      setCenter(prevLat || shopData?.[0].lat, prevLng || shopData?.[0].lng);
     } else {
       setCenter(lat, lng);
     }
-  }, [shopData, lat, lng]);
+  }, [shopData, lat, lng, prevLat, prevLng]);
 
   useEffect(() => {
     if (!map) return;
@@ -132,9 +135,38 @@ export default function HomePage() {
     naver.maps.Event.addListener(map, 'dragend', handleDrag);
   }, [map]);
 
+  useEffect(() => {
+    if (prevShopId) {
+      setSelectedShopId(prevShopId);
+    }
+  }, [prevShopId]);
+
+  console.log(prevShopId);
+
+  useEffect(() => {
+    if (!shopData || !map || !prevShopId) return;
+
+    const setupMapCenter = async () => {
+      if (prevShopId && prevLat && prevLng) {
+        setCenter(prevLat, prevLng);
+        map.setZoom(18);
+
+        if (swiperRef.current) {
+          goToSlide(prevShopId);
+        }
+      } else if (shopData.length) {
+        setCenter(prevLat || shopData[0].lat, prevLng || shopData[0].lng);
+      } else {
+        setCenter(lat, lng);
+      }
+    };
+
+    setupMapCenter();
+  }, [shopData, map, prevShopId, prevLat, prevLng]);
+
   return (
     <div className="relative">
-      <Link href="/search" className="fixed top-0 z-sticky w-full max-w-screen p-16">
+      <Link href="/search" onClick={() => setSearchValue('')} className="fixed top-0 z-sticky w-full max-w-screen p-16">
         <div className="relative h-46 w-full">
           <div className="absolute left-10 top-[52%] -translate-y-1/2">
             <SearchIcon fill="#9EA4AA" />
