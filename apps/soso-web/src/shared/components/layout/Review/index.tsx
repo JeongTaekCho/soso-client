@@ -5,6 +5,7 @@ import Flex from '@/shared/components/layout/Flex';
 import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
 import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite';
 import { useDeleteReviewMutation } from '@/shared/components/layout/Review/hooks/useDeleteReviewMutation';
+import ImageSwiperModal from '@/shared/components/modal/ImageSwiperModal';
 import ProfileImage from '@/shared/components/ui/ProfileImage';
 import { useDialog } from '@/shared/context/DialogContext';
 import { useToast } from '@/shared/context/ToastContext';
@@ -25,6 +26,8 @@ interface ReviewProps {
 }
 export default function Review({ isMe, isWrite = false, isBorder = true, data }: ReviewProps) {
   const [isWriteModal, setIsWriteModal] = useState(false);
+  const [isImageViewer, setIsImageViewer] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const { openDialog, closeDialog } = useDialog();
   const { openToast } = useToast();
   const { id } = useParams();
@@ -54,6 +57,15 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
         onConfirm: () => confirm(),
       });
     }
+  };
+
+  const handleOpenImageViewer = (index: number) => {
+    setSelectedIndex(index);
+    setIsImageViewer(true);
+  };
+
+  const handleCloseImageViewer = () => {
+    setIsImageViewer(false);
   };
 
   const handleReviewDelete = () => {
@@ -138,8 +150,12 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
             </pre>
             {data && data?.images.length > 0 && (
               <Flex align="center" gap={8}>
-                {data?.images.map((image) => (
-                  <div className="relative h-72 w-72" key={`image-${image.id}`}>
+                {data?.images.map((image, index) => (
+                  <div
+                    onClick={() => handleOpenImageViewer(index)}
+                    className="relative h-72 w-72"
+                    key={`image-${image.id}`}
+                  >
                     <Image
                       fill
                       src={getSafeImageUrl(image.url) || ''}
@@ -153,6 +169,12 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
           </Flex>
         </MessageBox>
       )}
+      <ImageSwiperModal
+        isOpen={isImageViewer}
+        onClose={handleCloseImageViewer}
+        images={data?.images.map((image) => image.url) || []}
+        initialSlide={selectedIndex}
+      />
     </Flex>
   );
 }
