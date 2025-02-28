@@ -15,12 +15,14 @@ import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { useDialog } from '@/shared/context/DialogContext';
 import { CURRENT_LOCATION_MARKER_ID } from '@/shared/constant/location';
 import Flex from '@/shared/components/layout/Flex';
+import { useSearchStore } from '@/shared/store/useSearchStore';
 
 const NaverMap = dynamic(() => import('../../../../shared/components/layout/NaverMap'), { ssr: false });
 
 export default function HomePage() {
   const { lat, lng, setLocation } = useLocationStore();
   const { map, addMarker, setCenter, clearMarkers, center } = useMapStore();
+  const { setSearchValue } = useSearchStore();
   const [isMove, setIsMove] = useState(false);
   const { openDialog } = useDialog();
 
@@ -134,7 +136,7 @@ export default function HomePage() {
 
   return (
     <div className="relative">
-      <Link href="/search" className="fixed top-0 z-sticky w-full max-w-screen p-16">
+      <Link href="/search" onClick={() => setSearchValue('')} className="fixed top-0 z-sticky w-full max-w-screen p-16">
         <div className="relative h-46 w-full">
           <div className="absolute left-10 top-[52%] -translate-y-1/2">
             <SearchIcon fill="#9EA4AA" />
