@@ -40,7 +40,7 @@ export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonPro
           <Flex direction="col" gap={12} className="w-full">
             <MapButton title="네이버 지도" onClick={() => window.open(naverUrl, '_blank')} />
             <MapButton title="카카오 지도" onClick={() => window.open(kakaoUrl, '_blank')} />
-            <MapButton title="apple 지도" />
+            {/* <MapButton title="apple 지도" /> */}
           </Flex>
         </Flex>
       </BottomModal>

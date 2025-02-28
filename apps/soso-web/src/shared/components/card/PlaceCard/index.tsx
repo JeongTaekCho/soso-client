@@ -2,6 +2,7 @@ import RoadFindButton from '@/shared/components/button/RoadFindButton';
 import Flex from '@/shared/components/layout/Flex';
 import { useLocationStore } from '@/shared/store/useLocationStore';
 import { ShopType } from '@/shared/types/shopType';
+import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { getDistance } from '@/shared/utils/getDistance';
 import Image from 'next/image';
@@ -18,18 +19,6 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
   const [currentLat, setCurrentLat] = useState<number | null>(null);
   const [currentLng, setCurrentLng] = useState<number | null>(null);
   const { setPrevLocation } = useLocationStore();
-
-  const naverFindUrl = () => {
-    if (!data) return;
-    return `https://map.naver.com/v5/search/${data.location}`;
-    // return `nmap://route/public?slat=${currentLocation?.lat}&slng=${currentLocation?.lng}&dlat=${data?.lat}&dlng=${data?.lng}`; // 모바일
-  };
-
-  const kakaoFindUrl = () => {
-    if (!data) return;
-    return `https://map.kakao.com/link/to/${data.location},${data.lat},${data.lng}`;
-    // return `nmap://route/public?slat=${currentLocation?.lat}&slng=${currentLocation?.lng}&dlat=${data?.lat}&dlng=${data?.lng}`; // 모바일
-  };
 
   useEffect(() => {
     const setCurrentLocation = async () => {
@@ -73,7 +62,10 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
           </Flex>
         </Flex>
         <div className="absolute bottom-16 right-18">
-          <RoadFindButton naverUrl={naverFindUrl()} kakaoUrl={kakaoFindUrl()} />
+          <RoadFindButton
+            naverUrl={naverFindUrl(data.name, data.lat, data.lng)}
+            kakaoUrl={kakaoFindUrl(data.name, data.lat, data.lng)}
+          />
         </div>
       </Flex>
     </Link>
@@ -99,7 +91,10 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
             </p>
           </Flex>
         </Flex>
-        <RoadFindButton naverUrl={naverFindUrl()} kakaoUrl={kakaoFindUrl()} />
+        <RoadFindButton
+          naverUrl={naverFindUrl(data.name, data.lat, data.lng)}
+          kakaoUrl={kakaoFindUrl(data.name, data.lat, data.lng)}
+        />
       </Flex>
     </Link>
   );

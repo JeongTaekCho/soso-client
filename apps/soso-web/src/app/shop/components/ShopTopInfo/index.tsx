@@ -13,6 +13,7 @@ import Flex from '@/shared/components/layout/Flex';
 import AlertModal from '@/shared/components/modal/AlertModal';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import { ShopDetailType } from '@/shared/types/shopType';
+import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop';
 import { useState } from 'react';
 
 interface ShopTopInfoProps {
@@ -58,15 +59,25 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
         </button>
       </Flex>
       <BottomModal isOpen={isFindModal} onClose={handleToggleFindModal}>
-        <Flex direction="col" gap={18} className="relative w-full px-16 pb-28 pt-18">
+        <Flex direction="col" gap={18} className="relative w-full">
           <button onClick={handleToggleFindModal} className="absolute right-16 top-14">
             <XIcon />
           </button>
           <h4 className="font-title3_bold">길찾기</h4>
           <Flex direction="col" gap={12} className="w-full">
-            <MapButton title="네이버 지도" onClick={() => window.open('', '_blank')} />
-            <MapButton title="카카오 지도" onClick={() => window.open('', '_blank')} />
-            <MapButton title="apple 지도" />
+            <MapButton
+              title="네이버 지도"
+              onClick={() =>
+                window.open(naverFindUrl(shopData?.shop.name || '', shopData?.shop.lat, shopData?.shop.lng), '_blank')
+              }
+            />
+            <MapButton
+              title="카카오 지도"
+              onClick={() =>
+                window.open(kakaoFindUrl(shopData?.shop.name || '', shopData?.shop.lat, shopData?.shop.lng), '_blank')
+              }
+            />
+            {/* <MapButton title="apple 지도" /> */}
           </Flex>
         </Flex>
       </BottomModal>
