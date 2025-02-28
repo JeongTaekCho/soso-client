@@ -84,7 +84,11 @@ export default function ProfileEditPage() {
             <Flex direction="col" gap={2}>
               <ValidationText text="2자 이상 10자 이하로 입력해 주세요." isError={isError.lengthError} />
               <ValidationText text="한글,영문, 숫자만 가능합니다." isError={isError.patternError} />
-              {isDuplicateNickname && <ValidationText text="중복된 닉네임입니다." isError={isDuplicateNickname} />}
+
+              <ValidationText
+                text="중복된 닉네임입니다."
+                isError={isDuplicateNickname && userData?.nickName !== debounceNickname}
+              />
             </Flex>
           </Flex>
           <div className="bottom-fixed-button">
