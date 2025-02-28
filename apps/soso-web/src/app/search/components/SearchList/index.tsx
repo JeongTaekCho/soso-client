@@ -88,7 +88,7 @@ export default function SearchList() {
       {!searchDebounceValue && (
         <Flex direction="col" gap={12} className="mb-18 w-full px-20">
           <Flex justify="between" align="center" className="w-full">
-            <h3 className="font-title3_bold">최근에 찾은 소품샵</h3>
+            <h3 className="font-body1_bold">최근에 찾은 소품샵</h3>
             {token && <button className="text-gray-400 font-caption">전체 삭제</button>}
           </Flex>
           {token ? (
@@ -111,7 +111,7 @@ export default function SearchList() {
           )}
         </Flex>
       )}
-      {!searchDebounceValue && <h3 className="px-20 font-title3_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
+      {!searchDebounceValue && <h3 className="px-20 font-body1_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
       {!searchDebounceValue && (
         <Flex direction="col" className="w-full">
           {shopSortData?.map((shop) => (

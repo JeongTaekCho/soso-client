@@ -11,8 +11,6 @@ export default function ProductLists() {
   const { data: myReviewData } = useGetMyReviewQuery();
   const { data: myShopData } = useGetMyShopQuery();
 
-  console.log(myShopData);
-
   const myWishList =
     myWishData?.map((wish) => {
       return {
