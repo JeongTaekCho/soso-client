@@ -14,6 +14,7 @@ import AlertModal from '@/shared/components/modal/AlertModal';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import { ShopDetailType } from '@/shared/types/shopType';
 import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop';
+import { openMapOptions } from '@/shared/utils/openNativeMap';
 import { useState } from 'react';
 
 interface ShopTopInfoProps {
@@ -48,7 +49,10 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
           <span className="text-gray-500 font-body2_m">찜</span>
         </button>
         <Divider width="1px" height="56px" bgColor="#E8EBED" />
-        <button onClick={handleToggleFindModal} className="flex flex-1 flex-col items-center justify-center gap-2">
+        <button
+          onClick={() => openMapOptions(shopData?.shop.name || '', shopData?.shop.lat, shopData?.shop.lng)}
+          className="flex flex-1 flex-col items-center justify-center gap-2"
+        >
           <LoadFindIcon />
           <span className="text-gray-500 font-body2_m">길찾기</span>
         </button>
