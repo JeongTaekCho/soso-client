@@ -7,6 +7,7 @@ import Input from '@/shared/components/inputs/Input';
 import ProfileUpload from '@/shared/components/inputs/ProfileUpload';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
+import Loading from '@/shared/components/loading/Loading';
 import ValidationText from '@/shared/components/text/ValidationText';
 import useDebounce from '@/shared/hooks/useDebounce';
 import { useSingleFileUpload } from '@/shared/hooks/useFileUpload';
@@ -22,7 +23,7 @@ export default function ProfileEditPage() {
   });
   const { preview, file, setSingleFile } = useSingleFileUpload();
   const { data: userData } = useGetUserProfileQuery();
-  const { mutate: patchUserMutate } = usePatchUserProfileMutation();
+  const { mutate: patchUserMutate, isPending } = usePatchUserProfileMutation();
   const { register, handleSubmit, watch, setValue } = useForm({
     mode: 'onChange',
   });
@@ -96,6 +97,8 @@ export default function ProfileEditPage() {
           </div>
         </form>
       </Flex>
+
+      {isPending && <Loading />}
     </div>
   );
 }

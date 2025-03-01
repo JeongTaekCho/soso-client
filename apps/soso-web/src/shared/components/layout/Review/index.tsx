@@ -5,6 +5,7 @@ import Flex from '@/shared/components/layout/Flex';
 import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
 import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite';
 import { useDeleteReviewMutation } from '@/shared/components/layout/Review/hooks/useDeleteReviewMutation';
+import Loading from '@/shared/components/loading/Loading';
 import ImageSwiperModal from '@/shared/components/modal/ImageSwiperModal';
 import ProfileImage from '@/shared/components/ui/ProfileImage';
 import { useDialog } from '@/shared/context/DialogContext';
@@ -15,7 +16,7 @@ import { ReviewType } from '@/shared/types/shopType';
 import { formatStringDate } from '@/shared/utils/formatStringDate';
 import { getSafeImageUrl } from '@/shared/utils/getSafeImageUrl';
 import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 interface ReviewProps {
@@ -34,7 +35,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
 
   const { token } = useAuthStore();
 
-  const { mutate: deleteReviewMutate } = useDeleteReviewMutation();
+  const { mutate: deleteReviewMutate, isPending } = useDeleteReviewMutation();
   const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id));
   const { data: userData } = useGetUserProfileQuery();
 
@@ -166,6 +167,8 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
         images={data?.images.map((image) => image.url) || []}
         initialSlide={selectedIndex}
       />
+
+      {isPending && <Loading />}
     </Flex>
   );
 }
