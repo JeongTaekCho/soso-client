@@ -32,8 +32,6 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const { openToast } = useToast();
   const { id } = useParams();
 
-  const router = useRouter();
-
   const { token } = useAuthStore();
 
   const { mutate: deleteReviewMutate } = useDeleteReviewMutation();
@@ -41,11 +39,6 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const { data: userData } = useGetUserProfileQuery();
 
   const handleToggleWriteModal = () => {
-    const confirm = () => {
-      closeDialog();
-      router.push('/login');
-    };
-
     if (token) {
       setIsWriteModal((prev) => !prev);
     } else {
@@ -53,8 +46,6 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
         type: 'alert',
         title: '',
         message: '로그인이 필요한 서비스입니다.',
-        rightLabel: '로그인/회원가입하기',
-        onConfirm: () => confirm(),
       });
     }
   };
