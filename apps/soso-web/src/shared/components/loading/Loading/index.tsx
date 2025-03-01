@@ -7,7 +7,7 @@ interface LoadingProps {
 
 export default function Loading({ text }: LoadingProps) {
   return (
-    <div onClick={handleStopEvent} className="fixed top-0 z-modal m-auto h-screen bg-black/5 layout-center">
+    <div onClick={handleStopEvent} className="fixed top-0 z-important m-auto h-screen bg-black/5 layout-center">
       <Flex
         direction="col"
         align="center"

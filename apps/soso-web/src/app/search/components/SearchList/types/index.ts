@@ -1,7 +1,12 @@
 import { PaginationType } from '@/shared/types/paginationType';
 import { ShopType } from '@/shared/types/shopType';
 
-export interface GetSearchListResponse {
+export interface SearchListType {
   data: ShopType[];
   pageInfo: PaginationType;
+}
+
+export interface GetSearchListResponse {
+  pageParams: number[];
+  pages: SearchListType[];
 }

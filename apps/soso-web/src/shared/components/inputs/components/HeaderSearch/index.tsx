@@ -21,7 +21,7 @@ export default function HeaderSearch() {
   }, []);
 
   return (
-    <div className="fixed top-0 h-46 w-full px-16 py-10 layout-center">
+    <div className="fixed top-0 z-sticky h-46 w-full px-16 py-10 layout-center">
       <div className="relative">
         <div className="absolute left-16 top-1/2 -translate-y-1/2">
           <SearchIcon fill="#9EA4AA" />
