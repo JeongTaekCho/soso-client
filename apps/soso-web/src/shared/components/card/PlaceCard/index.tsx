@@ -16,15 +16,17 @@ interface PlaceCardProps {
   data: ShopType;
 }
 export default function PlaceCard({ width, height, type, data }: PlaceCardProps) {
-  const [currentLat, setCurrentLat] = useState<number | null>(null);
-  const [currentLng, setCurrentLng] = useState<number | null>(null);
+  const [currentLat, setCurrentLat] = useState<number | null>(0);
+  const [currentLng, setCurrentLng] = useState<number | null>(0);
   const { setPrevLocation } = useLocationStore();
 
   useEffect(() => {
     const setCurrentLocation = async () => {
       const currentLocation = await getCurrentLocation();
 
-      if (currentLocation === 'denied') return;
+      if (currentLocation === 'denied') {
+        return;
+      }
 
       setCurrentLat(Number(currentLocation.lat));
       setCurrentLng(Number(currentLocation.lng));
@@ -57,7 +59,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
               {data.name}
             </h4>
             <p className="text-gray-400 font-body1_m">
-              {getDistance(Number(currentLat), Number(currentLng), data.lat, data.lng)}
+              {currentLat === 0 ? '-' : getDistance(Number(currentLat), Number(currentLng), data.lat, data.lng)}
             </p>
           </Flex>
         </Flex>
@@ -87,7 +89,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
           <Flex direction="col" gap={8}>
             <h4 className="font-title4_semi">{data.name}</h4>
             <p className="text-gray-400 font-body1_m">
-              {getDistance(Number(currentLat), Number(currentLng), data.lat, data.lng)}
+              {currentLat === 0 ? '-' : getDistance(Number(currentLat), Number(currentLng), data.lat, data.lng)}
             </p>
           </Flex>
         </Flex>
