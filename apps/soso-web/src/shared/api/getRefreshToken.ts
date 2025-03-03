@@ -18,15 +18,13 @@ export const getRefreshToken = async (
     });
 
     // ✅ 응답 데이터 JSON 파싱
-    const responseData = await response.json();
-
-    console.log(responseData);
+    const { result } = await response.json();
 
     // ✅ 정상적인 accessToken과 refreshToken이 반환되었을 경우
-    if (response.ok && responseData?.accessToken && responseData?.refreshToken) {
-      setToken(responseData.accessToken);
-      setRefreshToken(responseData.refreshToken);
-      return responseData.accessToken;
+    if (response.ok && result?.accessToken && result?.refreshToken) {
+      setToken(result.accessToken);
+      setRefreshToken(result.refreshToken);
+      return result.accessToken;
     }
 
     // ❌ 실패 시 토큰 삭제

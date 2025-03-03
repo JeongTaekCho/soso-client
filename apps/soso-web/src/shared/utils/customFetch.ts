@@ -39,11 +39,11 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endPoint}`, finalOptions);
 
     if (response.status === 401 && refreshToken) {
-      // const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken, clearToken);
+      const newToken = await getRefreshToken(refreshToken, setToken, setRefreshToken, clearToken);
 
-      // if (newToken) {
-      //   return customFetch(endPoint, { ...options });
-      // }
+      if (newToken) {
+        return customFetch(endPoint, { ...options });
+      }
 
       throw new CustomError('토큰 갱신 실패: 다시 로그인해주세요.', 401);
     }
