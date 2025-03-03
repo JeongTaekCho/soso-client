@@ -49,6 +49,7 @@ export default function SettingPage() {
           link="/my/setting/feedback"
           icon={<span className="text-main font-body1_m">1.1</span>}
           className="cursor-default"
+          disabled
         />
         <Divider height="10px" />
         <LinkButton onClick={handleOpenLogoutModal} title="로그아웃" icon={<LinkIcon />} />
