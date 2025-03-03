@@ -11,14 +11,14 @@ interface NaverMapProps {
   height?: string;
   markerEvent?: (marker: naver.maps.Marker, data: any) => void;
   isCurrent?: boolean;
+  isDisabled?: boolean;
 }
 
-// 사용자 정의 타입 확장
 interface CustomMap extends naver.maps.Map {
   customMarkers?: naver.maps.Marker[];
 }
 
-export default function NaverMap({ width, height, markerEvent, isCurrent }: NaverMapProps) {
+export default function NaverMap({ width, height, markerEvent, isCurrent, isDisabled }: NaverMapProps) {
   if (isCurrent) {
     useLocationHandler();
   }
@@ -31,29 +31,34 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
   const initMap = () => {
     if (!window.naver || !mapRef.current) return;
 
-    const newMap = new naver.maps.Map(mapRef.current, {
+    const mapOptions = {
       center: new naver.maps.LatLng(center.lat, center.lng),
       zoom: zoom,
-    }) as CustomMap;
+      minZoom: minZoom,
+      draggable: !isDisabled,
+      scrollWheel: !isDisabled,
+      pinchZoom: !isDisabled,
+      keyboardShortcuts: !isDisabled,
+      disableDoubleTapZoom: !!isDisabled,
+      disableDoubleClickZoom: !!isDisabled,
+      disableTwoFingerTapZoom: !!isDisabled,
+    };
 
-    newMap.setOptions('minZoom', minZoom);
+    const newMap = new naver.maps.Map(mapRef.current, mapOptions) as CustomMap;
     newMap.customMarkers = [];
     setMap(newMap);
 
     setLoading(false);
   };
 
-  // 마커 업데이트
   const updateMarkers = () => {
     if (!map) return;
 
     const customMap = map as CustomMap;
 
-    // 기존 마커 제거
     customMap.customMarkers?.forEach((marker) => marker.setMap(null));
     customMap.customMarkers = [];
 
-    // 새로운 마커 추가
     const newMarkers = markers.map((markerData) => {
       const newMarker = new naver.maps.Marker({
         position: new naver.maps.LatLng(markerData.position.lat, markerData.position.lng),
@@ -89,6 +94,18 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
   }, []);
 
   useEffect(() => {
+    if (!map) return;
+
+    map.setOptions('draggable', !isDisabled);
+    map.setOptions('scrollWheel', !isDisabled);
+    map.setOptions('pinchZoom', !isDisabled);
+    map.setOptions('keyboardShortcuts', !isDisabled);
+    map.setOptions('disableDoubleTapZoom', !!isDisabled);
+    map.setOptions('disableDoubleClickZoom', !!isDisabled);
+    map.setOptions('disableTwoFingerTapZoom', !!isDisabled);
+  }, [map, isDisabled]);
+
+  useEffect(() => {
     if (map) {
       updateMarkers();
     }
@@ -96,7 +113,7 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
 
   useEffect(() => {
     if (!map) return;
-    map.panTo(new naver.maps.LatLng(center.lat, center.lng)); // 지도 중심 이동
+    map.panTo(new naver.maps.LatLng(center.lat, center.lng));
   }, [map, center]);
 
   useEffect(() => {
@@ -111,7 +128,6 @@ export default function NaverMap({ width, height, markerEvent, isCurrent }: Nave
 
   return (
     <>
-      {/* 네이버 지도 스크립트 */}
       <Script
         strategy="lazyOnload"
         type="text/javascript"

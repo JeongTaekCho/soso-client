@@ -12,7 +12,7 @@ export default function AuthComponent() {
   const { openDialog, closeDialog } = useDialog();
   const { data: userData } = useGetUserProfileQuery();
 
-  const { isHydrated, token } = useAuthStore();
+  const { isHydrated, token, isLoggingOut } = useAuthStore();
 
   const confirm = () => {
     closeDialog();
@@ -20,7 +20,7 @@ export default function AuthComponent() {
   };
 
   useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || isLoggingOut) return;
     if (!token && (pathname.includes('/my') || pathname.includes('/report'))) {
       openDialog({
         type: 'alert',

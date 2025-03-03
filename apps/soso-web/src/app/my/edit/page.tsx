@@ -7,8 +7,11 @@ import Input from '@/shared/components/inputs/Input';
 import ProfileUpload from '@/shared/components/inputs/ProfileUpload';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
+import Loading from '@/shared/components/loading/Loading';
 import ValidationText from '@/shared/components/text/ValidationText';
+import useDebounce from '@/shared/hooks/useDebounce';
 import { useSingleFileUpload } from '@/shared/hooks/useFileUpload';
+import { useGetDuplicateNicknameQuery } from '@/shared/hooks/useGetDuplicateNicknameQuery';
 import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -20,13 +23,14 @@ export default function ProfileEditPage() {
   });
   const { preview, file, setSingleFile } = useSingleFileUpload();
   const { data: userData } = useGetUserProfileQuery();
-  const { mutate: patchUserMutate } = usePatchUserProfileMutation();
-
+  const { mutate: patchUserMutate, isPending } = usePatchUserProfileMutation();
   const { register, handleSubmit, watch, setValue } = useForm({
     mode: 'onChange',
   });
 
   const nickname = watch('nickName');
+  const debounceNickname = useDebounce(nickname, 200);
+  const { data: isDuplicateNickname, isLoading } = useGetDuplicateNicknameQuery(debounceNickname);
 
   useEffect(() => {
     const lengthError = nickname?.length < 2 || nickname?.length > 10;
@@ -63,7 +67,12 @@ export default function ProfileEditPage() {
   }, [userData]);
 
   const isDisabled =
-    isError.lengthError || isError.patternError || !nickname || (userData?.nickName === nickname && !file);
+    isError.lengthError ||
+    isError.patternError ||
+    !nickname ||
+    (userData?.nickName === nickname && !file) ||
+    (isDuplicateNickname && !file) ||
+    isLoading;
 
   return (
     <div>
@@ -72,10 +81,15 @@ export default function ProfileEditPage() {
         <ProfileUpload prevImage={userData?.photoUrl} preview={preview} setSingleFile={setSingleFile} />
         <form className="w-full" onSubmit={handleSubmit(handleClick)}>
           <Flex direction="col" gap={8} className="w-full">
-            <Input placeholder="닉네임을 입력해 주세요." {...register('nickName')} defaultValue={'기존닉네임'} />
+            <Input placeholder="닉네임을 입력해 주세요." {...register('nickName')} defaultValue={''} />
             <Flex direction="col" gap={2}>
               <ValidationText text="2자 이상 10자 이하로 입력해 주세요." isError={isError.lengthError} />
               <ValidationText text="한글,영문, 숫자만 가능합니다." isError={isError.patternError} />
+
+              <ValidationText
+                text="중복된 닉네임입니다."
+                isError={isDuplicateNickname && userData?.nickName !== debounceNickname}
+              />
             </Flex>
           </Flex>
           <div className="bottom-fixed-button">
@@ -83,6 +97,8 @@ export default function ProfileEditPage() {
           </div>
         </form>
       </Flex>
+
+      {isPending && <Loading />}
     </div>
   );
 }

@@ -9,10 +9,11 @@ import Flex from '@/shared/components/layout/Flex';
 import AddProductModal from '@/shared/components/modal/AddProductModal';
 import ContentTitle from '@/shared/components/text/ContentTitle';
 import EmptyData from '@/shared/components/ui/EmptyData';
-import { PRODUCT_LIST } from '@/shared/constant/Product';
+import { useDialog } from '@/shared/context/DialogContext';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 import useProductListStore from '@/shared/store/useProductListStore';
 import { ProductType } from '@/shared/types/shopType';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface ShopProductsProps {
@@ -20,12 +21,24 @@ interface ShopProductsProps {
 }
 export default function ShopProducts({ productData }: ShopProductsProps) {
   const [isBottomModal, setIsBottomModal] = useState(false);
-  const { selectedProducts } = useProductListStore();
+  const { selectedProducts, clearProductList } = useProductListStore();
   const { id } = useParams();
+  const { token } = useAuthStore();
+  const { openDialog } = useDialog();
 
   const { mutate: addShopProductMutate } = useAddShopProductMutation();
 
   const handleToggleBottomModal = () => {
+    if (!token) {
+      openDialog({
+        type: 'alert',
+        title: '',
+        message: '로그인이 필요한 서비스입니다.',
+      });
+
+      return;
+    }
+
     setIsBottomModal((prev) => !prev);
   };
 
@@ -37,7 +50,23 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
       }),
     };
 
-    addShopProductMutate(data);
+    addShopProductMutate(data, {
+      onSuccess: () => {
+        clearProductList();
+        setIsBottomModal(false);
+        openDialog({
+          type: 'alert',
+          title: '제안 완료',
+          message: (
+            <span>
+              소중한 유저님이 등록해주신 정보는
+              <br />
+              확인 후 업데이트 될 예정입니다.
+            </span>
+          ),
+        });
+      },
+    });
   };
 
   return (

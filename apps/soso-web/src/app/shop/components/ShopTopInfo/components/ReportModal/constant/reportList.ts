@@ -6,7 +6,7 @@ export const REPORT_LIST = [
   },
   {
     id: '2',
-    text: '위치가 잘못됐어요',
+    text: '위치가 잘못됐어요.',
     name: 'report',
   },
 ];

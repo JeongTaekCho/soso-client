@@ -6,8 +6,5 @@ export const usePostReviewMutation = () => {
   return useMutation({
     mutationKey: ['postReview'],
     mutationFn: (data: ReviewRequestType) => postReview(data),
-    onSuccess: () => {
-      console.log('성공');
-    },
   });
 };

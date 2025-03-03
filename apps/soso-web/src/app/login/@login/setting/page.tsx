@@ -7,7 +7,6 @@ import Input from '@/shared/components/inputs/Input';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import ValidationText from '@/shared/components/text/ValidationText';
-import { useRouter } from 'next/navigation';
 import { useGetDuplicateNicknameQuery } from '@/shared/hooks/useGetDuplicateNicknameQuery';
 import useDebounce from '@/shared/hooks/useDebounce';
 import { usePostSaveNicknameMutation } from '@/app/login/@login/setting/hooks/usePostSaveNicknameMutation';
@@ -17,8 +16,6 @@ export default function InfoSetting() {
     lengthError: true,
     patternError: true,
   });
-
-  const router = useRouter();
 
   const { register, handleSubmit, watch } = useForm({
     mode: 'onChange',

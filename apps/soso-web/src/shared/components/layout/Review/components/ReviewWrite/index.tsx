@@ -8,6 +8,7 @@ import Flex from '@/shared/components/layout/Flex';
 import InputContent from '@/shared/components/layout/InputContent';
 import { usePostReviewMutation } from '@/shared/components/layout/Review/components/ReviewWrite/hooks/usePostReviewMutation';
 import { ReviewRequestType } from '@/shared/components/layout/Review/components/ReviewWrite/types';
+import Loading from '@/shared/components/loading/Loading';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
 import AddFileUi from '@/shared/components/ui/AddFileUi';
@@ -29,7 +30,7 @@ export default function ReviewWrite({ isOpen, onClose }: ReviewWriteProps) {
   const { id } = useParams();
   const { openToast } = useToast();
 
-  const { mutate: postReviewMutate } = usePostReviewMutation();
+  const { mutate: postReviewMutate, isPending } = usePostReviewMutation();
   const { refetch: detailRefetch } = useGetShopDetailQuery(String(id));
 
   const handleChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -86,6 +87,8 @@ export default function ReviewWrite({ isOpen, onClose }: ReviewWriteProps) {
         </Flex>
         <Button onClick={handleSubmitReview} disabled={!content.length} title="후기 작성" />
       </Flex>
+
+      {isPending && <Loading />}
     </BottomModal>
   );
 }

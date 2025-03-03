@@ -13,6 +13,9 @@ import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
 import { useAuthStore } from '@/shared/store/useAuthStore';
+import { useInView } from 'react-intersection-observer';
+import { ShopType } from '@/shared/types/shopType';
+import Loading from '@/shared/components/loading/Loading';
 
 interface Location {
   lat: number;
@@ -59,14 +62,23 @@ const SEARCH_HISTORY = [
 ];
 
 export default function SearchList() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
 
   const { searchValue } = useSearchStore();
   const searchDebounceValue = useDebounce(searchValue, 300);
 
   const { data: shopSortData } = useGetShopQuery(currentLocation?.lat ?? null, currentLocation?.lng ?? null, true);
-  const { data: shopSearchData } = useGetShopSearchListQuery(searchDebounceValue, currentPage, 10);
+  const {
+    data: shopSearchData,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetShopSearchListQuery(searchDebounceValue);
+
+  const { ref, inView } = useInView({
+    threshold: 0.2,
+  });
 
   const { token } = useAuthStore();
 
@@ -74,7 +86,7 @@ export default function SearchList() {
     const fetchLocation = async () => {
       const result = await getCurrentLocation();
       if (result === 'denied') {
-        setCurrentLocation(null); // 🔥 권한 거부 시 기본 위치 사용
+        setCurrentLocation(null);
       } else {
         setCurrentLocation(result);
       }
@@ -83,18 +95,18 @@ export default function SearchList() {
     fetchLocation();
   }, []);
 
-  // const { data: shopSortData } = useGetShopQuery(
-  //   37.5445867,
-  //   127.0559619,
-  //   true
-  // );
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage && !isLoading) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
 
   return (
     <Flex direction="col" gap={18} className="mt-20 w-full">
       {!searchDebounceValue && (
         <Flex direction="col" gap={12} className="mb-18 w-full px-20">
           <Flex justify="between" align="center" className="w-full">
-            <h3 className="font-title3_bold">최근에 찾은 소품샵</h3>
+            <h3 className="font-body1_bold">최근에 찾은 소품샵</h3>
             {token && <button className="text-gray-400 font-caption">전체 삭제</button>}
           </Flex>
           {token ? (
@@ -117,7 +129,7 @@ export default function SearchList() {
           )}
         </Flex>
       )}
-      {!searchDebounceValue && <h3 className="px-20 font-title3_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
+      {!searchDebounceValue && <h3 className="px-20 font-body1_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
       {!searchDebounceValue && (
         <Flex direction="col" className="w-full">
           {shopSortData?.map((shop) => (
@@ -127,16 +139,22 @@ export default function SearchList() {
           ))}
         </Flex>
       )}
-      {shopSearchData && shopSearchData?.length > 0 && (
+      {shopSearchData && shopSearchData?.pages[0].data.length > 0 && (
         <Flex direction="col" className="w-full">
-          {shopSearchData?.map((shop) => (
-            <div key={shop.id} className="w-full border-b border-gray-100">
-              <PlaceCard data={shop} />
+          {shopSearchData?.pages.map((page, index) => (
+            <div className="w-full" key={`page-${index}`}>
+              {page.data.map((shop: ShopType) => (
+                <div key={shop.id} className="w-full border-b border-gray-100">
+                  <PlaceCard data={shop} />
+                </div>
+              ))}
             </div>
           ))}
+
+          {!isLoading && <div ref={ref} className="h-40" />}
         </Flex>
       )}
-      {shopSearchData && !shopSearchData.length && (
+      {shopSearchData && !shopSearchData.pages[0].data.length && (
         <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
           <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
           <Link
@@ -159,6 +177,7 @@ export default function SearchList() {
           </Link>
         </Flex>
       )}
+      {isLoading && <Loading />}
     </Flex>
   );
 }
