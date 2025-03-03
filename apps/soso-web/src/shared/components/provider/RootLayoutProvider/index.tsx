@@ -5,8 +5,9 @@ import BottomNavigation from '@/shared/components/layout/BottomNavigation';
 import TanstackQueryProvider from '@/shared/components/provider/TanstackQueryProvider';
 import { DialogProvider } from '@/shared/context/DialogContext';
 import { ToastProvider } from '@/shared/context/ToastContext';
+import useScrollToTop from '@/shared/hooks/useScrollToTop';
 import { usePathname } from 'next/navigation';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
 interface RootLayoutProviderProps {
   children: ReactNode;
@@ -30,6 +31,15 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
     };
   }, []);
 
+  // 라우팅 했을 때 스크롤 최상단
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0;
+    }
+  }, [pathname]);
+
   return (
     <div>
       <TanstackQueryProvider>
@@ -37,6 +47,7 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
           <ToastProvider>
             <AuthComponent />
             <div
+              ref={contentRef}
               className={`m-auto h-screenVh w-full max-w-screen overflow-y-auto pb-60 ${pathname === '/' ? 'pt-0' : 'pt-56'} shadow-md`}
             >
               {children}
