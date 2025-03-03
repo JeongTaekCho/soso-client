@@ -45,7 +45,6 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
         return customFetch(endPoint, { ...options });
       }
 
-      clearToken();
       throw new CustomError('토큰 갱신 실패: 다시 로그인해주세요.', 401);
     }
 
