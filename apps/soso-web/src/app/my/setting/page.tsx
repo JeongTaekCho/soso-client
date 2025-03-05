@@ -43,7 +43,7 @@ export default function SettingPage() {
         <LinkButton title="공지사항" link="/my/setting/notice" icon={<LinkIcon />} />
         <LinkButton title="피드백 및 문의" link="/my/setting/feedback" icon={<LinkIcon />} />
         <Divider height="10px" />
-        <LinkButton title="이용약관" link="/my/setting/feedback" icon={<LinkIcon />} />
+        <LinkButton title="이용약관" link="/my/setting/policy" icon={<LinkIcon />} />
         <LinkButton
           title="버전"
           link="/my/setting/feedback"
@@ -53,7 +53,7 @@ export default function SettingPage() {
         />
         <Divider height="10px" />
         <LinkButton onClick={handleOpenLogoutModal} title="로그아웃" icon={<LinkIcon />} />
-        <LinkButton title="탈퇴하기" icon={<LinkIcon />} />
+        <LinkButton link="/my/setting/unsubscribe" title="탈퇴하기" icon={<LinkIcon />} />
       </Flex>
     </div>
   );
