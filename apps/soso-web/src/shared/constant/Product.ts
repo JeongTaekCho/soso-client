@@ -61,7 +61,7 @@ export const PRODUCT_LIST = [
   },
   {
     id: 13,
-    name: '기차',
+    name: '기타',
     value: 'pro_etc',
   },
 ];
