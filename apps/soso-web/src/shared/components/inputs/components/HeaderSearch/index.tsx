@@ -29,7 +29,7 @@ export default function HeaderSearch() {
         <Input
           ref={inputRef}
           height="100%"
-          placeholder="찾고있는 소품샵이 있나요?"
+          placeholder="소품샵, 주소 등 검색어를 입력해 주세요."
           className="pl-46"
           value={searchValue}
           onChange={handleChangeSearchValue}

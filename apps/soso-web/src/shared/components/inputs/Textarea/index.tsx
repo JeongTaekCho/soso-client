@@ -30,9 +30,11 @@ export default function Textarea({
         )}
         {...props}
       />
-      <p className="absolute bottom-14 right-16 text-gray-400 font-caption">
-        (<span className={clsx(lengthError && 'text-etc-red')}>{value.length}</span>/100)
-      </p>
+      {lengthError && (
+        <p className="absolute bottom-14 right-16 text-gray-400 font-caption">
+          (<span className={clsx(lengthError && 'text-etc-red')}>{value.length}</span>/100)
+        </p>
+      )}
     </div>
   );
 }

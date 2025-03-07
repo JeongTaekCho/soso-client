@@ -63,10 +63,13 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
       </Flex>
       <BottomModal isOpen={isFindModal} onClose={handleCloseFindModal}>
         <Flex direction="col" gap={18} className="relative w-full">
-          <button onClick={handleCloseFindModal} className="absolute right-16 top-14">
-            <XIcon />
-          </button>
-          <h4 className="font-title3_bold">길찾기</h4>
+          <Flex justify="between" align="center" className="w-full">
+            <h4 className="font-title3_bold">길찾기</h4>
+            <button onClick={handleCloseFindModal} className="">
+              <XIcon />
+            </button>
+          </Flex>
+
           <Flex direction="col" gap={12} className="w-full">
             <MapButton
               title="네이버 지도"

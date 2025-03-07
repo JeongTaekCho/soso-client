@@ -7,22 +7,22 @@ import { useGetMyWishQuery } from '@/app/my/components/ProductLists/hooks/useGet
 import Flex from '@/shared/components/layout/Flex';
 
 export default function ProductLists() {
-  const { data: myWishData } = useGetMyWishQuery();
-  const { data: myReviewData } = useGetMyReviewQuery();
-  const { data: myShopData } = useGetMyShopQuery();
+  const { data: myWishData } = useGetMyWishQuery(10);
+  const { data: myReviewData } = useGetMyReviewQuery(10);
+  const { data: myShopData } = useGetMyShopQuery(10);
 
   const myWishList =
-    myWishData?.map((wish) => {
+    myWishData?.pages[0].data.map((wish) => {
       return {
-        id: wish.id,
-        image: wish.image,
-        name: wish.name,
-        link: `/shop/${wish.id}`,
+        id: wish.shop.id,
+        image: wish.shop.image,
+        name: wish.shop.name,
+        link: `/shop/${wish.shop.id}`,
       };
     }) || [];
 
   const myReviewList =
-    myReviewData?.map((review) => {
+    myReviewData?.pages[0].data.map((review) => {
       return {
         id: review.id,
         image: review.shop.image,
@@ -32,7 +32,7 @@ export default function ProductLists() {
     }) || [];
 
   const myShopList =
-    myShopData?.map((shop) => {
+    myShopData?.pages[0].data.map((shop) => {
       return {
         id: shop.shop.id,
         image: shop.shop.image,
@@ -44,15 +44,23 @@ export default function ProductLists() {
 
   return (
     <Flex direction="col" gap={28} className="w-full">
-      <ProductLayout data={myWishList} title="찜" placeholder="아직 찜한 소품샵이 없습니다." productLink="/my/wish" />
+      <ProductLayout
+        data={myWishList}
+        totalData={myWishData?.pages[0].pageInfo.totalElements}
+        title="찜"
+        placeholder="아직 찜한 소품샵이 없습니다."
+        productLink="/my/wish"
+      />
       <ProductLayout
         data={myReviewList}
+        totalData={myReviewData?.pages[0].pageInfo.totalElements}
         title="나의 후기"
         placeholder="아직 등록된 후기가 없습니다."
         productLink="/my/review"
       />
       <ProductLayout
         data={myShopList}
+        totalData={myShopData?.pages[0].pageInfo.totalElements}
         title="내가 등록한 소품샵"
         placeholder="아직 등록된 소품샵이 없습니다."
         productLink="/my/shop"

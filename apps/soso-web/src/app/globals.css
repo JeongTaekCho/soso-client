@@ -71,3 +71,7 @@ select,
 textarea {
   outline: none;
 }
+
+pre {
+  white-space: pre-wrap;
+}
