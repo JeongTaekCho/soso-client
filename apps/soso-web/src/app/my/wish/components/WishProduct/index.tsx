@@ -15,16 +15,16 @@ export default function WishProduct({ data }: WishProductProps) {
   const width = isMobile ? 'w-[calc(33.3%-7.5px)]' : 'w-[calc(25%-8.3px)]';
 
   return (
-    <Link href={`/shop/${data.id}`} className={clsx('flex flex-col gap-8', width)}>
+    <Link href={`/shop/${data.shop.id}`} className={clsx('flex flex-col gap-8', width)}>
       <div className="relative aspect-square w-full">
         <Image
-          src={data.image || '/images/default_item.svg'}
+          src={data.shop.image || '/images/default_item.svg'}
           fill
           style={{ objectFit: 'cover' }}
           alt="프로덕트 이미지"
         />
       </div>
-      <p className="max-w-full truncate text-gray-600 font-body1_m">{data.name}</p>
+      <p className="max-w-full truncate text-gray-600 font-body1_m">{data.shop.name}</p>
     </Link>
   );
 }

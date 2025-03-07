@@ -9,7 +9,7 @@ interface ProductImageProps {
 export default function ProductImage({ imgUrl, size, className }: ProductImageProps) {
   return (
     <Image
-      src={imgUrl || '/images/jojo.jpg'}
+      src={imgUrl || '/images/default_item.svg'}
       width={size || 72}
       height={size || 72}
       className={clsx('rounded-12', className)}

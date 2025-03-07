@@ -1,21 +1,32 @@
+import { PaginationType } from '@/shared/types/paginationType';
 import { ShopType } from '@/shared/types/shopType';
 
 export interface MyWishType {
-  id: number;
-  name: string;
-  image: null | string;
-  type: number;
-  reportStatus: number;
-  lat: number;
-  lng: number;
-  location: string;
-  region: {
+  shop: {
     id: number;
     name: string;
+    image: null | string;
+    type: number;
+    reportStatus: number;
+    lat: number;
+    lng: number;
+    location: string;
+    region: {
+      id: number;
+      name: string;
+    };
   };
 }
 
-export type GetMyWishResponseType = MyWishType[];
+export interface GetMyWishResponse {
+  data: MyWishType[];
+  pageInfo: PaginationType;
+}
+
+export type GetMyWishResponseType = {
+  pageParams: number[];
+  pages: GetMyWishResponse;
+};
 
 export interface MyReviewType {
   id: number;
@@ -28,7 +39,15 @@ export interface MyReviewType {
   }[];
 }
 
-export type GetMyReviewResponseType = MyReviewType[];
+export interface GetMyReviewResponse {
+  data: MyReviewType[];
+  pageInfo: PaginationType;
+}
+
+export type GetMyReviewResponseType = {
+  pageParams: number[];
+  pages: GetMyReviewResponse;
+};
 
 export interface MyShopType {
   uuid: string;
@@ -39,4 +58,12 @@ export interface MyShopType {
   shop: ShopType;
 }
 
-export type GetMyShopResponseType = MyShopType[];
+export interface GetMyShopResponse {
+  data: MyShopType[];
+  pageInfo: PaginationType;
+}
+
+export type GetMyShopResponseType = {
+  pageParams: number[];
+  pages: GetMyShopResponse;
+};

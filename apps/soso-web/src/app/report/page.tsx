@@ -20,7 +20,7 @@ export default function ReportPage() {
 
   const router = useRouter();
 
-  const { shop } = useReportStore();
+  const { shop, setShop } = useReportStore();
   const { map, setCenter, addMarker, clearMarkers } = useMapStore();
 
   const handleNext = () => {
@@ -45,7 +45,10 @@ export default function ReportPage() {
       if ((!shop.lat || !shop.lng) && currentLocation !== 'denied') {
         setCenter(currentLocation.lat, currentLocation.lng);
         const currentAddress = await getCurrentAddress(currentLocation.lat, currentLocation.lng);
-        setCurrentAddress(currentAddress);
+        if (currentAddress) {
+          setCurrentAddress(currentAddress);
+          setShop({ ...shop, location: currentAddress });
+        }
       }
 
       if (currentLocation === 'denied') return;
