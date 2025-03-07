@@ -1,14 +1,25 @@
 'use client';
 
+import { useGetMyReviewQuery } from '@/app/my/components/ProductLists/hooks/useGetMyReviewQuery';
 import MyReview from '@/app/my/review/components/MyReview';
 import Divider from '@/shared/components/divider/Divider';
 import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
+import Loading from '@/shared/components/loading/Loading';
+import { useInView } from 'react-intersection-observer';
 import clsx from 'clsx';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useEffect } from 'react';
 
 export default function MyReviewPage() {
   const [isLatest, setIsLatest] = useState(true);
+
+  // useInfiniteQuery로 변경된 훅 사용
+  const { data: myReviewData, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useGetMyReviewQuery(10);
+
+  // 무한 스크롤을 위한 InView 설정
+  const { ref, inView } = useInView({
+    threshold: 0.2,
+  });
 
   const handleClickFilter = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLButtonElement;
@@ -24,6 +35,16 @@ export default function MyReviewPage() {
       setIsLatest(false);
     }
   };
+
+  // inView 상태가 변경될 때 다음 페이지 데이터 로드
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage && !isLoading) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
+
+  // 모든 페이지의 데이터를 하나의 배열로 펼치기
+  const allReviews = myReviewData?.pages.flatMap((page) => page.data) || [];
 
   return (
     <div>
@@ -47,18 +68,27 @@ export default function MyReviewPage() {
           </button>
         </Flex>
         <Flex direction="col" className="w-full">
-          <div className="group w-full border-b-[10px] border-gray-50 py-20 last:border-none">
-            <MyReview />
-          </div>
-          <div className="group w-full border-b-[10px] border-gray-50 py-20 last:border-none">
-            <MyReview />
-          </div>
-          <div className="group w-full border-b-[10px] border-gray-50 py-20 last:border-none">
-            <MyReview />
-          </div>
-          <div className="group w-full border-b-[10px] border-gray-50 py-20 last:border-none">
-            <MyReview />
-          </div>
+          {allReviews.map((review, index) => (
+            <div
+              key={review.id || index}
+              className="group w-full border-b-[10px] border-gray-50 py-20 last:border-none"
+            >
+              <MyReview data={review} />
+            </div>
+          ))}
+
+          {/* 무한 스크롤을 위한 관찰 요소 */}
+          {!isLoading && <div ref={ref} className="h-40" />}
+
+          {/* 로딩 상태 표시 */}
+          {isLoading && <Loading />}
+
+          {/* 데이터가 없을 때 표시할 내용 */}
+          {myReviewData && allReviews.length === 0 && (
+            <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
+              <p className="text-gray-500 font-body1_m">작성한 후기가 없습니다.</p>
+            </Flex>
+          )}
         </Flex>
       </Flex>
     </div>
