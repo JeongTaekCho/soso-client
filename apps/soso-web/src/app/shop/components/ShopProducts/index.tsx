@@ -24,9 +24,16 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
   const { selectedProducts, clearProductList } = useProductListStore();
   const { id } = useParams();
   const { token } = useAuthStore();
-  const { openDialog } = useDialog();
+  const { openDialog, closeDialog } = useDialog();
+
+  const router = useRouter();
 
   const { mutate: addShopProductMutate } = useAddShopProductMutation();
+
+  const confirm = () => {
+    router.push('/login');
+    closeDialog();
+  };
 
   const handleToggleBottomModal = () => {
     if (!token) {
@@ -34,6 +41,9 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
         type: 'alert',
         title: '',
         message: '로그인이 필요한 서비스입니다.',
+        rightLabel: '로그인/회원가입하기',
+        onConfirm: () => confirm(),
+        onCancel: () => closeDialog(),
       });
 
       return;

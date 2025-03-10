@@ -9,14 +9,24 @@ interface DialogModalProps {
   message?: string | ReactNode;
   onConfirm?: () => void;
   onClose: () => void;
+  onCancel?: () => void;
   leftLabel?: string;
   rightLabel?: string;
 }
 
-const DialogModal = ({ type, title, message, leftLabel, rightLabel, onConfirm, onClose }: DialogModalProps) => {
+const DialogModal = ({
+  type,
+  title,
+  message,
+  leftLabel,
+  rightLabel,
+  onConfirm,
+  onClose,
+  onCancel,
+}: DialogModalProps) => {
   return (
     <>
-      <Backdrop />
+      <Backdrop onClick={onCancel && onCancel} />
       <div className="fixed left-1/2 top-1/2 z-modal w-[323px] -translate-x-1/2 -translate-y-1/2 rounded-20 bg-white px-16 pb-20 pt-24">
         <Flex direction="col" align="center" gap={24} className="w-full">
           <Flex direction="col" align="center" gap={12} className="w-full">

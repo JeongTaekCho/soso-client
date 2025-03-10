@@ -16,7 +16,7 @@ import { ReviewType } from '@/shared/types/shopType';
 import { formatStringDate } from '@/shared/utils/formatStringDate';
 import { getSafeImageUrl } from '@/shared/utils/getSafeImageUrl';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
@@ -34,6 +34,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const { openDialog, closeDialog } = useDialog();
   const { openToast } = useToast();
   const { id } = useParams();
+  const router = useRouter();
 
   const { token } = useAuthStore();
 
@@ -42,6 +43,11 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const { data: userData } = useGetUserProfileQuery();
 
   const handleToggleWriteModal = () => {
+    const confirm = () => {
+      router.push('/login');
+      closeDialog();
+    };
+
     if (token) {
       setIsWriteModal((prev) => !prev);
     } else {
@@ -49,6 +55,9 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
         type: 'alert',
         title: '',
         message: '로그인이 필요한 서비스입니다.',
+        rightLabel: '로그인/회원가입하기',
+        onConfirm: () => confirm(),
+        onCancel: () => closeDialog(),
       });
     }
   };
