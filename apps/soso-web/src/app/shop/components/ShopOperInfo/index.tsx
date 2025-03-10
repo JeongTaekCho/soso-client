@@ -219,7 +219,14 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
                 </Flex>
               </InputContent>
               <InputContent label="전화번호">
-                <Input placeholder="전화번호를 입력해 주세요." value={phoneNumber} onChange={handleChangePhoneNumber} />
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="전화번호를 입력해 주세요."
+                  value={phoneNumber}
+                  onChange={handleChangePhoneNumber}
+                />
               </InputContent>
             </Flex>
             <Button title="제안하기" type="button" onClick={handleSubmitOperating} />

@@ -64,8 +64,10 @@ export default function ReportPage() {
 
     clearMarkers();
     currentAddMarker();
+  }, []);
 
-    if (!shop.lat || !shop.lng) return;
+  useEffect(() => {
+    if (!shop.lat || !shop.lng || !map) return;
     setCenter(shop.lat, shop.lng);
     addMarker({
       id: REPORT_MARKER_ID,

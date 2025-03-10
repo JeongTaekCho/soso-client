@@ -18,7 +18,7 @@ export default function MyPage() {
           </Link>
         }
       />
-      <div className="w-full px-20">
+      <div className="w-full">
         <MyProfile />
       </div>
       <Divider height="10px" />

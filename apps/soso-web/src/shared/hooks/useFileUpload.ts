@@ -1,14 +1,14 @@
 import { useDialog } from '@/shared/context/DialogContext';
 import { useState } from 'react';
 
-export const useFileUpload = (maxFiles: number = 10) => {
+export const useFileUpload = (maxFiles: number = 10, prevImageLength?: number) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
 
   const { openDialog } = useDialog();
 
   const addFiles = (newFiles: File[]) => {
-    if (files.length + newFiles.length > maxFiles) {
+    if (files.length + newFiles.length + (prevImageLength || 0) > maxFiles) {
       openDialog({
         type: 'alert',
         title: '이미지 업로드 오류',
@@ -23,6 +23,11 @@ export const useFileUpload = (maxFiles: number = 10) => {
     setPreviews((prev) => [...prev, ...previewUrls]);
   };
 
+  const resetFiles = () => {
+    setFiles([]);
+    setPreviews([]);
+  };
+
   // 파일 삭제
   const removeFile = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
@@ -33,7 +38,7 @@ export const useFileUpload = (maxFiles: number = 10) => {
     });
   };
 
-  return { files, previews, addFiles, removeFile };
+  return { files, previews, resetFiles, addFiles, removeFile };
 };
 
 export const useSingleFileUpload = () => {
@@ -58,5 +63,10 @@ export const useSingleFileUpload = () => {
     setPreview(null);
   };
 
-  return { file, preview, setSingleFile, removeSingleFile };
+  const resetFile = () => {
+    setFile(null);
+    setPreview(null);
+  };
+
+  return { file, preview, resetFile, setSingleFile, removeSingleFile };
 };

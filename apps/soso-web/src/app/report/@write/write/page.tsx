@@ -142,7 +142,7 @@ export default function ReportWrite() {
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">운영 정보</h3>
           <Flex direction="col" className="w-full" gap={20}>
-            <Flex direction="col" gap={6} className="w-full">
+            <Flex direction="col" gap={8} className="w-full">
               <h5 className="text-gray-500 font-body1_m">운영 요일을 선택해주세요.</h5>
               <div className="flex w-full max-w-[375px] items-center justify-between">
                 {yoil.map((item) => (
@@ -156,7 +156,7 @@ export default function ReportWrite() {
                 ))}
               </div>
             </Flex>
-            <Flex direction="col" gap={6} className="w-full">
+            <Flex direction="col" gap={8} className="w-full">
               <h5 className="text-gray-500 font-body1_m">운영 시간을 선택해주세요.</h5>
               <Flex justify="between" align="center" className="w-full" gap={20}>
                 <Flex className="flex-1" justify="between" align="center" gap={12}>
@@ -169,9 +169,16 @@ export default function ReportWrite() {
                 </Flex>
               </Flex>
             </Flex>
-            <Flex direction="col" gap={6} className="w-full">
+            <Flex direction="col" gap={8} className="w-full">
               <h3 className="text-gray-500 font-body1_m">전화번호</h3>
-              <Input placeholder="전화번호를 입력해 주세요." value={phoneNumber} onChange={handleChangePhoneNumber} />
+              <Input
+                type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                placeholder="전화번호를 입력해 주세요."
+                value={phoneNumber}
+                onChange={handleChangePhoneNumber}
+              />
             </Flex>
           </Flex>
         </Flex>
