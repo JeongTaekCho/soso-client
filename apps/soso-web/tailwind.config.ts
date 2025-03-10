@@ -264,8 +264,8 @@ const config: Config = {
         '.bottom-fixed-button': {
           position: 'fixed',
           left: '50%',
-          bottom: '70px',
-          padding: '0 20px',
+          bottom: '0',
+          padding: '20px',
           width: '100%',
           maxWidth: '600px',
           transform: 'translateX(-50%)',
