@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import './swiper.css';
+import XIcon from '@/shared/components/icons/XIcon';
 interface TimePickerProps {
   onConfirm: (time: string) => void;
   onCancel: () => void;
@@ -50,9 +51,9 @@ const TimePicker: React.FC<TimePickerProps> = ({ onConfirm, onCancel, value }) =
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-[320px] rounded-[16px] bg-white p-[20px] shadow-lg">
-        <div className="mb-[16px] flex items-center justify-between">
+        <div className="mb-[16px] flex items-center justify-end">
           <button onClick={onCancel} className="text-[18px] font-medium text-black focus:outline-none">
-            ✖
+            <XIcon />
           </button>
         </div>
 

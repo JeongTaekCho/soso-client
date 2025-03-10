@@ -9,13 +9,14 @@ interface SellProductProps {
   checkbox?: boolean;
   isCheck?: boolean;
   onClick?: (product: ProductType) => void;
+  isModal?: boolean;
 }
 
-export default function SellProduct({ product, checkbox, isCheck, onClick }: SellProductProps) {
+export default function SellProduct({ product, checkbox, isCheck, onClick, isModal }: SellProductProps) {
   return (
     <div
       onClick={() => onClick?.({ id: product.id, name: product.name })}
-      className={clsx('w-[calc(25%-6px)]', checkbox && 'cursor-pointer')}
+      className={clsx(checkbox && 'cursor-pointer', isModal ? 'w-[calc(25%-12px)]' : 'w-[calc(25%-6px)]')}
     >
       <Flex direction="col" gap={6} justify="center" align="center" className="h-full w-full">
         <Flex

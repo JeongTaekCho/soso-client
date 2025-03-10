@@ -43,7 +43,7 @@ export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: Ad
           <ModalCloseButton onClick={handleCloseModal} />
         </Flex>
         <Flex direction="col" gap={38} align="center">
-          <Flex align="center" wrap gap={8}>
+          <Flex align="center" wrap gap={16}>
             {PRODUCT_LIST.map((product: ProductType) => (
               <SellProduct
                 key={product.id}
@@ -51,6 +51,7 @@ export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: Ad
                 checkbox
                 onClick={() => toggleProduct(product)}
                 isCheck={selectedProducts.some((p) => p.id === product.id)}
+                isModal
               />
             ))}
           </Flex>

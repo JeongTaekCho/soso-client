@@ -198,7 +198,7 @@ export default function HomePage() {
             <Swiper
               slidesPerView={1.2}
               spaceBetween={10}
-              loop={true}
+              loop={shopData?.length > 3 && true}
               centeredSlides={true}
               onSlideChange={handleSlideChange}
               onSwiper={(swiper) => {

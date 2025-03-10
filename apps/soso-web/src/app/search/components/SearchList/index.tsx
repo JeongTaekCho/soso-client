@@ -129,16 +129,18 @@ export default function SearchList() {
           )}
         </Flex>
       )}
-      {!searchDebounceValue && <h3 className="px-20 font-body1_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
-      {!searchDebounceValue && (
-        <Flex direction="col" className="w-full">
-          {shopSortData?.map((shop) => (
-            <div key={shop.id} className="w-full border-b border-gray-100">
-              <PlaceCard data={shop} />
-            </div>
-          ))}
-        </Flex>
-      )}
+      <Flex direction="col" gap={4} className="w-full">
+        {!searchDebounceValue && <h3 className="px-20 font-body1_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
+        {!searchDebounceValue && (
+          <Flex direction="col" className="w-full">
+            {shopSortData?.map((shop) => (
+              <div key={shop.id} className="w-full border-b border-gray-100">
+                <PlaceCard data={shop} />
+              </div>
+            ))}
+          </Flex>
+        )}
+      </Flex>
       {shopSearchData && shopSearchData?.pages[0].data.length > 0 && (
         <Flex direction="col" className="w-full">
           {shopSearchData?.pages.map((page, index) => (

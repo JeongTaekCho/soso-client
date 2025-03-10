@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 export const useTimePicker = () => {
-  const INITIAL_OPEN_TIME = '오전 10:00';
-  const INITIAL_CLOSE_TIME = '오후 07:00';
+  const INITIAL_OPEN_TIME = '오전 00:00';
+  const INITIAL_CLOSE_TIME = '오후 00:00';
 
   const [openTime, setOpenTime] = useState(INITIAL_OPEN_TIME);
   const [closeTime, setCloseTime] = useState(INITIAL_CLOSE_TIME);

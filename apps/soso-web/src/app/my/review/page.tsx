@@ -13,10 +13,14 @@ import { MouseEvent, useState, useEffect } from 'react';
 export default function MyReviewPage() {
   const [isLatest, setIsLatest] = useState(true);
 
-  // useInfiniteQuery로 변경된 훅 사용
-  const { data: myReviewData, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useGetMyReviewQuery(10);
+  const {
+    data: myReviewData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useGetMyReviewQuery(10, isLatest ? 'DESC' : 'ASC');
 
-  // 무한 스크롤을 위한 InView 설정
   const { ref, inView } = useInView({
     threshold: 0.2,
   });

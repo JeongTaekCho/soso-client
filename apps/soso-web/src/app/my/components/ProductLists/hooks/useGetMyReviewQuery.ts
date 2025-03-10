@@ -2,14 +2,14 @@ import { getMyReview } from '@/app/my/components/ProductLists/api/getMyReview';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-export const useGetMyReviewQuery = (limit: number) => {
+export const useGetMyReviewQuery = (limit: number, sort?: 'DESC' | 'ASC') => {
   const { token } = useAuthStore();
 
   return useInfiniteQuery({
-    queryKey: ['myReview', limit],
+    queryKey: ['myReview', limit, sort],
 
     queryFn: async ({ pageParam }) => {
-      const result = await getMyReview(pageParam, limit);
+      const result = await getMyReview(pageParam, limit, sort);
       return result;
     },
 

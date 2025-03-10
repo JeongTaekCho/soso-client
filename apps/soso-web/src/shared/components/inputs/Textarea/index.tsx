@@ -28,6 +28,7 @@ export default function Textarea({
           'resize-none rounded-12 bg-gray-50 px-16 py-14 text-gray-600 font-body1_m placeholder:text-gray-400',
           className
         )}
+        value={value}
         {...props}
       />
       {lengthError && (

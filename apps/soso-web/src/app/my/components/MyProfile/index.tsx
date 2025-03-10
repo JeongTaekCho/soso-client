@@ -10,7 +10,7 @@ export default function MyProfile() {
 
   return (
     <Flex direction="col" gap={20} className="w-full pb-16 pt-20">
-      <Flex justify="between" align="center" className="w-full">
+      <Flex justify="between" align="center" className="w-full px-20">
         <Flex align="center" gap={12}>
           <ProfileImage imgUrl={userData?.photoUrl} />
           <p className="text-black font-title3_bold">
@@ -25,9 +25,11 @@ export default function MyProfile() {
           수정
         </Link>
       </Flex>
-      <Flex justify="between" align="center" className="w-full rounded-16 bg-[#F3EDE8] px-18 py-16">
-        <p className="text-[#8E847C] font-body1_m">나만의 소품샵을 둘러보세요.</p>
-      </Flex>
+      <div className="w-full px-16">
+        <Flex justify="between" align="center" className="w-full rounded-16 bg-[#F3EDE8] px-18 py-16">
+          <p className="text-[#8E847C] font-body1_m">나만의 소품샵을 둘러보세요.</p>
+        </Flex>
+      </div>
     </Flex>
   );
 }

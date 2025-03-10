@@ -34,20 +34,21 @@ export default function ReportModal({ isReportModal, handleToggleReportModal }: 
         openDialog({
           type: 'alert',
           title: '신고 완료',
-          message:
-            reportId === '1' ? (
-              <span>
-                소중한 정보 감사합니다.
-                <br />
-                확인 후 해당 장소는 삭제될 예정입니다.
-              </span>
-            ) : (
-              <span>
-                소중한 정보 감사합니다.
-                <br />
-                확인 후 조치하도록 하겠습니다.
-              </span>
-            ),
+          message: (
+            // reportId === '1' ? (
+            <span>
+              소중한 정보 감사합니다.
+              <br />
+              확인 후 해당 장소는 삭제될 예정입니다.
+            </span>
+          ),
+          // ) : (
+          //   <span>
+          //     소중한 정보 감사합니다.
+          //     <br />
+          //     확인 후 조치하도록 하겠습니다.
+          //   </span>
+          // ),
         });
         setSelectedId('');
       },
