@@ -12,6 +12,10 @@ export const convertToFormData = (data?: Record<string, any>) => {
       formData.append(key, value);
     } else if (value instanceof File || value instanceof Blob) {
       formData.append(key, value);
+    } else if (key === 'deleteImages' && Array.isArray(value)) {
+      value.forEach((id, index) => {
+        formData.append(`${key}[${index}]`, id);
+      });
     } else if (typeof value === 'object' && value !== null) {
       formData.append(key, JSON.stringify(value));
     } else {

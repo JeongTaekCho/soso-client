@@ -18,6 +18,8 @@ import { getSafeImageUrl } from '@/shared/utils/getSafeImageUrl';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, FreeMode } from 'swiper/modules';
 
 interface ReviewProps {
   isMe?: boolean;
@@ -107,17 +109,23 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
           </Flex>
         </Flex>
         {isMe && isWrite && (
-          <Flex align="center" gap={12}>
-            <button className="h-30 w-41 rounded-[100px] border border-gray-100 text-gray-600 font-caption">
-              수정
-            </button>
-            <button
-              onClick={handleOpenDeleteModal}
-              className="h-30 w-41 rounded-[100px] border border-gray-100 text-gray-600 font-caption"
-            >
-              삭제
-            </button>
-          </Flex>
+          <>
+            <Flex align="center" gap={12}>
+              <button
+                onClick={handleToggleWriteModal}
+                className="h-30 w-41 rounded-[100px] border border-gray-100 text-gray-600 font-caption"
+              >
+                수정
+              </button>
+              <button
+                onClick={handleOpenDeleteModal}
+                className="h-30 w-41 rounded-[100px] border border-gray-100 text-gray-600 font-caption"
+              >
+                삭제
+              </button>
+            </Flex>
+            <ReviewWrite isEdit isOpen={isWriteModal} onClose={handleToggleWriteModal} />
+          </>
         )}
       </Flex>
       {isMe && !isWrite ? (
@@ -141,22 +149,27 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
               {data?.content || ''}
             </pre>
             {data && data?.images.length > 0 && (
-              <Flex align="center" gap={8}>
+              <Swiper
+                modules={[Navigation, FreeMode]}
+                slidesPerView="auto"
+                spaceBetween={8}
+                freeMode={true}
+                grabCursor={true}
+                className="w-full"
+              >
                 {data?.images.map((image, index) => (
-                  <div
-                    onClick={() => handleOpenImageViewer(index)}
-                    className="relative h-72 w-72"
-                    key={`image-${image.id}`}
-                  >
-                    <Image
-                      fill
-                      src={getSafeImageUrl(image.url) || ''}
-                      alt="리뷰 이미지"
-                      className="rounded-12 object-cover"
-                    />
-                  </div>
+                  <SwiperSlide key={`image-${image.id}`} style={{ width: 'auto' }}>
+                    <div onClick={() => handleOpenImageViewer(index)} className="relative h-72 w-72">
+                      <Image
+                        fill
+                        src={getSafeImageUrl(image.url) || ''}
+                        alt="리뷰 이미지"
+                        className="rounded-12 object-cover"
+                      />
+                    </div>
+                  </SwiperSlide>
                 ))}
-              </Flex>
+              </Swiper>
             )}
           </Flex>
         </MessageBox>

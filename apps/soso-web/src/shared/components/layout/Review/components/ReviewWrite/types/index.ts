@@ -3,3 +3,10 @@ export interface ReviewRequestType {
   content: string;
   files: File[];
 }
+
+export interface PatchReviewRequestType {
+  reviewId: number;
+  content: string;
+  deleteImages: number[];
+  files: File[];
+}
