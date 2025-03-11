@@ -8,8 +8,8 @@ export default function PolicyPage() {
     <div>
       <Header title="이용약관" type="back" />
       <Flex direction="col">
-        <LinkButton title="개인정보 처리방침" link="/my/setting/policy/personal-information" icon={<LinkIcon />} />
-        <LinkButton title="위치 기반 서비스 이용 약관" link="/my/setting/policy/location" icon={<LinkIcon />} />
+        <LinkButton title="개인정보 처리방침" link="/policy/personal-information" icon={<LinkIcon />} />
+        <LinkButton title="위치 기반 서비스 이용 약관" link="/policy/location" icon={<LinkIcon />} />
       </Flex>
     </div>
   );
