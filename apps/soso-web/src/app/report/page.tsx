@@ -87,7 +87,10 @@ export default function ReportPage() {
             {isFullMap ? (
               <FullMap isOpen={isFullMap} onClose={handleCloseFullMap} />
             ) : (
-              <div onClick={handleOpenFullMap} className="h-[185px] w-full overflow-hidden rounded-16">
+              <div
+                onClick={handleOpenFullMap}
+                className="h-[185px] w-full overflow-hidden rounded-16 border border-gray-100"
+              >
                 <NaverMap width="100%" height="100%" isCurrent isDisabled />
               </div>
             )}
