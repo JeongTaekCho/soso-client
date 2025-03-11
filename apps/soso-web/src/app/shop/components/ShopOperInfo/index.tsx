@@ -23,9 +23,10 @@ import { useDialog } from '@/shared/context/DialogContext';
 import { useToast } from '@/shared/context/ToastContext';
 import useInput from '@/shared/hooks/useInput';
 import { useTimePicker } from '@/shared/hooks/useTimePicker';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 import { useYoilStore } from '@/shared/store/useYoilStore';
 import { OperatingHourType } from '@/shared/types/shopType';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 interface ShopOperInfoProps {
@@ -34,8 +35,11 @@ interface ShopOperInfoProps {
 
 export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
   const { yoil, setCheckYoil, addYoil, toggleAddYoil, resetAddYoil } = useYoilStore();
+  const { token } = useAuthStore();
   const [isBottomModal, setIsBottomModal] = useState(false);
   const { id } = useParams();
+
+  const router = useRouter();
 
   const {
     openTime,
@@ -49,7 +53,7 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
   } = useTimePicker();
 
   const { value: phoneNumber, onChange: handleChangePhoneNumber, setValue: setPhoneNumber } = useInput('');
-  const { openDialog } = useDialog();
+  const { openDialog, closeDialog } = useDialog();
 
   const { mutate: postOperatingMutate } = usePostShopOperatingMutation();
 
@@ -59,7 +63,24 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
     toggleAddYoil(id);
   };
 
+  const confirm = () => {
+    router.push('/login');
+    closeDialog();
+  };
+
   const handleToggleBottomModal = () => {
+    if (!token) {
+      openDialog({
+        type: 'alert',
+        title: '',
+        message: '로그인이 필요한 서비스입니다.',
+        rightLabel: '로그인/회원가입하기',
+        onConfirm: () => confirm(),
+        onCancel: () => closeDialog(),
+      });
+      return;
+    }
+
     setIsBottomModal((prev) => !prev);
   };
 

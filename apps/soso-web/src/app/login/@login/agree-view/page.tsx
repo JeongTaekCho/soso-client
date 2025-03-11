@@ -67,14 +67,14 @@ export default function AgreeView() {
               checked={agreements.privacy}
               label="[필수] 개인정보 수집 및 이용 동의"
               onChange={(value) => handleCheck('privacy', value)}
-              link="/login/agree-view/privacy"
+              link="/policy/personal-information"
             />
             <AgreementItem
               id="location"
               checked={agreements.location}
               label="[선택] 위치서비스 이용 동의"
               onChange={(value) => handleCheck('location', value)}
-              link="/login/agree-view/location"
+              link="/policy/location"
             />
           </Flex>
         </Flex>
