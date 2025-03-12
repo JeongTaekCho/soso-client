@@ -23,7 +23,8 @@
     "react-intersection-observer": "^9.15.1",
     "swiper": "^11.2.1",
     "yup": "^1.6.1",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "@repo/tailwind-config": "*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
