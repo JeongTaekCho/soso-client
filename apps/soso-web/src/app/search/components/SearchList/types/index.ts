@@ -19,3 +19,7 @@ export interface UserFindShopType {
 }
 
 export type GetUserFindShopResponse = UserFindShopType[];
+
+export interface DeleteUserFindShopRequest {
+  shopName: string;
+}

@@ -17,6 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import { ShopType } from '@/shared/types/shopType';
 import Loading from '@/shared/components/loading/Loading';
 import { useGetUserFindShopQuery } from '@/app/search/components/SearchList/hooks/useGetUserFindShopQuery';
+import { useDeleteUserFindShopMutation } from '@/app/search/components/SearchList/hooks/useDeleteUserFindShopMutation';
 
 interface Location {
   lat: number;
@@ -79,11 +80,17 @@ export default function SearchList() {
 
   const { data: userFindShopData } = useGetUserFindShopQuery();
 
+  const { mutate: deleteFindShopMutate } = useDeleteUserFindShopMutation();
+
   const { ref, inView } = useInView({
     threshold: 0.2,
   });
 
   const { token } = useAuthStore();
+
+  const handleDeleteFindShop = (shopName: string) => {
+    deleteFindShopMutate({ shopName });
+  };
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -123,7 +130,12 @@ export default function SearchList() {
             >
               {userFindShopData?.map((shop, index) => (
                 <SwiperSlide key={index} style={{ width: 'auto' }}>
-                  <SearchItem label={shop.shopName} onClose={() => {}} />
+                  <SearchItem
+                    label={shop.shopName}
+                    onClick={() => {
+                      handleDeleteFindShop(shop.shopName);
+                    }}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>
