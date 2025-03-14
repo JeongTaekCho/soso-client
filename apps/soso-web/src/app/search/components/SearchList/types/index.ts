@@ -10,3 +10,16 @@ export interface GetSearchListResponse {
   pageParams: number[];
   pages: SearchListType[];
 }
+
+export interface UserFindShopType {
+  id: number;
+  uuid: string;
+  shopName: string;
+  createdAt: string;
+}
+
+export type GetUserFindShopResponse = UserFindShopType[];
+
+export interface DeleteUserFindShopRequest {
+  shopName: string;
+}
