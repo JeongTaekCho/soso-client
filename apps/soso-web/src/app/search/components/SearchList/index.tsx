@@ -18,50 +18,12 @@ import { ShopType } from '@/shared/types/shopType';
 import Loading from '@/shared/components/loading/Loading';
 import { useGetUserFindShopQuery } from '@/app/search/components/SearchList/hooks/useGetUserFindShopQuery';
 import { useDeleteUserFindShopMutation } from '@/app/search/components/SearchList/hooks/useDeleteUserFindShopMutation';
+import { useAllDeleteUserFindShopMutation } from '@/app/search/components/SearchList/hooks/useAllDeleteUserFindShopMutation';
 
 interface Location {
   lat: number;
   lng: number;
 }
-
-const SEARCH_HISTORY = [
-  {
-    name: '소품샵1',
-  },
-  {
-    name: '소품샵2',
-  },
-  {
-    name: 'A LIST OF THINGS 리스트오브띵즈',
-  },
-  {
-    name: '소품샵4',
-  },
-  {
-    name: '소품샵5',
-  },
-  {
-    name: '소품샵6',
-  },
-  {
-    name: '소품샵7',
-  },
-  {
-    name: '소품샵8',
-  },
-  {
-    name: '소품샵9',
-  },
-  {
-    name: '소품샵10',
-  },
-  {
-    name: '소품샵11',
-  },
-  {
-    name: '소품샵12',
-  },
-];
 
 export default function SearchList() {
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
@@ -81,6 +43,7 @@ export default function SearchList() {
   const { data: userFindShopData } = useGetUserFindShopQuery();
 
   const { mutate: deleteFindShopMutate } = useDeleteUserFindShopMutation();
+  const { mutate: allDeleteFindShopMutate } = useAllDeleteUserFindShopMutation();
 
   const { ref, inView } = useInView({
     threshold: 0.2,
@@ -90,6 +53,9 @@ export default function SearchList() {
 
   const handleDeleteFindShop = (shopName: string) => {
     deleteFindShopMutate({ shopName });
+  };
+  const handleAllDeleteFindShop = () => {
+    allDeleteFindShopMutate();
   };
 
   useEffect(() => {
@@ -113,11 +79,15 @@ export default function SearchList() {
 
   return (
     <Flex direction="col" gap={18} className="mt-20 w-full">
-      {!searchDebounceValue && (
+      {!searchDebounceValue && userFindShopData && userFindShopData.length > 0 && (
         <Flex direction="col" gap={12} className="mb-18 w-full px-20">
           <Flex justify="between" align="center" className="w-full">
             <h3 className="font-body1_bold">최근에 찾은 소품샵</h3>
-            {token && <button className="text-gray-400 font-caption">전체 삭제</button>}
+            {token && (
+              <button onClick={handleAllDeleteFindShop} className="text-gray-400 font-caption">
+                전체 삭제
+              </button>
+            )}
           </Flex>
           {token ? (
             <Swiper
