@@ -1,6 +1,7 @@
 'use client';
 
 import { UNSUBSCRIBE_LIST } from '@/app/my/setting/unsubscribe/constants';
+import { useDeleteUserMutation } from '@/app/my/setting/unsubscribe/hooks/useDeleteUserMutation';
 import Button from '@/shared/components/button/Button';
 import Radio from '@/shared/components/inputs/Radio';
 import Flex from '@/shared/components/layout/Flex';
@@ -11,8 +12,18 @@ import { ChangeEvent, useState } from 'react';
 
 export default function UnsubscribePage() {
   const { data: userData } = useGetUserProfileQuery();
+  const { mutate: deleteUserMutate } = useDeleteUserMutation();
   const { openDialog } = useDialog();
   const [value, setValue] = useState('');
+
+  const handleDeleteUser = () => {
+    if (!userData) return;
+    const data = {
+      uuid: userData?.uuid,
+      deleteType: Number(value),
+    };
+    deleteUserMutate(data);
+  };
 
   const handleClickUnsubScribe = () => {
     openDialog({
@@ -24,6 +35,7 @@ export default function UnsubscribePage() {
           <br /> 계속 진행하시겠습니까?
         </span>
       ),
+      onConfirm: handleDeleteUser,
     });
   };
 
