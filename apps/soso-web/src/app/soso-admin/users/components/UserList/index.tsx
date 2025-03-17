@@ -89,7 +89,6 @@ const UserList = () => {
               </button>
               <button
                 onClick={() => {
-                  console.log('Delete user:', userToDelete);
                   setIsDeleteModalOpen(false);
                 }}
                 className="rounded-8 bg-etc-red px-16 py-8 text-white hover:bg-red-700"

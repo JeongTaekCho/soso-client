@@ -21,7 +21,7 @@ interface ShopProductsProps {
 }
 export default function ShopProducts({ productData }: ShopProductsProps) {
   const [isBottomModal, setIsBottomModal] = useState(false);
-  const { selectedProducts, clearProductList } = useProductListStore();
+  const { productList, clearProductList } = useProductListStore();
   const { id } = useParams();
   const { token } = useAuthStore();
   const { openDialog, closeDialog } = useDialog();
@@ -55,7 +55,7 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
   const handleAddProduct = () => {
     const data = {
       shopId: Number(id),
-      products: selectedProducts.map((el) => {
+      products: productList.map((el) => {
         return { id: el.id, name: el.name };
       }),
     };

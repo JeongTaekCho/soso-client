@@ -8,6 +8,8 @@ import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
 import { PRODUCT_LIST } from '@/shared/constant/Product';
 import useProductListStore from '@/shared/store/useProductListStore';
 import { ProductType } from '@/shared/types/shopType';
+import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery';
+import { useParams } from 'next/navigation';
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -17,20 +19,34 @@ interface AddProductModalProps {
 }
 
 export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: AddProductModalProps) {
-  const { selectedProducts, setProductList, toggleProduct, resetSelectedProducts } = useProductListStore();
+  const { productList, setProductList, toggleProduct, clearProductList } = useProductListStore();
+  const { id } = useParams();
+  const { data: detailData } = useGetShopDetailQuery(String(id));
+
+  const compareArrays = (
+    arr1: { id: number; name: string }[] | undefined,
+    arr2: { id: number; name: string }[] | undefined
+  ): boolean => {
+    if (!arr1 || !arr2) return false;
+    if (arr1.length !== arr2.length) return false;
+
+    return arr1.every((item1) => arr2.some((item2) => item1.id === item2.id && item1.name === item2.name));
+  };
 
   useEffect(() => {
-    if (isOpen) {
-      resetSelectedProducts();
+    if (!isOpen) return;
+    if (detailData?.shop.products) {
+      setProductList(detailData?.shop.products);
+    } else {
+      clearProductList();
     }
-  }, [isOpen, resetSelectedProducts]);
+  }, [isOpen, clearProductList]);
 
   const handleCloseModal = () => {
     onClose();
   };
 
   const handleSetProductList = () => {
-    setProductList();
     handleCloseModal();
     if (onClick) onClick();
   };
@@ -50,12 +66,16 @@ export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: Ad
                 product={product}
                 checkbox
                 onClick={() => toggleProduct(product)}
-                isCheck={selectedProducts.some((p) => p.id === product.id)}
+                isCheck={productList.some((p) => p.id === product.id)}
                 isModal
               />
             ))}
           </Flex>
-          <Button onClick={handleSetProductList} title="추가하기" disabled={!selectedProducts.length} />
+          <Button
+            onClick={handleSetProductList}
+            title="추가하기"
+            disabled={!productList.length || compareArrays(productList, detailData?.shop.products)}
+          />
         </Flex>
       </Flex>
     </BottomModal>
