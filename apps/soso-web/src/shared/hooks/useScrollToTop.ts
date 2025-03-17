@@ -8,7 +8,6 @@ export default function useScrollToTop() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    console.log('123');
     window.scrollTo(0, 0);
   }, [pathname, searchParams]);
 }

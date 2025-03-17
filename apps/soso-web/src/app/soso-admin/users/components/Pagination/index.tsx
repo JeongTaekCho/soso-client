@@ -9,10 +9,7 @@ interface PaginationProps {
 }
 
 const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
-  const handlePageChange = (page: number) => {
-    // 페이지 변경 로직을 여기에 구현합니다. 실제 구현에서는 URL을 변경하거나 상태를 업데이트합니다.
-    console.log('페이지 변경:', page);
-  };
+  const handlePageChange = (page: number) => {};
 
   // 페이지 범위 계산 (현재 페이지 주변에 최대 5개 페이지 표시)
   const getPageRange = () => {
