@@ -1,3 +1,4 @@
+import { handleImageError } from '@/shared/utils/handleImageError';
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -14,6 +15,7 @@ export default function ProductImage({ imgUrl, size, className }: ProductImagePr
         src={imgUrl || '/images/default_item.svg'}
         className={clsx('rounded-12', className)}
         alt="프로덕트 이미지"
+        onError={handleImageError}
       />
     </div>
   );

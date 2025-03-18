@@ -22,11 +22,12 @@ const NaverMap = dynamic(() => import('../../../../shared/components/layout/Nave
 export default function HomePage() {
   const { lat, lng, prevLat, prevLng, prevShopId, setPrevLocation, setLocation } = useLocationStore();
   const { map, addMarker, setCenter, clearMarkers } = useMapStore();
+  const [isRender, setIsRender] = useState(false);
   const { setSearchValue } = useSearchStore();
   const [isMove, setIsMove] = useState(false);
   const { openDialog } = useDialog();
 
-  const { data: shopData } = useGetShopQuery(prevLat || lat, prevLng || lng);
+  const { data: shopData } = useGetShopQuery(lat, lng);
   const swiperRef = useRef<any>(null);
 
   const [selectedShopId, setSelectedShopId] = useState<number | null>(null);
@@ -52,7 +53,10 @@ export default function HomePage() {
   const goToSlide = (shopId: number) => {
     const slideIndex = shopData?.findIndex((shop) => shop.id === shopId);
     if (slideIndex !== -1 && swiperRef.current) {
-      swiperRef.current.slideToLoop(slideIndex, 300);
+      // swiperRef.current.slideTo(slideIndex, 300);
+      swiperRef.current.slideToLoop
+        ? swiperRef.current.slideToLoop(slideIndex, 300)
+        : swiperRef.current.slideTo(slideIndex, 300);
     }
   };
 
@@ -117,11 +121,11 @@ export default function HomePage() {
 
   useEffect(() => {
     if (shopData?.length) {
-      setCenter(prevLat || shopData?.[0].lat, prevLng || shopData?.[0].lng);
+      setCenter(shopData?.[0].lat, shopData?.[0].lng);
     } else {
       setCenter(lat, lng);
     }
-  }, [shopData, lat, lng, prevLat, prevLng]);
+  }, [shopData, lat, lng]);
 
   useEffect(() => {
     if (!map) return;
@@ -135,32 +139,26 @@ export default function HomePage() {
     naver.maps.Event.addListener(map, 'dragend', handleDrag);
   }, [map]);
 
-  useEffect(() => {
-    if (prevShopId) {
-      setSelectedShopId(prevShopId);
-    }
-  }, [prevShopId]);
+  // useEffect(() => {
+  //   if (prevShopId) {
+  //     setSelectedShopId(prevShopId);
+  //   }
+  // }, [prevShopId]);
 
   useEffect(() => {
-    if (!shopData || !map || !prevShopId) return;
+    if (!shopData || !map || isRender) return;
 
     const setupMapCenter = async () => {
-      if (prevShopId && prevLat && prevLng) {
-        setCenter(prevLat, prevLng);
-        map.setZoom(18);
-
-        if (swiperRef.current) {
-          goToSlide(prevShopId);
-        }
-      } else if (shopData.length) {
-        setCenter(prevLat || shopData[0].lat, prevLng || shopData[0].lng);
+      if (shopData.length) {
+        setCenter(shopData[0].lat, shopData[0].lng);
       } else {
         setCenter(lat, lng);
       }
     };
 
     setupMapCenter();
-  }, [shopData, map, prevShopId, prevLat, prevLng]);
+    setIsRender(true);
+  }, [shopData, map]);
 
   return (
     <div className="relative">
@@ -198,7 +196,7 @@ export default function HomePage() {
             <Swiper
               slidesPerView={1.2}
               spaceBetween={10}
-              loop={shopData?.length > 3 && true}
+              loop={shopData?.length > 3}
               centeredSlides={true}
               onSlideChange={handleSlideChange}
               onSwiper={(swiper) => {

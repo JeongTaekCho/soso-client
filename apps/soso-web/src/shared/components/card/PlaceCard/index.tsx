@@ -5,6 +5,7 @@ import { ShopType } from '@/shared/types/shopType';
 import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import { getDistance } from '@/shared/utils/getDistance';
+import { handleImageError } from '@/shared/utils/handleImageError';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -19,11 +20,6 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
   const [currentLat, setCurrentLat] = useState<number | null>(0);
   const [currentLng, setCurrentLng] = useState<number | null>(0);
   const { setPrevLocation } = useLocationStore();
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.target as HTMLImageElement;
-    target.src = '/images/default_item.svg';
-  };
 
   useEffect(() => {
     const setCurrentLocation = async () => {
