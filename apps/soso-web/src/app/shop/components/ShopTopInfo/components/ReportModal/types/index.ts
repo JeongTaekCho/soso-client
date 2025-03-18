@@ -1,4 +1,4 @@
 export interface PatchReportRequestType {
   shopId: number;
-  report: number;
+  status: number;
 }
