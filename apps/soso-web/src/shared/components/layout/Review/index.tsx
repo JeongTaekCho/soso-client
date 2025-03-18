@@ -20,6 +20,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
+import ReviewReportModal from '@/shared/components/layout/Review/components/ReviewReportModal';
 
 interface ReviewProps {
   isMe?: boolean;
@@ -31,6 +32,8 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const [isWriteModal, setIsWriteModal] = useState(false);
   const [isImageViewer, setIsImageViewer] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isReportModal, setIsReportModal] = useState(false);
+
   const { openDialog, closeDialog } = useDialog();
   const { openToast } = useToast();
   const { id } = useParams();
@@ -41,6 +44,10 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const { mutate: deleteReviewMutate, isPending } = useDeleteReviewMutation();
   const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id));
   const { data: userData } = useGetUserProfileQuery();
+
+  const handleToggleReportModal = () => {
+    setIsReportModal((prev) => !prev);
+  };
 
   const handleToggleWriteModal = () => {
     const confirm = () => {
@@ -104,7 +111,12 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
       gap={14}
       className={`w-full pb-20 last:border-none ${isBorder ? 'border-b border-gray-100' : 'border-none'}`}
     >
-      <Flex justify="between" align="center" className="w-full">
+      <Flex justify="between" align="center" className="relative w-full">
+        {!isMe && (
+          <button onClick={handleToggleReportModal} className="absolute right-0 top-6 text-gray-400 font-caption">
+            신고하기
+          </button>
+        )}
         <Flex align="center" gap={12} className="flex-1">
           <ProfileImage
             imgUrl={
@@ -191,6 +203,12 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
       />
 
       {isPending && <Loading />}
+
+      <ReviewReportModal
+        reviewId={data?.id}
+        isReportModal={isReportModal}
+        handleToggleReportModal={handleToggleReportModal}
+      />
     </Flex>
   );
 }

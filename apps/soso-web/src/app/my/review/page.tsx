@@ -81,13 +81,10 @@ export default function MyReviewPage() {
             </div>
           ))}
 
-          {/* 무한 스크롤을 위한 관찰 요소 */}
           {!isLoading && <div ref={ref} className="h-40" />}
 
-          {/* 로딩 상태 표시 */}
           {isLoading && <Loading />}
 
-          {/* 데이터가 없을 때 표시할 내용 */}
           {myReviewData && allReviews.length === 0 && (
             <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
               <p className="text-gray-500 font-body1_m">작성한 후기가 없습니다.</p>
