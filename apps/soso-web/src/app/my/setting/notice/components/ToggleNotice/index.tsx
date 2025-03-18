@@ -27,7 +27,7 @@ export default function ToggleNotice({
     <Flex direction="col" gap={16} className="w-full py-16">
       <button className="flex w-full flex-col items-start gap-4" onClick={toggleContent}>
         <Flex className="w-full justify-between">
-          <h3 className="text-gray-800 font-title4_semi">{title}</h3>
+          <h3 className="text-left text-gray-800 font-title4_semi">{title}</h3>
           <div>
             <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
               <ToggleIcon />
