@@ -84,7 +84,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
       <Flex className="h-full w-full rounded-16 bg-white px-18 py-16" align="center" justify="between">
         <Flex align="center" gap={12}>
           <div className="relative h-72 w-72">
-            <Image src={'/images/default_item.svg'} style={{ objectFit: 'cover' }} fill alt="" />
+            <Image src={data?.image || '/images/default_item.svg'} style={{ objectFit: 'cover' }} fill alt="" />
           </div>
           <Flex direction="col" gap={8}>
             <h4 className="font-title4_semi">{data.name}</h4>

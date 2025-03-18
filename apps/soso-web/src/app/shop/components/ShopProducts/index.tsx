@@ -56,7 +56,7 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
     const data = {
       shopId: Number(id),
       products: productList.map((el) => {
-        return { id: el.id, name: el.name };
+        return { id: el.id };
       }),
     };
 
