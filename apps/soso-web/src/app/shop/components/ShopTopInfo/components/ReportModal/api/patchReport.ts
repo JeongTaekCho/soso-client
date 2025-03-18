@@ -2,8 +2,8 @@ import { PatchReportRequestType } from '@/app/shop/components/ShopTopInfo/compon
 import { customFetch } from '@/shared/utils/customFetch';
 
 export const patchReport = async (data: PatchReportRequestType) => {
-  const result = await customFetch('/shop/report', {
-    method: 'PATCH',
+  const result = await customFetch('/report/shop', {
+    method: 'POST',
     body: data,
   });
 

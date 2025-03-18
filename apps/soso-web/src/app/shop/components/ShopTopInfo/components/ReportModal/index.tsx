@@ -25,7 +25,7 @@ export default function ReportModal({ isReportModal, handleToggleReportModal }: 
     setSelectedId(reportId);
     const data = {
       shopId: Number(id),
-      report: Number(reportId),
+      status: Number(reportId),
     };
 
     patchReportMutate(data, {
