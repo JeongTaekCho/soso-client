@@ -10,12 +10,23 @@ import Loading from '@/shared/components/loading/Loading';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
 import { useInView } from 'react-intersection-observer';
 import { useRef, useState, useEffect } from 'react';
+import { useGetWishRegionQuery } from '@/app/my/wish/hooks/useGetWishRegionQuery';
 
 export default function MyWishPage() {
   const [area, setArea] = useState('전체 지역');
   const [isFilter, setIsFilter] = useState(false);
 
-  const { data: myWishData, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useGetMyWishQuery(15);
+  const {
+    data: myWishData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    refetch: wishDataRefetch,
+  } = useGetMyWishQuery(15, area === '전체 지역' ? '' : area);
+  const { data: regionData } = useGetWishRegionQuery();
+
+  console.log(regionData);
 
   const filterRef = useRef<HTMLDivElement>(null);
 
@@ -40,6 +51,11 @@ export default function MyWishPage() {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
 
+  useEffect(() => {
+    console.log(area);
+    wishDataRefetch();
+  }, [area]);
+
   const allWishItems = myWishData?.pages.flatMap((page) => page.data) || [];
 
   return (
@@ -58,8 +74,9 @@ export default function MyWishPage() {
                 className="absolute right-0 top-30 z-dropdown w-[126px] rounded-12 bg-white shadow-filter-select"
               >
                 <FilterSelectButton label="전체 지역" active={area === '전체 지역'} onClick={handleChangeArea} />
-                <FilterSelectButton label="서울" active={area === '서울'} onClick={handleChangeArea} />
-                <FilterSelectButton label="제주" active={area === '제주'} onClick={handleChangeArea} />
+                {regionData?.map((region) => (
+                  <FilterSelectButton key={region} label={region} active={area === region} onClick={handleChangeArea} />
+                ))}
               </Flex>
             </div>
           )}

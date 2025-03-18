@@ -1,14 +1,14 @@
 import { getMyWish } from '@/app/my/components/ProductLists/api/getMyWish';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 import { useInfiniteQuery } from '@tanstack/react-query';
-export const useGetMyWishQuery = (limit: number) => {
+export const useGetMyWishQuery = (limit: number, area?: string) => {
   const { token } = useAuthStore();
 
   return useInfiniteQuery({
     queryKey: ['myWish', limit],
 
     queryFn: async ({ pageParam }) => {
-      const result = await getMyWish(pageParam, limit);
+      const result = await getMyWish(pageParam, limit, area);
       return result;
     },
 
