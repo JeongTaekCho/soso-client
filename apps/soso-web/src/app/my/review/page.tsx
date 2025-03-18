@@ -9,8 +9,11 @@ import Loading from '@/shared/components/loading/Loading';
 import { useInView } from 'react-intersection-observer';
 import clsx from 'clsx';
 import { MouseEvent, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function MyReviewPage() {
+  const router = useRouter();
+
   const [isLatest, setIsLatest] = useState(true);
 
   const {
@@ -75,7 +78,8 @@ export default function MyReviewPage() {
           {allReviews.map((review, index) => (
             <div
               key={review.id || index}
-              className="group w-full border-b-[10px] border-gray-50 py-20 last:border-none"
+              className="group w-full cursor-pointer border-b-[10px] border-gray-50 py-20 last:border-none"
+              onClick={() => router.push(`/shop/${review.shop.id}/review`)}
             >
               <MyReview data={review} />
             </div>
