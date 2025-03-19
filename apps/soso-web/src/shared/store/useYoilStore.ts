@@ -14,7 +14,7 @@ interface YoilStore {
   resetYoil: () => void; // 추가된 함수
   addYoil: YoilType[];
   toggleAddYoil: (id: string) => void;
-  setAddYoil: (updatedYoil: YoilType[]) => void;
+  setAddYoil: (label: string, checked: boolean) => void;
   resetAddYoil: () => void;
 }
 
@@ -63,7 +63,10 @@ export const useYoilStore = create<YoilStore>((set) => ({
     set((state) => ({
       addYoil: state.addYoil.map((day) => (day.id === id ? { ...day, checked: !day.checked } : day)),
     })),
-  setAddYoil: (updatedYoil) => set(() => ({ addYoil: updatedYoil })),
+  setAddYoil: (label, checked) =>
+    set((state) => ({
+      addYoil: state.addYoil.map((day) => (day.label === label ? { ...day, checked } : day)),
+    })),
 
   resetAddYoil: () =>
     set(() => ({
