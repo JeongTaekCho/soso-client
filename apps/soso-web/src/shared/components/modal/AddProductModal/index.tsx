@@ -21,7 +21,7 @@ interface AddProductModalProps {
 export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: AddProductModalProps) {
   const { productList, setProductList, toggleProduct, clearProductList } = useProductListStore();
   const { id } = useParams();
-  const { data: detailData } = useGetShopDetailQuery(String(id));
+  const { data: detailData } = useGetShopDetailQuery(id);
 
   const compareArrays = (
     arr1: { id: number; name: string }[] | undefined,

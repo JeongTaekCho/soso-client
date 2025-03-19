@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsNavigation } from '@/shared/hooks/useIsNavigation';
+import clsx from 'clsx';
 
 interface ToastOptions {
   message: string;
@@ -16,6 +18,7 @@ const ToastContext = createContext<ToastContextType | null>(null);
 
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [toast, setToast] = useState<ToastOptions | null>(null);
+  const isNavigation = useIsNavigation();
 
   const openToast = (options: ToastOptions) => {
     setToast(options);
@@ -28,7 +31,10 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
       <AnimatePresence>
         {toast && (
           <motion.div
-            className="fixed bottom-72 left-1/2 z-modal w-full max-w-screen px-16"
+            className={clsx(
+              'fixed left-1/2 z-modal w-full max-w-screen px-16',
+              isNavigation ? 'bottom-72' : 'bottom-12'
+            )}
             initial={{ opacity: 0, y: 30, x: '-50%' }}
             animate={{ opacity: 1, y: 0, x: '-50%' }}
             exit={{ opacity: 0, y: 20, x: '-50%' }}
