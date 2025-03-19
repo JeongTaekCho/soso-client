@@ -4,7 +4,9 @@ import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
 import Textarea from '@/shared/components/inputs/Textarea';
 import Flex from '@/shared/components/layout/Flex';
 import { REVIEW_REPORT_LIST } from '@/shared/components/layout/Review/components/ReviewReportModal/constants/ReviewReportList';
+import { usePostReviewReportMutation } from '@/shared/components/layout/Review/components/ReviewReportModal/hooks/usePostReviewReportMutation';
 import BottomModal from '@/shared/components/modal/BottomModal';
+import { useDialog } from '@/shared/context/DialogContext';
 import useInput from '@/shared/hooks/useInput';
 import { useState } from 'react';
 
@@ -21,6 +23,9 @@ export default function ReviewReportModal({
 }: ReviewReportModalProps) {
   const [selectedId, setSelectedId] = useState<string>('');
   const { value: etcValue, onChange: handleChangeEtcValue } = useInput('');
+  const { openDialog } = useDialog();
+
+  const { mutate: reviewReportMutate } = usePostReviewReportMutation();
 
   const handleChange = (reportId: string) => {
     if (!reviewId) return;
@@ -31,10 +36,29 @@ export default function ReviewReportModal({
   const handleSubmitReviewReport = () => {
     const data = {
       reviewId: Number(reviewId),
-      report: Number(selectedId),
+      status: Number(selectedId),
+      message: etcValue,
     };
 
     console.log(data);
+
+    reviewReportMutate(data, {
+      onSuccess: () => {
+        handleToggleReportModal();
+        openDialog({
+          type: 'alert',
+          title: '신고 완료',
+          message: (
+            <span>
+              소중한 정보 감사합니다.
+              <br />
+              확인 후 해당 리뷰는 삭제될 예정입니다.
+            </span>
+          ),
+        });
+        setSelectedId('');
+      },
+    });
   };
 
   return (
