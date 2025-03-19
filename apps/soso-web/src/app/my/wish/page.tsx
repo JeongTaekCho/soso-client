@@ -26,8 +26,6 @@ export default function MyWishPage() {
   } = useGetMyWishQuery(15, area === '전체 지역' ? '' : area);
   const { data: regionData } = useGetWishRegionQuery();
 
-  console.log(regionData);
-
   const filterRef = useRef<HTMLDivElement>(null);
 
   const { ref, inView } = useInView({
@@ -52,7 +50,6 @@ export default function MyWishPage() {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
 
   useEffect(() => {
-    console.log(area);
     wishDataRefetch();
   }, [area]);
 

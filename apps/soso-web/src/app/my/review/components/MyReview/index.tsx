@@ -2,7 +2,6 @@ import { MyReviewType } from '@/app/my/components/ProductLists/types';
 import Flex from '@/shared/components/layout/Flex';
 import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
 import ShopInfo from '@/shared/components/ui/ShopInfo';
-import { formatDate } from '@/shared/utils/formatDate';
 import { formatStringDate } from '@/shared/utils/formatStringDate';
 
 interface MyReviewProps {
