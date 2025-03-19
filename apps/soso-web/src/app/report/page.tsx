@@ -7,7 +7,7 @@ import Flex from '@/shared/components/layout/Flex';
 import Header from '@/shared/components/layout/Header';
 import NaverMap from '@/shared/components/layout/NaverMap';
 import FullMap from '@/shared/components/modal/FullMap';
-import { CURRENT_LOCATION_MARKER_ID, REPORT_MARKER_ID } from '@/shared/constant/location';
+import { REPORT_MARKER_ID } from '@/shared/constant/location';
 import useMapStore from '@/shared/store/useMapStore';
 import { getCurrentAddress } from '@/shared/utils/getCurrentAddress';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
