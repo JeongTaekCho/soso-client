@@ -10,6 +10,8 @@ interface ShopInfoProps {
 }
 
 export default function ShopInfo({ name, date, imgUrl, disabled }: ShopInfoProps) {
+  console.log(imgUrl);
+
   return (
     <Flex align="center" gap={12}>
       <ProductImage imgUrl={!disabled ? imgUrl : '/images/confirm.png'} />

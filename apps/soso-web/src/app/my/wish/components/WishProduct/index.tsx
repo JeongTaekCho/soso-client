@@ -2,6 +2,7 @@
 
 import { MyWishType } from '@/app/my/components/ProductLists/types';
 import useIsMobile from '@/shared/hooks/useIsMobile';
+import { handleImageError } from '@/shared/utils/handleImageError';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,6 +23,7 @@ export default function WishProduct({ data }: WishProductProps) {
           fill
           style={{ objectFit: 'cover' }}
           alt="프로덕트 이미지"
+          onError={handleImageError}
         />
       </div>
       <p className="max-w-full truncate text-gray-600 font-body1_m">{data.shop.name}</p>
