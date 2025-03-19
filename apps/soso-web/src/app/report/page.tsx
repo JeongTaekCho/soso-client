@@ -47,19 +47,11 @@ export default function ReportPage() {
         const currentAddress = await getCurrentAddress(currentLocation.lat, currentLocation.lng);
         if (currentAddress) {
           setCurrentAddress(currentAddress);
-          setShop({ ...shop, location: currentAddress });
+          setShop({ ...shop, location: currentAddress, lat: currentLocation.lat, lng: currentLocation.lng });
         }
       }
 
       if (currentLocation === 'denied') return;
-      addMarker({
-        id: CURRENT_LOCATION_MARKER_ID,
-        position: { lat: currentLocation.lat, lng: currentLocation.lng },
-        icon: {
-          content: `<div style="width:24px; height:24px" class="animate-glow"><img width='24' height='24' src="/images/marker/current_marker.svg" alt="지도 마커" ></img></div>`,
-        },
-        zIndex: 20,
-      });
     };
 
     clearMarkers();
