@@ -40,8 +40,6 @@ export default function ReviewReportModal({
       message: etcValue,
     };
 
-    console.log(data);
-
     reviewReportMutate(data, {
       onSuccess: () => {
         handleToggleReportModal();

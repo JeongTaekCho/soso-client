@@ -5,6 +5,7 @@ import BottomNavigation from '@/shared/components/layout/BottomNavigation';
 import TanstackQueryProvider from '@/shared/components/provider/TanstackQueryProvider';
 import { DialogProvider } from '@/shared/context/DialogContext';
 import { ToastProvider } from '@/shared/context/ToastContext';
+import { useIsNavigation } from '@/shared/hooks/useIsNavigation';
 import { usePathname } from 'next/navigation';
 import { ReactNode, useEffect, useRef } from 'react';
 
@@ -15,7 +16,7 @@ interface RootLayoutProviderProps {
 export default function RootLayoutProvider({ children }: RootLayoutProviderProps) {
   const pathname = usePathname();
 
-  const isNavigation = pathname === '/' || pathname === '/search' || pathname === '/report' || pathname === '/my';
+  const isNavigation = useIsNavigation();
 
   useEffect(() => {
     const setVh = () => {
