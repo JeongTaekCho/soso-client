@@ -34,7 +34,7 @@ interface ShopOperInfoProps {
 }
 
 export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
-  const { yoil, setCheckYoil, addYoil, toggleAddYoil, resetAddYoil } = useYoilStore();
+  const { yoil, setCheckYoil, addYoil, setAddYoil, toggleAddYoil, resetAddYoil } = useYoilStore();
   const { token } = useAuthStore();
   const [isBottomModal, setIsBottomModal] = useState(false);
   const { id } = useParams();
@@ -46,10 +46,11 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
     closeTime,
     isTimePicker,
     timePickerType,
+    setOpenTime,
+    setCloseTime,
     handleCloseTimePicker,
     handleOpenTimePicker,
     handleTimePicker,
-    resetTimePicker,
   } = useTimePicker();
 
   const { value: phoneNumber, onChange: handleChangePhoneNumber, setValue: setPhoneNumber } = useInput('');
@@ -84,12 +85,6 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
     setIsBottomModal((prev) => !prev);
   };
 
-  const handleResetOperating = () => {
-    resetAddYoil();
-    setPhoneNumber('');
-    resetTimePicker();
-  };
-
   const handleSubmitOperating = () => {
     const data = {
       shopId: Number(id),
@@ -109,7 +104,6 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
 
     postOperatingMutate(data, {
       onSuccess: () => {
-        handleResetOperating();
         handleToggleBottomModal();
         openDialog({
           type: 'alert',
@@ -134,7 +128,17 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
     setCheckYoil('금', operData?.[0]?.friday || false);
     setCheckYoil('토', operData?.[0]?.saturday || false);
     setCheckYoil('일', operData?.[0]?.sunday || false);
-  }, [operData]);
+    setAddYoil('월', operData?.[0]?.monday || false);
+    setAddYoil('화', operData?.[0]?.tuesday || false);
+    setAddYoil('수', operData?.[0]?.wednesday || false);
+    setAddYoil('목', operData?.[0]?.thursday || false);
+    setAddYoil('금', operData?.[0]?.friday || false);
+    setAddYoil('토', operData?.[0]?.saturday || false);
+    setAddYoil('일', operData?.[0]?.sunday || false);
+    setOpenTime(operData?.[0]?.startTime || '');
+    setCloseTime(operData?.[0]?.endTime || '');
+    setPhoneNumber(operData?.[0]?.phoneNumber || '');
+  }, [operData, isBottomModal]);
 
   const [status, setStatus] = useState({
     isYoilData: false,
@@ -159,6 +163,8 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
       });
     }
   }, [operData]);
+
+  console.log(openTime);
 
   return (
     <ContentBox>

@@ -39,6 +39,8 @@ export const useTimePicker = () => {
     closeTime,
     isTimePicker,
     timePickerType,
+    setOpenTime,
+    setCloseTime,
     handleOpenTimePicker,
     handleCloseTimePicker,
     handleTimePicker,
