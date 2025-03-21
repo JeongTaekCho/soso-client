@@ -19,7 +19,6 @@ interface ReportModalProps {
 }
 export default function ReportModal({ isReportModal, handleToggleReportModal }: ReportModalProps) {
   const [selectedId, setSelectedId] = useState<string>('');
-  const { value: etcValue, onChange: handleChangeEtcValue } = useInput('');
   const { id } = useParams();
   const { openDialog } = useDialog();
 
@@ -33,7 +32,6 @@ export default function ReportModal({ isReportModal, handleToggleReportModal }: 
     const data = {
       shopId: Number(id),
       status: Number(selectedId),
-      message: etcValue,
     };
 
     patchReportMutate(data, {
@@ -74,14 +72,6 @@ export default function ReportModal({ isReportModal, handleToggleReportModal }: 
               onChange={() => handleChange(list.id)}
             />
           ))}
-          {selectedId === '3' && (
-            <Textarea
-              value={etcValue}
-              onChange={handleChangeEtcValue}
-              height="100px"
-              placeholder="신고 사유를 입력해 주세요."
-            />
-          )}
         </Flex>
         <Button title="신고하기" onClick={handleSubmitReport} className="mt-16" />
       </Flex>

@@ -9,9 +9,4 @@ export const REPORT_LIST = [
     text: '위치가 잘못됐어요.',
     name: 'report',
   },
-  {
-    id: '3',
-    text: '기타',
-    name: 'report',
-  },
 ];
