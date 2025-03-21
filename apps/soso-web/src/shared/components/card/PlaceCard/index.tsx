@@ -48,7 +48,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
         width: width || '327px',
         height: height || 'auto',
       }}
-      className="overflow-hidden"
+      className="overflow-hidden bg-white"
     >
       <Flex className="relative h-full w-full rounded-16 bg-white px-18 py-16" align="end" justify="between">
         <Flex align="center" gap={12} className="w-full">
@@ -86,7 +86,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
         width: width || '100%',
         height: height || 'auto',
       }}
-      className="overflow-hidden"
+      className="overflow-hidden bg-white"
     >
       <Flex className="h-full w-full rounded-16 bg-white px-18 py-16" align="center" justify="between">
         <Flex align="center" gap={12}>
