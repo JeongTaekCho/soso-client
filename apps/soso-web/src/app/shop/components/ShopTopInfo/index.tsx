@@ -81,7 +81,7 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
                 window.open(kakaoFindUrl(shopData?.shop.name || '', shopData?.shop.lat, shopData?.shop.lng), '_blank')
               }
             />
-            <MapButton title="apple 지도" />
+            {/* <MapButton title="apple 지도" /> */}
           </Flex>
         </Flex>
       </BottomModal>

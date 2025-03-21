@@ -52,7 +52,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
     >
       <Flex className="relative h-full w-full rounded-16 bg-white px-18 py-16" align="end" justify="between">
         <Flex align="center" gap={12} className="w-full">
-          <div className="relative h-64 min-w-64">
+          <div className="relative h-64 min-w-64 overflow-hidden rounded-8">
             <Image
               src={data?.image || '/images/default_item.svg'}
               style={{ objectFit: 'cover' }}
@@ -90,7 +90,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
     >
       <Flex className="h-full w-full rounded-16 bg-white px-18 py-16" align="center" justify="between">
         <Flex align="center" gap={12}>
-          <div className="relative h-72 w-72">
+          <div className="relative h-72 w-72 overflow-hidden rounded-8">
             <Image
               src={data?.image || '/images/default_item.svg'}
               style={{ objectFit: 'cover' }}

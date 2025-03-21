@@ -17,7 +17,7 @@ export default function WishProduct({ data }: WishProductProps) {
 
   return (
     <Link href={`/shop/${data.shop.id}`} className={clsx('flex flex-col gap-8', width)}>
-      <div className="relative aspect-square w-full">
+      <div className="relative aspect-square w-full overflow-hidden rounded-12">
         <Image
           src={data.shop.image || '/images/default_item.svg'}
           fill
