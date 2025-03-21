@@ -7,12 +7,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
 import EmptyData from '@/shared/components/ui/EmptyData';
 import LinkIcon from '@/shared/components/icons/LinkIcon';
+import clsx from 'clsx';
 
 interface Data {
   id: number;
   image: string | null;
   name: string;
   link: string;
+  type?: number;
 }
 
 interface ProductLayoutProps {
@@ -47,8 +49,14 @@ export default function ProductLayout({ data, title, placeholder, productLink, t
         >
           {data.map((item, index) => (
             <SwiperSlide style={{ width: '72px' }} key={index}>
-              <Link href={item.link} className="flex w-full flex-col gap-6 truncate">
-                <ProductImage imgUrl={item.image || '/images/default_item.svg'} size={72} />
+              <Link
+                href={item.type === 0 ? '#' : item.link}
+                className={clsx('flex w-full flex-col gap-6 truncate', item.type === 0 && 'cursor-default')}
+              >
+                <ProductImage
+                  imgUrl={item.type === 0 ? '/images/confirm.png' : item.image || '/images/default_item.svg'}
+                  size={72}
+                />
                 <span className="block max-w-full truncate break-all px-4 text-gray-500 font-body2_m">{item.name}</span>
               </Link>
             </SwiperSlide>

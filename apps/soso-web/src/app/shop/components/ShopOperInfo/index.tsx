@@ -34,6 +34,12 @@ interface ShopOperInfoProps {
 }
 
 export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
+  const [isFormChanged, setIsFormChanged] = useState(false);
+  const [status, setStatus] = useState({
+    isYoilData: false,
+    isTimeData: false,
+    isPhoneData: false,
+  });
   const { yoil, setCheckYoil, addYoil, setAddYoil, toggleAddYoil, resetAddYoil } = useYoilStore();
   const { token } = useAuthStore();
   const [isBottomModal, setIsBottomModal] = useState(false);
@@ -140,11 +146,26 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
     setPhoneNumber(operData?.[0]?.phoneNumber || '');
   }, [operData, isBottomModal]);
 
-  const [status, setStatus] = useState({
-    isYoilData: false,
-    isTimeData: false,
-    isPhoneData: false,
-  });
+  useEffect(() => {
+    // 운영요일 변경 확인
+    const isYoilChanged =
+      addYoil[0].checked !== (operData?.[0]?.monday || false) ||
+      addYoil[1].checked !== (operData?.[0]?.tuesday || false) ||
+      addYoil[2].checked !== (operData?.[0]?.wednesday || false) ||
+      addYoil[3].checked !== (operData?.[0]?.thursday || false) ||
+      addYoil[4].checked !== (operData?.[0]?.friday || false) ||
+      addYoil[5].checked !== (operData?.[0]?.saturday || false) ||
+      addYoil[6].checked !== (operData?.[0]?.sunday || false);
+
+    // 운영시간 변경 확인
+    const isTimeChanged = openTime !== (operData?.[0]?.startTime || '') || closeTime !== (operData?.[0]?.endTime || '');
+
+    // 전화번호 변경 확인
+    const isPhoneChanged = phoneNumber !== (operData?.[0]?.phoneNumber || '');
+
+    // 하나라도 변경되었으면 폼이 변경된 것으로 판단
+    setIsFormChanged(isYoilChanged || isTimeChanged || isPhoneChanged);
+  }, [addYoil, openTime, closeTime, phoneNumber, operData]);
 
   useEffect(() => {
     if (operData && operData.length > 0) {
@@ -163,8 +184,6 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
       });
     }
   }, [operData]);
-
-  console.log(openTime);
 
   return (
     <ContentBox>
@@ -256,7 +275,7 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
                 />
               </InputContent>
             </Flex>
-            <Button title="제안하기" type="button" onClick={handleSubmitOperating} />
+            <Button title="제안하기" type="button" disabled={!isFormChanged} onClick={handleSubmitOperating} />
           </Flex>
         </Flex>
       </BottomModal>

@@ -14,6 +14,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 import { useInView } from 'react-intersection-observer';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ShopType } from '@/shared/types/shopType';
 import Loading from '@/shared/components/loading/Loading';
 import { useGetUserFindShopQuery } from '@/app/search/components/SearchList/hooks/useGetUserFindShopQuery';
@@ -79,92 +80,128 @@ export default function SearchList() {
 
   return (
     <Flex direction="col" gap={18} className="mt-20 w-full">
-      {!searchDebounceValue && userFindShopData && userFindShopData.length > 0 && (
-        <Flex direction="col" gap={12} className="mb-18 w-full px-20">
-          <Flex justify="between" align="center" className="w-full">
-            <h3 className="font-body1_bold">최근에 찾은 소품샵</h3>
-            {token && (
-              <button onClick={handleAllDeleteFindShop} className="text-gray-400 font-caption">
-                전체 삭제
-              </button>
-            )}
-          </Flex>
-          {token ? (
-            <Swiper
-              modules={[Navigation, FreeMode]}
-              slidesPerView="auto"
-              spaceBetween={8}
-              freeMode={true}
-              grabCursor={true}
+      <motion.div className="w-full">
+        <AnimatePresence mode="popLayout">
+          {!searchDebounceValue && userFindShopData && userFindShopData.length > 0 && (
+            <motion.div
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{
+                y: -100,
+                opacity: 0,
+                transition: {
+                  duration: 0.3,
+                  ease: 'easeOut',
+                },
+              }}
               className="w-full"
             >
-              {userFindShopData?.map((shop, index) => (
-                <SwiperSlide key={index} style={{ width: 'auto' }}>
-                  <SearchItem
-                    label={shop.shopName}
-                    onClick={() => {
-                      handleDeleteFindShop(shop.shopName);
-                    }}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          ) : (
-            <p className="text-gray-400 font-body2_m">로그인 후 가능한 서비스입니다.</p>
+              <motion.div
+                initial={{ y: 0 }}
+                animate={{ y: 0 }}
+                exit={{
+                  height: 0,
+                  marginBottom: 0,
+                  transition: {
+                    duration: 0.3,
+                    ease: 'easeInOut',
+                    delay: 0.1,
+                  },
+                }}
+                className="w-full overflow-hidden"
+              >
+                <Flex direction="col" gap={12} className="mb-18 w-full px-20">
+                  <Flex justify="between" align="center" className="w-full">
+                    <h3 className="font-body1_bold">최근에 찾은 소품샵</h3>
+                    {token && (
+                      <button onClick={handleAllDeleteFindShop} className="text-gray-400 font-caption">
+                        전체 삭제
+                      </button>
+                    )}
+                  </Flex>
+                  {token ? (
+                    <Swiper
+                      modules={[Navigation, FreeMode]}
+                      slidesPerView="auto"
+                      spaceBetween={8}
+                      freeMode={true}
+                      grabCursor={true}
+                      className="w-full"
+                    >
+                      {userFindShopData?.map((shop, index) => (
+                        <SwiperSlide key={index} style={{ width: 'auto' }}>
+                          <SearchItem
+                            label={shop.shopName}
+                            onClick={() => {
+                              handleDeleteFindShop(shop.shopName);
+                            }}
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  ) : (
+                    <p className="text-gray-400 font-body2_m">로그인 후 가능한 서비스입니다.</p>
+                  )}
+                </Flex>
+              </motion.div>
+            </motion.div>
           )}
-        </Flex>
-      )}
-      <Flex direction="col" gap={4} className="w-full">
-        {!searchDebounceValue && <h3 className="px-20 font-body1_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
-        {!searchDebounceValue && (
-          <Flex direction="col" className="w-full">
-            {shopSortData?.map((shop) => (
-              <div key={shop.id} className="w-full border-b border-gray-100">
-                <PlaceCard data={shop} />
-              </div>
-            ))}
+        </AnimatePresence>
+
+        <motion.div layout className="w-full">
+          <Flex direction="col" gap={4} className="w-full">
+            {!searchDebounceValue && <h3 className="px-20 font-body1_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
+            {!searchDebounceValue && (
+              <Flex direction="col" className="w-full">
+                {shopSortData?.map((shop) => (
+                  <div key={shop.id} className="w-full border-b border-gray-100">
+                    <PlaceCard data={shop} />
+                  </div>
+                ))}
+              </Flex>
+            )}
           </Flex>
-        )}
-      </Flex>
-      {shopSearchData && shopSearchData?.pages[0].data.length > 0 && (
-        <Flex direction="col" className="w-full">
-          {shopSearchData?.pages.map((page, index) => (
-            <div className="w-full" key={`page-${index}`}>
-              {page.data.map((shop: ShopType) => (
-                <div key={shop.id} className="w-full border-b border-gray-100">
-                  <PlaceCard data={shop} />
+          {shopSearchData && shopSearchData?.pages[0].data.length > 0 && (
+            <Flex direction="col" className="w-full">
+              {shopSearchData?.pages.map((page, index) => (
+                <div className="w-full" key={`page-${index}`}>
+                  {page.data.map((shop: ShopType) => (
+                    <div key={shop.id} className="w-full border-b border-gray-100">
+                      <PlaceCard data={shop} />
+                    </div>
+                  ))}
                 </div>
               ))}
-            </div>
-          ))}
 
-          {!isLoading && <div ref={ref} className="h-40" />}
-        </Flex>
-      )}
-      {shopSearchData && !shopSearchData.pages[0].data.length && (
-        <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
-          <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
-          <Link
-            href="/report"
-            className="flex h-56 w-[263px] items-center justify-center rounded-16 bg-orange-light text-main font-body1_m"
-          >
-            소중한 소품샵 제보하기
-          </Link>
-        </Flex>
-      )}
+              {!isLoading && <div ref={ref} className="h-40" />}
+            </Flex>
+          )}
+          {shopSearchData && !shopSearchData.pages[0].data.length && (
+            <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
+              <p className="text-gray-500 font-body1_m">찾고 계신 장소가 없으신가요?</p>
+              <Link
+                href="/report"
+                className="flex h-56 w-[263px] items-center justify-center rounded-16 bg-orange-light text-main font-body1_m"
+              >
+                소중한 소품샵 제보하기
+              </Link>
+            </Flex>
+          )}
 
-      {shopSortData && !shopSortData.length && !shopSearchData && (
-        <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
-          <p className="text-gray-500 font-body1_m">내 주변 소품샵이 없어요</p>
-          <Link
-            href="/report"
-            className="flex h-56 w-[263px] items-center justify-center rounded-16 bg-orange-light text-main font-body1_m"
-          >
-            소중한 소품샵 제보하기
-          </Link>
-        </Flex>
-      )}
-      {isLoading && <Loading />}
+          {shopSortData && !shopSortData.length && !shopSearchData && (
+            <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
+              <p className="text-gray-500 font-body1_m">내 주변 소품샵이 없어요</p>
+              <Link
+                href="/report"
+                className="flex h-56 w-[263px] items-center justify-center rounded-16 bg-orange-light text-main font-body1_m"
+              >
+                소중한 소품샵 제보하기
+              </Link>
+            </Flex>
+          )}
+          {isLoading && <Loading />}
+        </motion.div>
+      </motion.div>
     </Flex>
   );
 }
