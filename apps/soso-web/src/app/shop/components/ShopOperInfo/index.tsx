@@ -164,8 +164,6 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
     }
   }, [operData]);
 
-  console.log(openTime);
-
   return (
     <ContentBox>
       <Flex justify="between" align="center" className="w-full">

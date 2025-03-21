@@ -10,7 +10,6 @@ import WishIcon from '@/shared/components/icons/WishIcon';
 import XIcon from '@/shared/components/icons/XIcon';
 import ContentBox from '@/shared/components/layout/ContentBox';
 import Flex from '@/shared/components/layout/Flex';
-import AlertModal from '@/shared/components/modal/AlertModal';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import { ShopDetailType } from '@/shared/types/shopType';
 import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop';
@@ -69,7 +68,6 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
               <XIcon />
             </button>
           </Flex>
-
           <Flex direction="col" gap={12} className="w-full">
             <MapButton
               title="네이버 지도"
@@ -89,11 +87,6 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
       </BottomModal>
 
       <ReportModal isReportModal={isReportModal} handleToggleReportModal={handleToggleReportModal} />
-      <AlertModal isOpen={false} onClose={() => {}} title="신고완료">
-        소중한 정보 감사합니다.
-        <br />
-        확인 후 해당 장소는 삭제될 예정입니다.
-      </AlertModal>
     </ContentBox>
   );
 }
