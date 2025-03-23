@@ -40,9 +40,9 @@ export default function MyShopPage() {
     <div>
       <Header title="내가 등록한 소품샵" type="back" />
       <Flex direction="col" className="w-full">
-        {allShops.map((data) => (
+        {allShops.map((data, index) => (
           <button
-            key={data.shop.id}
+            key={`shop-${data.shop.id}-${index}`}
             onClick={() => handleLink(data.shop.id)}
             disabled={data.type === 0}
             className="flex w-full items-center justify-between border-b border-gray-100 px-16 py-18"
