@@ -51,7 +51,7 @@ export interface ReviewType {
   }[];
   user: {
     uuid: string;
-    photoUrl: string;
+    photoUrl: string | null;
     nickName: string;
   };
 }
