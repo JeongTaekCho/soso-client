@@ -120,12 +120,12 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
         <Flex align="center" gap={12} className="flex-1">
           <ProfileImage
             imgUrl={
-              (isMe ? getSafeImageUrl(userData?.photoUrl) : getSafeImageUrl(data?.user.photoUrl)) ||
+              (isMe ? getSafeImageUrl(userData?.photoUrl || '') : getSafeImageUrl(data?.user?.photoUrl || '')) ||
               '/images/default_profile.png'
             }
           />
           <Flex direction="col" className="flex-1">
-            <p className="text-gray-800 font-body2_m">{data?.user.nickName || ''}</p>
+            <p className="text-gray-800 font-body2_m">{data?.user?.nickName || '익명'}</p>
             <p className="text-gray-400 font-caption">{formatStringDate(data?.createdAt)}</p>
           </Flex>
         </Flex>
@@ -169,7 +169,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
             <pre className="whitespace-pre-wrap break-all font-['Pretendard'] text-gray-600 font-body2_m">
               {data?.content || ''}
             </pre>
-            {data && data?.images.length > 0 && (
+            {data && data?.images?.length > 0 && (
               <Swiper
                 modules={[Navigation, FreeMode]}
                 slidesPerView="auto"
@@ -178,12 +178,12 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
                 grabCursor={true}
                 className="w-full"
               >
-                {data?.images.map((image, index) => (
+                {data?.images?.map((image, index) => (
                   <SwiperSlide key={`image-${image.id}`} style={{ width: 'auto' }}>
                     <div onClick={() => handleOpenImageViewer(index)} className="relative h-72 w-72">
                       <Image
                         fill
-                        src={getSafeImageUrl(image.url) || ''}
+                        src={getSafeImageUrl(image?.url || '') || ''}
                         alt="리뷰 이미지"
                         className="rounded-12 object-cover"
                       />
@@ -198,7 +198,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
       <ImageSwiperModal
         isOpen={isImageViewer}
         onClose={handleCloseImageViewer}
-        images={data?.images.map((image) => image.url) || []}
+        images={data?.images?.map((image) => image.url) || []}
         initialSlide={selectedIndex}
       />
 

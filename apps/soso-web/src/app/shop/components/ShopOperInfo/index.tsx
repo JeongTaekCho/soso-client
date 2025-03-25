@@ -96,8 +96,8 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
       shopId: Number(id),
       operatingHours: {
         phoneNumber,
-        startTime: openTime,
-        endTime: closeTime,
+        startTime: openTime.split(' ')[1],
+        endTime: closeTime.split(' ')[1],
         monday: addYoil[0].checked,
         tuesday: addYoil[1].checked,
         wednesday: addYoil[2].checked,
@@ -210,12 +210,12 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
             <Flex justify="center" align="center" gap={40} className="w-full rounded-12 bg-gray-50 py-16">
               <Flex align="center" gap={12} className="font-body1_m">
                 <span className="text-gray-400">open</span>
-                <span className="text-gray-800">{operData?.[0]?.startTime?.slice(0, -3) || '-'}</span>
+                <span className="text-gray-800">{operData?.[0]?.startTime || '-'}</span>
               </Flex>
               <Divider width="1px" height="12px" bgColor="#C9CDD2" />
               <Flex align="center" gap={12} className="font-body1_m">
                 <span className="text-gray-400">closed</span>
-                <span className="text-gray-800">{operData?.[0]?.endTime?.slice(0, -3) || '-'}</span>
+                <span className="text-gray-800">{operData?.[0]?.endTime || '-'}</span>
               </Flex>
             </Flex>
           ) : (
