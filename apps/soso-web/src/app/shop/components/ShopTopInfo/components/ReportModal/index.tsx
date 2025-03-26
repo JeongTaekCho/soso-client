@@ -11,7 +11,7 @@ import BottomModal from '@/shared/components/modal/BottomModal';
 import { useDialog } from '@/shared/context/DialogContext';
 import useInput from '@/shared/hooks/useInput';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ReportModalProps {
   isReportModal: boolean;
@@ -73,7 +73,7 @@ export default function ReportModal({ isReportModal, handleToggleReportModal }: 
             />
           ))}
         </Flex>
-        <Button title="신고하기" onClick={handleSubmitReport} className="mt-16" />
+        <Button disabled={!selectedId} title="신고하기" onClick={handleSubmitReport} className="mt-16" />
       </Flex>
     </BottomModal>
   );

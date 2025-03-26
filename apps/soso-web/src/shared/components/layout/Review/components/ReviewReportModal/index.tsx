@@ -87,7 +87,7 @@ export default function ReviewReportModal({
             />
           )}
         </Flex>
-        <Button title="신고하기" onClick={handleSubmitReviewReport} className="mt-16" />
+        <Button disabled={!selectedId} title="신고하기" onClick={handleSubmitReviewReport} className="mt-16" />
       </Flex>
     </BottomModal>
   );

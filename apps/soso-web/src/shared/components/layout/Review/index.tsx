@@ -45,16 +45,28 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
   const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id));
   const { data: userData } = useGetUserProfileQuery();
 
+  const confirm = () => {
+    router.push('/login');
+    closeDialog();
+  };
+
   const handleToggleReportModal = () => {
+    if (!token) {
+      openDialog({
+        type: 'alert',
+        title: '',
+        message: '로그인이 필요한 서비스입니다.',
+        rightLabel: '로그인/회원가입하기',
+        onConfirm: () => confirm(),
+        onCancel: () => closeDialog(),
+      });
+      return;
+    }
+
     setIsReportModal((prev) => !prev);
   };
 
   const handleToggleWriteModal = () => {
-    const confirm = () => {
-      router.push('/login');
-      closeDialog();
-    };
-
     if (token) {
       setIsWriteModal((prev) => !prev);
     } else {
@@ -125,7 +137,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
             }
           />
           <Flex direction="col" className="flex-1">
-            <p className="text-gray-800 font-body2_m">{data?.user?.nickName || '익명'}</p>
+            <p className="text-gray-800 font-body2_m">{data?.user?.nickName || isMe ? '' : '익명'}</p>
             <p className="text-gray-400 font-caption">{formatStringDate(data?.createdAt)}</p>
           </Flex>
         </Flex>
