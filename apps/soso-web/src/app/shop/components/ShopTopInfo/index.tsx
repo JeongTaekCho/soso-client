@@ -11,8 +11,11 @@ import XIcon from '@/shared/components/icons/XIcon';
 import ContentBox from '@/shared/components/layout/ContentBox';
 import Flex from '@/shared/components/layout/Flex';
 import BottomModal from '@/shared/components/modal/BottomModal';
+import { useDialog } from '@/shared/context/DialogContext';
+import { useAuthStore } from '@/shared/store/useAuthStore';
 import { ShopDetailType } from '@/shared/types/shopType';
 import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface ShopTopInfoProps {
@@ -22,7 +25,11 @@ interface ShopTopInfoProps {
 export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
   const [isFindModal, setIsFindModal] = useState(false);
   const [isReportModal, setIsReportModal] = useState(false);
+  const { token } = useAuthStore();
+  const { openDialog, closeDialog } = useDialog();
   const { mutate: toggleWishMutate } = useToggleWishMutation(Number(shopData?.shop.id));
+
+  const router = useRouter();
 
   const handleOpenFindModal = () => {
     setIsFindModal((prev) => !prev);
@@ -32,6 +39,23 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
   };
 
   const handleToggleReportModal = () => {
+    const confirm = () => {
+      router.push('/login');
+      closeDialog();
+    };
+
+    if (!token) {
+      openDialog({
+        type: 'alert',
+        title: '',
+        message: '로그인이 필요한 서비스입니다.',
+        rightLabel: '로그인/회원가입하기',
+        onConfirm: () => confirm(),
+        onCancel: () => closeDialog(),
+      });
+      return;
+    }
+
     setIsReportModal((prev) => !prev);
   };
 
