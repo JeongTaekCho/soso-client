@@ -38,7 +38,7 @@ const useMapStore = create<MapStore>((set, get) => ({
     lng: 126.978,
   },
   zoom: 18,
-  minZoom: 13,
+  minZoom: 7,
   markers: [],
   map: null,
 

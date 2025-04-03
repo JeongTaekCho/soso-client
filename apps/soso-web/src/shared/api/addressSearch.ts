@@ -11,7 +11,7 @@ export const addressSearch = async (query: string): Promise<AddressType[]> => {
       `https://dapi.kakao.com/v2/local/search/keyword.json?query=${query}&page=1&size=15`,
       {
         headers: {
-          Authorization: 'KakaoAK ed6ffe71e1e79e32472df6ddd09548cd',
+          Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_KEY}`,
         },
       }
     );
@@ -20,7 +20,7 @@ export const addressSearch = async (query: string): Promise<AddressType[]> => {
     if (!response.data.documents || response.data.documents.length === 0) {
       response = await axios.get(`https://dapi.kakao.com/v2/local/search/address.json?query=${query}&page=1&size=15`, {
         headers: {
-          Authorization: 'KakaoAK ed6ffe71e1e79e32472df6ddd09548cd',
+          Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_KEY}`,
         },
       });
     }

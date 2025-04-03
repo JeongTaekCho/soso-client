@@ -146,6 +146,12 @@ export default function HomePage() {
   // }, [prevShopId]);
 
   useEffect(() => {
+    if (!shopData) return;
+
+    setSelectedShopId(shopData[0].id);
+  }, [shopData]);
+
+  useEffect(() => {
     if (!shopData || !map || isRender) return;
 
     const setupMapCenter = async () => {
