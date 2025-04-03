@@ -8,6 +8,7 @@ import { usePostReviewReportMutation } from '@/shared/components/layout/Review/c
 import BottomModal from '@/shared/components/modal/BottomModal';
 import { useDialog } from '@/shared/context/DialogContext';
 import useInput from '@/shared/hooks/useInput';
+import { CustomError } from '@/shared/utils/customFetch';
 import { useState } from 'react';
 
 interface ReviewReportModalProps {
@@ -22,7 +23,7 @@ export default function ReviewReportModal({
   handleToggleReportModal,
 }: ReviewReportModalProps) {
   const [selectedId, setSelectedId] = useState<string>('');
-  const { value: etcValue, onChange: handleChangeEtcValue } = useInput('');
+  const { value: etcValue, onChange: handleChangeEtcValue, setValue: setEtcValue } = useInput('');
   const { openDialog } = useDialog();
 
   const { mutate: reviewReportMutate } = usePostReviewReportMutation();
@@ -43,6 +44,7 @@ export default function ReviewReportModal({
     reviewReportMutate(data, {
       onSuccess: () => {
         handleToggleReportModal();
+        setEtcValue('');
         openDialog({
           type: 'alert',
           title: '신고 완료',
@@ -55,6 +57,22 @@ export default function ReviewReportModal({
           ),
         });
         setSelectedId('');
+      },
+      onError: (error: unknown) => {
+        if (error instanceof CustomError) {
+          const responseData = error.data;
+          if (responseData.status === 409) {
+            handleToggleReportModal();
+            setSelectedId('');
+            setEtcValue('');
+            openDialog({
+              title: '이미 신고한 후기입니다.',
+              type: 'alert',
+            });
+          }
+        } else {
+          console.log('알 수 없는 에러:', error);
+        }
       },
     });
   };
@@ -87,7 +105,12 @@ export default function ReviewReportModal({
             />
           )}
         </Flex>
-        <Button disabled={!selectedId} title="신고하기" onClick={handleSubmitReviewReport} className="mt-16" />
+        <Button
+          disabled={!selectedId || !etcValue}
+          title="신고하기"
+          onClick={handleSubmitReviewReport}
+          className="mt-16"
+        />
       </Flex>
     </BottomModal>
   );
