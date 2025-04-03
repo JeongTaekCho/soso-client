@@ -8,6 +8,7 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   placeholder: string;
   className?: string;
   lengthError?: boolean;
+  maxLength?: number;
 }
 
 export default function Textarea({
@@ -17,6 +18,7 @@ export default function Textarea({
   value,
   className,
   lengthError,
+  maxLength,
   ...props
 }: TextareaProps) {
   return (
@@ -31,9 +33,9 @@ export default function Textarea({
         value={value}
         {...props}
       />
-      {lengthError && (
+      {maxLength && (
         <p className="absolute bottom-14 right-16 text-gray-400 font-caption">
-          (<span className={clsx(lengthError && 'text-etc-red')}>{value.length}</span>/100)
+          (<span className={clsx(lengthError && 'text-etc-red')}>{value.length}</span>/{maxLength})
         </p>
       )}
     </div>

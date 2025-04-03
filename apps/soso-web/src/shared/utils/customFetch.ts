@@ -55,7 +55,6 @@ export const customFetch = async (endPoint: string, options: CustomFetchOptions 
 
     return response.json();
   } catch (error) {
-    console.error('🚨 Fetch 오류:', error);
     throw error;
   }
 };

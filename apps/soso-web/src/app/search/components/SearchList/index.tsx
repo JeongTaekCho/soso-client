@@ -9,7 +9,7 @@ import { useGetShopQuery } from '@/shared/hooks/useGetShopQuery';
 import { useSearchStore } from '@/shared/store/useSearchStore';
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
 import { useAuthStore } from '@/shared/store/useAuthStore';
@@ -52,7 +52,9 @@ export default function SearchList() {
 
   const { token } = useAuthStore();
 
-  const handleDeleteFindShop = (shopName: string) => {
+  const handleDeleteFindShop = (e: MouseEvent<HTMLButtonElement>, shopName: string) => {
+    e.stopPropagation();
+    e.preventDefault();
     deleteFindShopMutate({ shopName });
   };
   const handleAllDeleteFindShop = () => {
@@ -78,39 +80,59 @@ export default function SearchList() {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
 
+  // 컨테이너 애니메이션 변형
+  const containerVariants = {
+    visible: { opacity: 1, y: 0 },
+    hidden: {
+      opacity: 0,
+      y: -100,
+      transition: {
+        duration: 0.3,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  // 내부 콘텐츠 애니메이션 변형
+  const contentVariants = {
+    visible: {
+      opacity: 1,
+      height: 'auto',
+      marginBottom: '18px',
+    },
+    hidden: {
+      opacity: 0,
+      height: 0,
+      marginBottom: 0,
+      transition: {
+        duration: 0.3,
+        ease: 'easeInOut',
+        opacity: { duration: 0.2 },
+      },
+    },
+  };
+
   return (
     <Flex direction="col" gap={18} className="mt-20 w-full">
-      <motion.div className="w-full">
+      <div className="w-full">
         <AnimatePresence mode="popLayout">
           {!searchDebounceValue && userFindShopData && userFindShopData.length > 0 && (
             <motion.div
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 1 }}
-              exit={{
-                y: -100,
-                opacity: 0,
-                transition: {
-                  duration: 0.3,
-                  ease: 'easeOut',
-                },
-              }}
+              key="recent-shops"
+              initial={false}
+              animate="visible"
+              exit="hidden"
+              variants={containerVariants}
               className="w-full"
             >
               <motion.div
-                initial={{ y: 0 }}
-                animate={{ y: 0 }}
-                exit={{
-                  height: 0,
-                  marginBottom: 0,
-                  transition: {
-                    duration: 0.3,
-                    ease: 'easeInOut',
-                    delay: 0.1,
-                  },
-                }}
+                initial={false}
+                animate="visible"
+                exit="hidden"
+                variants={contentVariants}
                 className="w-full overflow-hidden"
               >
-                <Flex direction="col" gap={12} className="mb-18 w-full px-20">
+                <Flex direction="col" gap={12} className="w-full px-20">
                   <Flex justify="between" align="center" className="w-full">
                     <h3 className="font-body1_bold">최근에 찾은 소품샵</h3>
                     {token && (
@@ -131,9 +153,10 @@ export default function SearchList() {
                       {userFindShopData?.map((shop, index) => (
                         <SwiperSlide key={index} style={{ width: 'auto' }}>
                           <SearchItem
+                            id={shop.id}
                             label={shop.shopName}
-                            onClick={() => {
-                              handleDeleteFindShop(shop.shopName);
+                            onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                              handleDeleteFindShop(e, shop.shopName);
                             }}
                           />
                         </SwiperSlide>
@@ -147,8 +170,7 @@ export default function SearchList() {
             </motion.div>
           )}
         </AnimatePresence>
-
-        <motion.div layout className="w-full">
+        <div className="w-full">
           <Flex direction="col" gap={4} className="w-full">
             {!searchDebounceValue && <h3 className="px-20 font-body1_bold">내 근처 가장 인기 많은 소품샵은?</h3>}
             {!searchDebounceValue && (
@@ -187,7 +209,6 @@ export default function SearchList() {
               </Link>
             </Flex>
           )}
-
           {shopSortData && !shopSortData.length && !shopSearchData && (
             <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
               <p className="text-gray-500 font-body1_m">내 주변 소품샵이 없어요</p>
@@ -200,8 +221,8 @@ export default function SearchList() {
             </Flex>
           )}
           {isLoading && <Loading />}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </Flex>
   );
 }

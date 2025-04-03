@@ -1,18 +1,20 @@
 import DeleteIcon from '@/shared/components/icons/DeleteIcon';
-import Flex from '@/shared/components/layout/Flex';
+import Link from 'next/link';
+import { MouseEvent } from 'react';
 
 interface SearchItemProps {
   label: string;
-  onClick: () => void;
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  id: number;
 }
 
-export default function SearchItem({ label, onClick }: SearchItemProps) {
+export default function SearchItem({ label, onClick, id }: SearchItemProps) {
   return (
-    <Flex align="center" gap={4} className="rounded-full border border-gray-100 px-10 py-6">
+    <Link href={`/shop/${id}`} className="flex items-center gap-4 rounded-full border border-gray-100 px-10 py-6">
       <span className="text-gray-600 font-body2_m">{label}</span>
       <button onClick={onClick}>
         <DeleteIcon />
       </button>
-    </Flex>
+    </Link>
   );
 }
