@@ -117,6 +117,8 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
     });
   };
 
+  console.log(data);
+
   return (
     <Flex
       direction="col"
@@ -137,7 +139,7 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
             }
           />
           <Flex direction="col" className="flex-1">
-            <p className="text-gray-800 font-body2_m">{data?.user?.nickName || isMe ? '' : '익명'}</p>
+            <p className="text-gray-800 font-body2_m">{data?.user?.nickName || isMe ? data?.user?.nickName : '익명'}</p>
             <p className="text-gray-400 font-caption">{formatStringDate(data?.createdAt)}</p>
           </Flex>
         </Flex>
