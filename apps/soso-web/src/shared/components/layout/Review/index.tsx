@@ -117,8 +117,6 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
     });
   };
 
-  console.log(data);
-
   return (
     <Flex
       direction="col"

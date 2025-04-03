@@ -73,6 +73,7 @@ module.exports = {
         'filter-select': '1px 2px 9px 3px rgba(0, 0, 0, 0.14)',
         button: '1px 2px 6px 3px rgba(0, 0, 0, 0.08)',
         'place-card': '1px 2px 6px 3px rgba(0, 0, 0, 0.08)',
+        'search-bar': '1px 2px 6px 3px rgba(0, 0, 0, 0.08)',
       },
       backdropBlur: {
         10: '10px',

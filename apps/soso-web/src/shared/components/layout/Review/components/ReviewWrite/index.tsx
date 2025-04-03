@@ -18,6 +18,7 @@ import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
 import AddFileUi from '@/shared/components/ui/AddFileUi';
 import { useToast } from '@/shared/context/ToastContext';
 import { useFileUpload } from '@/shared/hooks/useFileUpload';
+import clsx from 'clsx';
 import { useParams } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 
@@ -121,8 +122,9 @@ export default function ReviewWrite({ isOpen, onClose, isEdit }: ReviewWriteProp
           <ModalCloseButton onClick={onClose} />
         </Flex>
         <Flex direction="col" gap={38} className="w-full">
-          <InputContent label="텍스트">
+          <InputContent label="텍스트" className="relative">
             <Textarea
+              maxLength={100}
               lengthError={lengthError}
               value={content || ''}
               onChange={handleChangeContent}
@@ -143,7 +145,11 @@ export default function ReviewWrite({ isOpen, onClose, isEdit }: ReviewWriteProp
             </Flex>
           </InputContent>
         </Flex>
-        <Button onClick={handleSubmitReview} disabled={isEdit ? !content.length : !content.length} title="후기 작성" />
+        <Button
+          onClick={handleSubmitReview}
+          disabled={(isEdit ? !content.length : !content.length) || lengthError}
+          title="후기 작성"
+        />
       </Flex>
 
       {(postReviewPending || patchReviewPending) && <Loading />}

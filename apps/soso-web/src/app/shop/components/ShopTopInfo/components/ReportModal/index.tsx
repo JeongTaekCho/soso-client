@@ -5,13 +5,11 @@ import { REPORT_LIST } from '@/app/shop/components/ShopTopInfo/components/Report
 import { usePatchReportMutation } from '@/app/shop/components/ShopTopInfo/components/ReportModal/hooks/usePatchReportMutation';
 import Button from '@/shared/components/button/Button';
 import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
-import Textarea from '@/shared/components/inputs/Textarea';
 import Flex from '@/shared/components/layout/Flex';
 import BottomModal from '@/shared/components/modal/BottomModal';
 import { useDialog } from '@/shared/context/DialogContext';
-import useInput from '@/shared/hooks/useInput';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface ReportModalProps {
   isReportModal: boolean;
