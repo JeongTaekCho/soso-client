@@ -146,7 +146,7 @@ export default function HomePage() {
   // }, [prevShopId]);
 
   useEffect(() => {
-    if (!shopData) return;
+    if (!shopData || (shopData && !shopData.length)) return;
 
     setSelectedShopId(shopData[0].id);
   }, [shopData]);
@@ -179,7 +179,7 @@ export default function HomePage() {
               height: '52px',
             }}
           >
-            <div className="shadow-search-bar h-full w-full rounded-12 bg-white px-16 py-14 pl-46 text-gray-400 font-body1_m focus:outline-main">
+            <div className="h-full w-full rounded-12 bg-white px-16 py-14 pl-46 text-gray-400 shadow-search-bar font-body1_m focus:outline-main">
               찾고있는 소품샵이 있나요?
             </div>
           </div>
