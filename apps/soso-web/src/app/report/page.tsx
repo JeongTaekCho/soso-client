@@ -69,7 +69,7 @@ export default function ReportPage() {
 
   return (
     <div>
-      <Header title="제보하기" />
+      <Header title="소품샵 등록하기" />
       <Flex direction="col" gap={60} className="w-full py-20">
         <Flex direction="col" gap={20} className="w-full">
           <Flex direction="col" gap={12} className="w-full px-16">

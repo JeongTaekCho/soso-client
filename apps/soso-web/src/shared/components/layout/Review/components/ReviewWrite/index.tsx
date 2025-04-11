@@ -128,7 +128,8 @@ export default function ReviewWrite({ isOpen, onClose, isEdit }: ReviewWriteProp
               lengthError={lengthError}
               value={content || ''}
               onChange={handleChangeContent}
-              placeholder="리뷰를 남겨주세요!"
+              placeholder={`💭 어떤 소품을 구매하셨나요?
+💕 소품샵 방문 후 가장 좋았던 점이 있나요?`}
             />
           </InputContent>
           <InputContent label="사진">

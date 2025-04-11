@@ -91,7 +91,11 @@ export default function MyReviewPage() {
 
           {myReviewData && allReviews.length === 0 && (
             <Flex direction="col" justify="center" align="center" className="mt-90 w-full" gap={16}>
-              <p className="text-gray-500 font-body1_m">작성한 후기가 없습니다.</p>
+              <p className="text-center text-gray-400 font-body1_m">
+                아직 후기가 없어요.
+                <br />
+                소소하게 써주신 한 줄이 큰 도움이 돼요!
+              </p>
             </Flex>
           )}
         </Flex>
