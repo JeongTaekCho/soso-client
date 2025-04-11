@@ -228,7 +228,7 @@ export default function HomePage() {
                   href="/report"
                   className="flex w-full items-center justify-center rounded-8 bg-orange-light py-9 text-main font-body2_m"
                 >
-                  소중한 소품샵 제보하기
+                  소품샵 등록하기기
                 </Link>
               </Flex>
             </div>

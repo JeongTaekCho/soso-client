@@ -120,7 +120,7 @@ export default function ReportWrite() {
 
   return (
     <form className="flex flex-col modal-page">
-      <Header type="back" title="제보하기" />
+      <Header type="back" title="소품샵 등록하기" />
       <Flex direction="col" gap={28} className="w-full overflow-y-auto px-16 pt-76">
         <Flex direction="col" gap={8} className="w-full">
           <h3 className="text-gray-800 font-title4_semi">상점 이름</h3>

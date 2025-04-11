@@ -61,7 +61,7 @@ export default function ProductLists() {
       <ProductLayout
         data={myShopList}
         totalData={myShopData?.pages[0].pageInfo.totalElements}
-        title="내가 등록한 소품샵"
+        title="내가 알린린 소품샵"
         placeholder="아직 등록된 소품샵이 없습니다."
         productLink="/my/shop"
       />
