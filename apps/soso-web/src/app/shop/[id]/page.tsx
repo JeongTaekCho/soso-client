@@ -5,6 +5,7 @@ import ShopOperInfo from '@/app/shop/components/ShopOperInfo';
 import ShopProducts from '@/app/shop/components/ShopProducts';
 import ShopReview from '@/app/shop/components/ShopReview';
 import ShopTopInfo from '@/app/shop/components/ShopTopInfo';
+import SnsInfo from '@/app/shop/components/SnsInfo';
 import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery';
 import Divider from '@/shared/components/divider/Divider';
 import Header from '@/shared/components/layout/Header';
@@ -39,6 +40,8 @@ export default function ShopDetailPage({ params }: PageProps) {
       <ShopLocation location={shopDetailData?.shop.location} />
       <Divider height="10px" bgColor="#F7F8F9" />
       <ShopOperInfo operData={shopDetailData?.shop.operatingHours} />
+      <Divider height="10px" bgColor="#F7F8F9" />
+      <SnsInfo />
       <Divider height="10px" bgColor="#F7F8F9" />
       <ShopProducts productData={shopDetailData?.shop.products} />
       <Divider height="10px" bgColor="#F7F8F9" />
