@@ -9,9 +9,12 @@ import { useInView } from 'react-intersection-observer';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useDialog } from '@/shared/context/DialogContext';
 
 export default function MyShopPage() {
   const router = useRouter();
+
+  const { openDialog, closeDialog } = useDialog();
 
   // useInfiniteQuery로 변경된 훅 사용
   const { data: myShopData, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useGetMyShopQuery(10);
@@ -24,6 +27,13 @@ export default function MyShopPage() {
   // 숍 상세 페이지로 이동하는 함수
   const handleLink = (shopId: number) => {
     router.push(`/shop/${shopId}`);
+  };
+
+  const handleOpenDeleteModal = () => {
+    openDialog({
+      type: 'confirm',
+      title: '등록한 정보를 삭제하시겠습니까?',
+    });
   };
 
   // inView 상태가 변경될 때 다음 페이지 데이터 로드
@@ -41,22 +51,31 @@ export default function MyShopPage() {
       <Header title="내가 알린 소품샵" type="back" />
       <Flex direction="col" className="w-full">
         {allShops.map((data, index) => (
-          <button
-            key={`shop-${data.shop.id}-${index}`}
-            onClick={() => handleLink(data.shop.id)}
-            disabled={data.type === 0}
-            className="flex w-full items-center justify-between border-b border-gray-100 px-16 py-18"
-          >
-            <ShopInfo
-              name={data.shop.name}
-              date={'2024.01.01'}
+          <div key={`shop-${data.shop.id}-${index}`} className="relative w-full">
+            <button
+              onClick={() => handleLink(data.shop.id)}
               disabled={data.type === 0}
-              imgUrl={data.shop.image || ''}
-            />
-            <div className={clsx('block w-86 py-6 font-caption', 'rounded-8 bg-gray-50')}>
-              {data.type === 0 ? '최초 제보' : data.type === 1 ? '운영 정보 수정' : '판매 정보 수정'}
-            </div>
-          </button>
+              className="flex w-full items-center justify-between border-b border-gray-100 px-16 py-18"
+            >
+              <ShopInfo
+                name={data.shop.name}
+                date={'2024.01.01'}
+                disabled={data.type === 0}
+                imgUrl={data.shop.image || ''}
+              />
+            </button>
+            <Flex direction="col" gap={8} className="absolute right-16 top-1/2 -translate-y-1/2">
+              <div className={clsx('block w-86 py-6 font-caption', 'rounded-8 bg-gray-50 text-center')}>
+                {data.type === 0 ? '최초 제보' : data.type === 1 ? '운영 정보 수정' : '판매 정보 수정'}
+              </div>
+              <button
+                onClick={handleOpenDeleteModal}
+                className="h-26 w-86 rounded-8 border border-gray-100 text-gray-500 font-caption"
+              >
+                삭제
+              </button>
+            </Flex>
+          </div>
         ))}
 
         {/* 무한 스크롤을 위한 관찰 요소 */}

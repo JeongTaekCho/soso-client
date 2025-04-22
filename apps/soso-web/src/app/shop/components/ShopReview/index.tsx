@@ -5,6 +5,7 @@ import LinkIcon from '@/shared/components/icons/LinkIcon';
 import ContentBox from '@/shared/components/layout/ContentBox';
 import Flex from '@/shared/components/layout/Flex';
 import Review from '@/shared/components/layout/Review';
+import ReviewPhoto from '@/shared/components/layout/Review/components/ReviewPhoto';
 import ContentTitle from '@/shared/components/text/ContentTitle';
 import EmptyData from '@/shared/components/ui/EmptyData';
 import { ShopDetailType } from '@/shared/types/shopType';
@@ -37,6 +38,7 @@ export default function ShopReview({ shopData, id }: ShopReviewProps) {
       </Flex>
       <Flex direction="col" gap={20} className="w-full">
         <Review isMe={true} isWrite={shopData && shopData?.userReviews.length > 0} data={shopData?.userReviews[0]} />
+        <ReviewPhoto />
         {shopData?.otherReviews.map((review) => <Review key={review.id} data={review} />)}
         {!shopData?.otherReviews.length && !shopData?.userReviews.length && (
           <EmptyData text="등록된 후기가 없습니다." />
