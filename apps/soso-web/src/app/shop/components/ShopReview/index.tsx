@@ -38,7 +38,7 @@ export default function ShopReview({ shopData, id }: ShopReviewProps) {
       </Flex>
       <Flex direction="col" gap={20} className="w-full">
         <Review isMe={true} isWrite={shopData && shopData?.userReviews.length > 0} data={shopData?.userReviews[0]} />
-        <ReviewPhoto />
+        <ReviewPhoto data={shopData && shopData?.imageList} />
         {shopData?.otherReviews.map((review) => <Review key={review.id} data={review} />)}
         {!shopData?.otherReviews.length && !shopData?.userReviews.length && (
           <EmptyData text="등록된 후기가 없습니다." />

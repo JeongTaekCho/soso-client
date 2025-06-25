@@ -22,7 +22,7 @@ export default function ShopReviewPage({ params }: PageProps) {
       <Flex direction="col" className="w-full px-16" gap={20}>
         <Review isMe={true} isWrite={!!shopDetailData?.userReviews.length} data={shopDetailData?.userReviews[0]} />
         <Flex direction="col" gap={28} className="w-full">
-          <ReviewPhoto />
+          <ReviewPhoto data={shopDetailData?.imageList} />
           {shopDetailData?.otherReviews.map((review) => <Review key={review.id} data={review} />)}
         </Flex>
         {!shopDetailData?.otherReviews.length && !shopDetailData?.userReviews.length && (
