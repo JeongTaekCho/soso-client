@@ -41,14 +41,16 @@ export interface ShopType {
   products: ProductType[];
 }
 
+export interface ImageType {
+  id: number;
+  url: string;
+}
+
 export interface ReviewType {
   id: number;
   content: string;
   createdAt: string;
-  images: {
-    id: number;
-    url: string;
-  }[];
+  images: ImageType[];
   user: {
     uuid: string;
     photoUrl: string | null;
@@ -61,4 +63,5 @@ export interface ShopDetailType {
   userReviews: ReviewType[];
   otherReviews: ReviewType[];
   wishlist: boolean;
+  imageList: ImageType[];
 }
