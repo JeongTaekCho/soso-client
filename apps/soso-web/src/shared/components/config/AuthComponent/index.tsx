@@ -1,26 +1,26 @@
-'use client';
+'use client'
 
-import { useDialog } from '@/shared/context/DialogContext';
-import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
-import { useAuthStore } from '@/shared/store/useAuthStore';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useDialog } from '@/shared/context/DialogContext'
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery'
+import { useAuthStore } from '@/shared/store/useAuthStore'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function AuthComponent() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { openDialog, closeDialog } = useDialog();
-  const { data: userData } = useGetUserProfileQuery();
+  const router = useRouter()
+  const pathname = usePathname()
+  const { openDialog, closeDialog } = useDialog()
+  const { data: userData } = useGetUserProfileQuery()
 
-  const { isHydrated, token, isLoggingOut } = useAuthStore();
+  const { isHydrated, token, isLoggingOut } = useAuthStore()
 
   const confirm = () => {
-    closeDialog();
-    router.push('/login');
-  };
+    closeDialog()
+    router.push('/login')
+  }
 
   useEffect(() => {
-    if (!isHydrated || isLoggingOut) return;
+    if (!isHydrated || isLoggingOut) return
     if (!token && (pathname.includes('/my') || pathname.includes('/report'))) {
       openDialog({
         type: 'alert',
@@ -28,17 +28,17 @@ export default function AuthComponent() {
         message: '로그인이 필요한 서비스입니다.',
         rightLabel: '로그인/회원가입하기',
         onConfirm: () => confirm(),
-      });
+      })
     }
-  }, [token, isHydrated, pathname]);
+  }, [token, isHydrated, pathname])
 
   useEffect(() => {
-    if (!userData) return;
+    if (!userData) return
 
     if (userData.isNew) {
-      router.push('/login/agree-view');
+      router.push('/login/agree-view')
     }
-  }, [userData]);
+  }, [userData])
 
-  return null;
+  return null
 }

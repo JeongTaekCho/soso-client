@@ -1,13 +1,13 @@
-import Button from '@/shared/components/button/Button';
-import Flex from '@/shared/components/layout/Flex';
-import ModalPortal from '@/shared/components/modal/ModalPortal';
-import { ReactNode } from 'react';
+import Button from '@/shared/components/button/Button'
+import Flex from '@/shared/components/layout/Flex'
+import ModalPortal from '@/shared/components/modal/ModalPortal'
+import { ReactNode } from 'react'
 
 interface AlertModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  children?: ReactNode;
+  isOpen: boolean
+  onClose: () => void
+  title: string
+  children?: ReactNode
 }
 export default function AlertModal({ isOpen, onClose, title, children }: AlertModalProps) {
   return (
@@ -20,5 +20,5 @@ export default function AlertModal({ isOpen, onClose, title, children }: AlertMo
         <Button title="확인" height="52px" />
       </Flex>
     </ModalPortal>
-  );
+  )
 }

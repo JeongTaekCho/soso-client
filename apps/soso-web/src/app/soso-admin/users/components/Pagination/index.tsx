@@ -1,28 +1,28 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Flex from '@/shared/components/layout/Flex';
+import { useState } from 'react'
+import Flex from '@/shared/components/layout/Flex'
 
 interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
+  currentPage: number
+  totalPages: number
 }
 
 const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
-  const handlePageChange = (page: number) => {};
+  const handlePageChange = (page: number) => {}
 
   // 페이지 범위 계산 (현재 페이지 주변에 최대 5개 페이지 표시)
   const getPageRange = () => {
-    const range = [];
-    const rangeSize = 5;
-    const rangeStart = Math.max(1, currentPage - Math.floor(rangeSize / 2));
-    const rangeEnd = Math.min(totalPages, rangeStart + rangeSize - 1);
+    const range = []
+    const rangeSize = 5
+    const rangeStart = Math.max(1, currentPage - Math.floor(rangeSize / 2))
+    const rangeEnd = Math.min(totalPages, rangeStart + rangeSize - 1)
 
     for (let i = rangeStart; i <= rangeEnd; i++) {
-      range.push(i);
+      range.push(i)
     }
-    return range;
-  };
+    return range
+  }
 
   return (
     <Flex justify="center" className="mt-32 w-full">
@@ -91,7 +91,7 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
         </button>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination

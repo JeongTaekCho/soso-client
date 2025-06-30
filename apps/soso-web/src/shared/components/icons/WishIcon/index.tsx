@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function WishIcon({ width, height, fill, isActive }: IconProps) {
   return isActive ? (
@@ -31,5 +31,5 @@ export default function WishIcon({ width, height, fill, isActive }: IconProps) {
         fill={fill || '#9EA4AA'}
       />
     </svg>
-  );
+  )
 }

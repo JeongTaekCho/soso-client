@@ -1,15 +1,15 @@
-'use client';
+'use client'
 
-import ProductLayout from '@/app/my/components/ProductLayout';
-import { useGetMyReviewQuery } from '@/app/my/components/ProductLists/hooks/useGetMyReviewQuery';
-import { useGetMyShopQuery } from '@/app/my/components/ProductLists/hooks/useGetMyShopQuery';
-import { useGetMyWishQuery } from '@/app/my/components/ProductLists/hooks/useGetMyWishQuery';
-import Flex from '@/shared/components/layout/Flex';
+import ProductLayout from '@/app/my/components/ProductLayout'
+import { useGetMyReviewQuery } from '@/app/my/components/ProductLists/hooks/useGetMyReviewQuery'
+import { useGetMyShopQuery } from '@/app/my/components/ProductLists/hooks/useGetMyShopQuery'
+import { useGetMyWishQuery } from '@/app/my/components/ProductLists/hooks/useGetMyWishQuery'
+import Flex from '@/shared/components/layout/Flex'
 
 export default function ProductLists() {
-  const { data: myWishData } = useGetMyWishQuery(10);
-  const { data: myReviewData } = useGetMyReviewQuery(10);
-  const { data: myShopData } = useGetMyShopQuery(10);
+  const { data: myWishData } = useGetMyWishQuery(10)
+  const { data: myReviewData } = useGetMyReviewQuery(10)
+  const { data: myShopData } = useGetMyShopQuery(10)
 
   const myWishList =
     myWishData?.pages[0].data.map((wish) => {
@@ -18,8 +18,8 @@ export default function ProductLists() {
         image: wish.shop.image,
         name: wish.shop.name,
         link: `/shop/${wish.shop.id}`,
-      };
-    }) || [];
+      }
+    }) || []
 
   const myReviewList =
     myReviewData?.pages[0].data.map((review) => {
@@ -28,8 +28,8 @@ export default function ProductLists() {
         image: review.shop.image,
         name: review.shop.name,
         link: `/shop/${review.shop.id}/review`,
-      };
-    }) || [];
+      }
+    }) || []
 
   const myShopList =
     myShopData?.pages[0].data.map((shop) => {
@@ -39,8 +39,8 @@ export default function ProductLists() {
         name: shop.shop.name,
         link: `/shop/${shop.shop.id}`,
         type: shop.type,
-      };
-    }) || [];
+      }
+    }) || []
 
   return (
     <Flex direction="col" gap={28} className="w-full">
@@ -66,5 +66,5 @@ export default function ProductLists() {
         productLink="/my/shop"
       />
     </Flex>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 interface BottomModalTitleProps {
-  title: string;
+  title: string
 }
 
 export default function BottomModalTitle({ title }: BottomModalTitleProps) {
-  return <h3 className="text-black font-title3_bold">{title}</h3>;
+  return <h3 className="text-black font-title3_bold">{title}</h3>
 }

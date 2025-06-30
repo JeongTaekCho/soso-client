@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function BottomArrowIcon({ width, height }: IconProps) {
   return (
@@ -16,5 +16,5 @@ export default function BottomArrowIcon({ width, height }: IconProps) {
         fill="#9EA4AA"
       />
     </svg>
-  );
+  )
 }

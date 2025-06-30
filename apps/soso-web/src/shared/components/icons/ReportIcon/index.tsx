@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function ReportIcon({ width, height }: IconProps) {
   return (
@@ -25,5 +25,5 @@ export default function ReportIcon({ width, height }: IconProps) {
       />
       <path d="M16 13V22" stroke="#9EA4AA" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
-  );
+  )
 }

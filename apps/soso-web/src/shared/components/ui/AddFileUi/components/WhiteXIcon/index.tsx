@@ -15,5 +15,5 @@ export default function WhiteXIcon() {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

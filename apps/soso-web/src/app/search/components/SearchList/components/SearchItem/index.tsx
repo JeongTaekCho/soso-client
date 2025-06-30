@@ -1,11 +1,11 @@
-import DeleteIcon from '@/shared/components/icons/DeleteIcon';
-import Link from 'next/link';
-import { MouseEvent } from 'react';
+import DeleteIcon from '@/shared/components/icons/DeleteIcon'
+import Link from 'next/link'
+import { MouseEvent } from 'react'
 
 interface SearchItemProps {
-  label: string;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
-  id: number;
+  label: string
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void
+  id: number
 }
 
 export default function SearchItem({ label, onClick, id }: SearchItemProps) {
@@ -16,5 +16,5 @@ export default function SearchItem({ label, onClick, id }: SearchItemProps) {
         <DeleteIcon />
       </button>
     </Link>
-  );
+  )
 }

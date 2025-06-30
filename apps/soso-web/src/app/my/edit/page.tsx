@@ -1,70 +1,70 @@
-'use client';
+'use client'
 
-import { usePatchUserProfileMutation } from '@/app/my/edit/hooks/usePatchUserProfileMutation';
-import { PatchUserRequestType } from '@/app/my/edit/types';
-import Button from '@/shared/components/button/Button';
-import Input from '@/shared/components/inputs/Input';
-import ProfileUpload from '@/shared/components/inputs/ProfileUpload';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import Loading from '@/shared/components/loading/Loading';
-import ValidationText from '@/shared/components/text/ValidationText';
-import useDebounce from '@/shared/hooks/useDebounce';
-import { useSingleFileUpload } from '@/shared/hooks/useFileUpload';
-import { useGetDuplicateNicknameQuery } from '@/shared/hooks/useGetDuplicateNicknameQuery';
-import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
-import { useEffect, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { usePatchUserProfileMutation } from '@/app/my/edit/hooks/usePatchUserProfileMutation'
+import { PatchUserRequestType } from '@/app/my/edit/types'
+import Button from '@/shared/components/button/Button'
+import Input from '@/shared/components/inputs/Input'
+import ProfileUpload from '@/shared/components/inputs/ProfileUpload'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import Loading from '@/shared/components/loading/Loading'
+import ValidationText from '@/shared/components/text/ValidationText'
+import useDebounce from '@/shared/hooks/useDebounce'
+import { useSingleFileUpload } from '@/shared/hooks/useFileUpload'
+import { useGetDuplicateNicknameQuery } from '@/shared/hooks/useGetDuplicateNicknameQuery'
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery'
+import { useEffect, useState } from 'react'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 
 export default function ProfileEditPage() {
   const [isError, setIsError] = useState({
     lengthError: true,
     patternError: true,
-  });
-  const { preview, file, setSingleFile } = useSingleFileUpload();
-  const { data: userData } = useGetUserProfileQuery();
-  const { mutate: patchUserMutate, isPending } = usePatchUserProfileMutation();
+  })
+  const { preview, file, setSingleFile } = useSingleFileUpload()
+  const { data: userData } = useGetUserProfileQuery()
+  const { mutate: patchUserMutate, isPending } = usePatchUserProfileMutation()
   const { register, handleSubmit, watch, setValue } = useForm({
     mode: 'onChange',
-  });
+  })
 
-  const nickname = watch('nickName');
-  const debounceNickname = useDebounce(nickname, 200);
-  const { data: isDuplicateNickname, isLoading } = useGetDuplicateNicknameQuery(debounceNickname);
+  const nickname = watch('nickName')
+  const debounceNickname = useDebounce(nickname, 200)
+  const { data: isDuplicateNickname, isLoading } = useGetDuplicateNicknameQuery(debounceNickname)
 
   useEffect(() => {
-    const lengthError = nickname?.length < 2 || nickname?.length > 10;
-    const patternError = !/^[가-힣a-zA-Z0-9]+$/.test(nickname);
+    const lengthError = nickname?.length < 2 || nickname?.length > 10
+    const patternError = !/^[가-힣a-zA-Z0-9]+$/.test(nickname)
 
     setIsError((prevErrors) => ({
       ...prevErrors,
       lengthError,
       patternError,
-    }));
-  }, [nickname]);
+    }))
+  }, [nickname])
 
   const handleClick: SubmitHandler<FieldValues> = (data) => {
-    let request: PatchUserRequestType;
+    let request: PatchUserRequestType
     if (userData?.nickName !== data.nickName) {
       request = {
         nickName: data.nickName,
-      };
+      }
     }
 
     if (file) {
       request = {
         ...request,
         file,
-      };
+      }
     }
 
-    patchUserMutate(request);
-  };
+    patchUserMutate(request)
+  }
 
   useEffect(() => {
-    if (!userData) return;
-    setValue('nickName', userData?.nickName);
-  }, [userData]);
+    if (!userData) return
+    setValue('nickName', userData?.nickName)
+  }, [userData])
 
   const isDisabled =
     isError.lengthError ||
@@ -72,7 +72,7 @@ export default function ProfileEditPage() {
     !nickname ||
     (userData?.nickName === nickname && !file) ||
     (isDuplicateNickname && !file) ||
-    isLoading;
+    isLoading
 
   return (
     <div>
@@ -100,5 +100,5 @@ export default function ProfileEditPage() {
 
       {isPending && <Loading />}
     </div>
-  );
+  )
 }

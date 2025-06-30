@@ -1,29 +1,29 @@
-'use client';
+'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useIsNavigation } from '@/shared/hooks/useIsNavigation';
-import clsx from 'clsx';
+import { createContext, useContext, useState, ReactNode } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useIsNavigation } from '@/shared/hooks/useIsNavigation'
+import clsx from 'clsx'
 
 interface ToastOptions {
-  message: string;
-  duration?: number;
+  message: string
+  duration?: number
 }
 
 interface ToastContextType {
-  openToast: (options: ToastOptions) => void;
+  openToast: (options: ToastOptions) => void
 }
 
-const ToastContext = createContext<ToastContextType | null>(null);
+const ToastContext = createContext<ToastContextType | null>(null)
 
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
-  const [toast, setToast] = useState<ToastOptions | null>(null);
-  const isNavigation = useIsNavigation();
+  const [toast, setToast] = useState<ToastOptions | null>(null)
+  const isNavigation = useIsNavigation()
 
   const openToast = (options: ToastOptions) => {
-    setToast(options);
-    setTimeout(() => setToast(null), options.duration || 3000);
-  };
+    setToast(options)
+    setTimeout(() => setToast(null), options.duration || 3000)
+  }
 
   return (
     <ToastContext.Provider value={{ openToast }}>
@@ -45,12 +45,12 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
         )}
       </AnimatePresence>
     </ToastContext.Provider>
-  );
-};
+  )
+}
 
 // Toast 컨텍스트 사용을 위한 커스텀 훅
 export const useToast = () => {
-  const context = useContext(ToastContext);
-  if (!context) throw new Error('useToast must be used within a ToastProvider');
-  return context;
-};
+  const context = useContext(ToastContext)
+  if (!context) throw new Error('useToast must be used within a ToastProvider')
+  return context
+}

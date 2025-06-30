@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
 interface MessageBoxProps {
-  children: ReactNode;
-  isMe?: boolean;
-  isWrite?: boolean;
+  children: ReactNode
+  isMe?: boolean
+  isWrite?: boolean
 }
 
 export default function MessageBox({ children, isMe, isWrite }: MessageBoxProps) {
@@ -29,5 +29,5 @@ export default function MessageBox({ children, isMe, isWrite }: MessageBoxProps)
         />
       </svg>
     </div>
-  );
+  )
 }

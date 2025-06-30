@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 
 interface RadioProps {
-  id: string;
-  name: string;
-  value: string;
-  checked: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string;
-  disabled?: boolean;
-  className?: string;
+  id: string
+  name: string
+  value: string
+  checked: boolean
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  label: string
+  disabled?: boolean
+  className?: string
 }
 
 const Radio = ({ id, name, value, checked, onChange, label, disabled = false, className = '' }: RadioProps) => {
@@ -29,7 +29,7 @@ const Radio = ({ id, name, value, checked, onChange, label, disabled = false, cl
         className="flex cursor-pointer items-center"
         onClick={(e) => {
           if (disabled) {
-            e.preventDefault();
+            e.preventDefault()
           }
         }}
       >
@@ -43,7 +43,7 @@ const Radio = ({ id, name, value, checked, onChange, label, disabled = false, cl
         <span className="text-[16px] font-medium">{label}</span>
       </label>
     </div>
-  );
-};
+  )
+}
 
-export default Radio;
+export default Radio

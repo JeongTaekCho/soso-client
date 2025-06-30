@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
 interface ReportLayoutProps {
-  children: ReactNode;
-  write: ReactNode;
-  address: ReactNode;
+  children: ReactNode
+  write: ReactNode
+  address: ReactNode
 }
 
 export default function ReportLayout({ children, write, address }: ReportLayoutProps) {
@@ -15,5 +15,5 @@ export default function ReportLayout({ children, write, address }: ReportLayoutP
       {write}
       {children}
     </div>
-  );
+  )
 }

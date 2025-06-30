@@ -1,9 +1,9 @@
-import XIcon from '@/shared/components/icons/XIcon';
-import NaverMap from '@/shared/components/layout/NaverMap';
+import XIcon from '@/shared/components/icons/XIcon'
+import NaverMap from '@/shared/components/layout/NaverMap'
 
 interface FullMap {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean
+  onClose: () => void
 }
 export default function FullMap({ isOpen, onClose }: FullMap) {
   return (
@@ -15,5 +15,5 @@ export default function FullMap({ isOpen, onClose }: FullMap) {
         </button>
       </div>
     )
-  );
+  )
 }

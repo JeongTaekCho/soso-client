@@ -1,17 +1,17 @@
-import Button from '@/shared/components/button/Button';
-import Backdrop from '@/shared/components/layout/Backdrop';
-import Flex from '@/shared/components/layout/Flex';
-import { ReactNode } from 'react';
+import Button from '@/shared/components/button/Button'
+import Backdrop from '@/shared/components/layout/Backdrop'
+import Flex from '@/shared/components/layout/Flex'
+import { ReactNode } from 'react'
 
 interface DialogModalProps {
-  type: 'alert' | 'confirm';
-  title: string;
-  message?: string | ReactNode;
-  onConfirm?: () => void;
-  onClose: () => void;
-  onCancel?: () => void;
-  leftLabel?: string;
-  rightLabel?: string;
+  type: 'alert' | 'confirm'
+  title: string
+  message?: string | ReactNode
+  onConfirm?: () => void
+  onClose: () => void
+  onCancel?: () => void
+  leftLabel?: string
+  rightLabel?: string
 }
 
 const DialogModal = ({
@@ -50,7 +50,7 @@ const DialogModal = ({
         </Flex>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default DialogModal;
+export default DialogModal

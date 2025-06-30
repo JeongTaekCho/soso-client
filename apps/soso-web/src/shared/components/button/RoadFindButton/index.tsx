@@ -1,24 +1,24 @@
-'use client';
+'use client'
 
-import MapButton from '@/shared/components/button/RoadFindButton/components/MapButton';
-import AirplaneIcon from '@/shared/components/icons/AirplaneIcon';
-import XIcon from '@/shared/components/icons/XIcon';
-import Flex from '@/shared/components/layout/Flex';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import { MouseEvent, useState } from 'react';
+import MapButton from '@/shared/components/button/RoadFindButton/components/MapButton'
+import AirplaneIcon from '@/shared/components/icons/AirplaneIcon'
+import XIcon from '@/shared/components/icons/XIcon'
+import Flex from '@/shared/components/layout/Flex'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import { MouseEvent, useState } from 'react'
 
 interface RoadFindButtonProps {
-  kakaoUrl?: string;
-  naverUrl?: string;
+  kakaoUrl?: string
+  naverUrl?: string
 }
 
 export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonProps) {
-  const [isFindModal, setIsFindModal] = useState(false);
+  const [isFindModal, setIsFindModal] = useState(false)
 
   const handleToggleFindModal = (e: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsFindModal((prev) => !prev);
-  };
+    e.preventDefault()
+    setIsFindModal((prev) => !prev)
+  }
 
   return (
     <>
@@ -45,5 +45,5 @@ export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonPro
         </Flex>
       </BottomModal>
     </>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import clsx from 'clsx';
-import { forwardRef, InputHTMLAttributes } from 'react';
+import clsx from 'clsx'
+import { forwardRef, InputHTMLAttributes } from 'react'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  width?: string;
-  height?: string;
-  className?: string;
+  width?: string
+  height?: string
+  className?: string
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -27,10 +27,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
       </div>
-    );
+    )
   }
-);
+)
 
-Input.displayName = 'Input';
+Input.displayName = 'Input'
 
-export default Input;
+export default Input

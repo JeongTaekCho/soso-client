@@ -1,14 +1,14 @@
-import clsx from 'clsx';
-import { TextareaHTMLAttributes } from 'react';
+import clsx from 'clsx'
+import { TextareaHTMLAttributes } from 'react'
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  width?: string;
-  height?: string;
-  value: string;
-  placeholder: string;
-  className?: string;
-  lengthError?: boolean;
-  maxLength?: number;
+  width?: string
+  height?: string
+  value: string
+  placeholder: string
+  className?: string
+  lengthError?: boolean
+  maxLength?: number
 }
 
 export default function Textarea({
@@ -39,5 +39,5 @@ export default function Textarea({
         </p>
       )}
     </div>
-  );
+  )
 }

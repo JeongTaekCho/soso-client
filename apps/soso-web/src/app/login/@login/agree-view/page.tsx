@@ -1,36 +1,36 @@
-'use client';
+'use client'
 
-import AgreementItem from '@/app/login/@login/agree-view/components/AgreementItem';
-import { useAgreementStore } from '@/app/login/store/useAgreementStore';
-import Button from '@/shared/components/button/Button';
-import Checkbox from '@/shared/components/inputs/Checkbox';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import AgreementItem from '@/app/login/@login/agree-view/components/AgreementItem'
+import { useAgreementStore } from '@/app/login/store/useAgreementStore'
+import Button from '@/shared/components/button/Button'
+import Checkbox from '@/shared/components/inputs/Checkbox'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function AgreeView() {
-  const { agreements, setAgreement, setAllAgreements } = useAgreementStore();
+  const { agreements, setAgreement, setAllAgreements } = useAgreementStore()
 
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
-    const { agree14, service, privacy, location } = agreements;
-    const allChecked = agree14 && service && privacy && location;
-    setAgreement('all', allChecked);
-  }, [agreements.agree14, agreements.service, agreements.privacy, agreements.location, setAgreement]);
+    const { agree14, service, privacy, location } = agreements
+    const allChecked = agree14 && service && privacy && location
+    setAgreement('all', allChecked)
+  }, [agreements.agree14, agreements.service, agreements.privacy, agreements.location, setAgreement])
 
   const handleCheck = (id: string, value: boolean) => {
     if (id === 'all') {
-      setAllAgreements(value);
+      setAllAgreements(value)
     } else {
-      setAgreement(id, value);
+      setAgreement(id, value)
     }
-  };
+  }
 
   const handleNext = () => {
-    router.push('/login/setting');
-  };
+    router.push('/login/setting')
+  }
 
   return (
     <div className="modal-page">
@@ -87,5 +87,5 @@ export default function AgreeView() {
         />
       </div>
     </div>
-  );
+  )
 }

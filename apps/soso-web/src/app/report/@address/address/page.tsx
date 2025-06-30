@@ -1,29 +1,29 @@
-'use client';
+'use client'
 
-import { useReportStore } from '@/app/report/store/useReportStore';
-import Divider from '@/shared/components/divider/Divider';
-import Input from '@/shared/components/inputs/Input';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import { useAddressSearch } from '@/shared/hooks/useAddressSearch';
-import useDebounce from '@/shared/hooks/useDebounce';
-import { AddressType } from '@/shared/types/addressType';
-import { useRouter } from 'next/navigation';
-import { ChangeEvent, useState } from 'react';
+import { useReportStore } from '@/app/report/store/useReportStore'
+import Divider from '@/shared/components/divider/Divider'
+import Input from '@/shared/components/inputs/Input'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import { useAddressSearch } from '@/shared/hooks/useAddressSearch'
+import useDebounce from '@/shared/hooks/useDebounce'
+import { AddressType } from '@/shared/types/addressType'
+import { useRouter } from 'next/navigation'
+import { ChangeEvent, useState } from 'react'
 
 export default function FindAddress() {
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState('')
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const debounceAddressValue = useDebounce(address, 250);
+  const debounceAddressValue = useDebounce(address, 250)
 
-  const { data: searchData } = useAddressSearch(debounceAddressValue);
-  const { shop, setShop } = useReportStore();
+  const { data: searchData } = useAddressSearch(debounceAddressValue)
+  const { shop, setShop } = useReportStore()
 
   const handleChangeAddress = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
-  };
+    setAddress(e.target.value)
+  }
 
   const handleSelectAddress = (data: AddressType) => {
     setShop({
@@ -31,9 +31,9 @@ export default function FindAddress() {
       location: data.road_address_name || data.address_name,
       lat: Number(data.y),
       lng: Number(data.x),
-    });
-    router.back();
-  };
+    })
+    router.back()
+  }
 
   return (
     <div className="layout-center modal-page">
@@ -75,5 +75,5 @@ export default function FindAddress() {
         </Flex>
       </Flex>
     </div>
-  );
+  )
 }

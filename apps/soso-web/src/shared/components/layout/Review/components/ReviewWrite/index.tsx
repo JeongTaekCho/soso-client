@@ -1,71 +1,71 @@
-'use client';
+'use client'
 
-import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery';
-import Button from '@/shared/components/button/Button';
-import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
-import Textarea from '@/shared/components/inputs/Textarea';
-import Flex from '@/shared/components/layout/Flex';
-import InputContent from '@/shared/components/layout/InputContent';
-import { usePatchReviewMutation } from '@/shared/components/layout/Review/components/ReviewWrite/hooks/usePatchReviewMutation';
-import { usePostReviewMutation } from '@/shared/components/layout/Review/components/ReviewWrite/hooks/usePostReviewMutation';
+import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery'
+import Button from '@/shared/components/button/Button'
+import ModalCloseButton from '@/shared/components/button/MocalCloseButton'
+import Textarea from '@/shared/components/inputs/Textarea'
+import Flex from '@/shared/components/layout/Flex'
+import InputContent from '@/shared/components/layout/InputContent'
+import { usePatchReviewMutation } from '@/shared/components/layout/Review/components/ReviewWrite/hooks/usePatchReviewMutation'
+import { usePostReviewMutation } from '@/shared/components/layout/Review/components/ReviewWrite/hooks/usePostReviewMutation'
 import {
   PatchReviewRequestType,
   ReviewRequestType,
-} from '@/shared/components/layout/Review/components/ReviewWrite/types';
-import Loading from '@/shared/components/loading/Loading';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
-import AddFileUi from '@/shared/components/ui/AddFileUi';
-import { useToast } from '@/shared/context/ToastContext';
-import { useFileUpload } from '@/shared/hooks/useFileUpload';
-import clsx from 'clsx';
-import { useParams } from 'next/navigation';
-import { ChangeEvent, useEffect, useState } from 'react';
+} from '@/shared/components/layout/Review/components/ReviewWrite/types'
+import Loading from '@/shared/components/loading/Loading'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import BottomModalTitle from '@/shared/components/text/BottomModalTitle'
+import AddFileUi from '@/shared/components/ui/AddFileUi'
+import { useToast } from '@/shared/context/ToastContext'
+import { useFileUpload } from '@/shared/hooks/useFileUpload'
+import clsx from 'clsx'
+import { useParams } from 'next/navigation'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 interface ReviewWriteProps {
-  isOpen: boolean;
-  isEdit?: boolean;
-  onClose: () => void;
+  isOpen: boolean
+  isEdit?: boolean
+  onClose: () => void
 }
 
 export default function ReviewWrite({ isOpen, onClose, isEdit }: ReviewWriteProps) {
-  const [content, setContent] = useState('');
-  const [lengthError, setLengthError] = useState(false);
-  const [prevImages, setPrevImages] = useState<{ id: number; url: string }[]>([]);
-  const [deleteFiles, setDeleteFiles] = useState<number[]>([]);
+  const [content, setContent] = useState('')
+  const [lengthError, setLengthError] = useState(false)
+  const [prevImages, setPrevImages] = useState<{ id: number; url: string }[]>([])
+  const [deleteFiles, setDeleteFiles] = useState<number[]>([])
 
-  const { id } = useParams();
-  const { openToast } = useToast();
+  const { id } = useParams()
+  const { openToast } = useToast()
 
-  const { mutate: postReviewMutate, isPending: postReviewPending } = usePostReviewMutation();
-  const { mutate: patchReviewMutate, isPending: patchReviewPending } = usePatchReviewMutation();
-  const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id));
-  const { files, previews, resetFiles, addFiles, removeFile } = useFileUpload(10, prevImages.length);
+  const { mutate: postReviewMutate, isPending: postReviewPending } = usePostReviewMutation()
+  const { mutate: patchReviewMutate, isPending: patchReviewPending } = usePatchReviewMutation()
+  const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id))
+  const { files, previews, resetFiles, addFiles, removeFile } = useFileUpload(10, prevImages.length)
 
   const handleImageDelete = (index: number) => {
-    const imageToDelete = prevImages[index].id;
+    const imageToDelete = prevImages[index].id
 
     if (imageToDelete) {
-      setDeleteFiles((prev) => [...prev, imageToDelete]);
+      setDeleteFiles((prev) => [...prev, imageToDelete])
     }
 
-    const newImages = [...prevImages];
-    newImages.splice(index, 1);
+    const newImages = [...prevImages]
+    newImages.splice(index, 1)
 
-    setPrevImages(newImages);
-  };
+    setPrevImages(newImages)
+  }
 
   const handleChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
+    setContent(e.target.value)
+  }
 
   useEffect(() => {
     if (content.length > 100) {
-      setLengthError(true);
+      setLengthError(true)
     } else {
-      setLengthError(false);
+      setLengthError(false)
     }
-  }, [content]);
+  }, [content])
 
   const handleSubmitReview = () => {
     if (isEdit) {
@@ -74,45 +74,45 @@ export default function ReviewWrite({ isOpen, onClose, isEdit }: ReviewWriteProp
         content,
         files: files,
         deleteImages: deleteFiles,
-      };
+      }
       patchReviewMutate(data, {
         onSuccess: () => {
-          detailRefetch();
-          onClose();
+          detailRefetch()
+          onClose()
           openToast({
             message: '리뷰가 수정되었습니다.',
-          });
+          })
         },
-      });
+      })
     } else {
       const data: ReviewRequestType = {
         shopId: Number(id),
         content,
         files: files,
-      };
+      }
       postReviewMutate(data, {
         onSuccess: () => {
-          detailRefetch();
-          onClose();
+          detailRefetch()
+          onClose()
           openToast({
             message: '리뷰가 등록되었습니다.',
-          });
+          })
         },
-      });
+      })
     }
-  };
+  }
 
   useEffect(() => {
-    if (!detailData || !isEdit) return;
-    setPrevImages(detailData?.userReviews[0]?.images || []);
-    setContent(detailData?.userReviews[0].content);
-  }, [detailData, isOpen, isEdit]);
+    if (!detailData || !isEdit) return
+    setPrevImages(detailData?.userReviews[0]?.images || [])
+    setContent(detailData?.userReviews[0].content)
+  }, [detailData, isOpen, isEdit])
 
   useEffect(() => {
-    setLengthError(false);
-    setDeleteFiles([]);
-    resetFiles();
-  }, [isOpen]);
+    setLengthError(false)
+    setDeleteFiles([])
+    resetFiles()
+  }, [isOpen])
 
   return (
     <BottomModal isOpen={isOpen} onClose={onClose}>
@@ -155,5 +155,5 @@ export default function ReviewWrite({ isOpen, onClose, isEdit }: ReviewWriteProp
 
       {(postReviewPending || patchReviewPending) && <Loading />}
     </BottomModal>
-  );
+  )
 }

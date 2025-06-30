@@ -1,14 +1,14 @@
-import HomeNaviIcon from '@/shared/components/layout/BottomNavigation/components/HomeNaviIcon';
-import MyNaviIcon from '@/shared/components/layout/BottomNavigation/components/MyNaviIcon';
-import ReportNaviIcon from '@/shared/components/layout/BottomNavigation/components/ReportNaviIcon';
-import SearchNaviIcon from '@/shared/components/layout/BottomNavigation/components/SearchNaviIcon';
-import Flex from '@/shared/components/layout/Flex';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import HomeNaviIcon from '@/shared/components/layout/BottomNavigation/components/HomeNaviIcon'
+import MyNaviIcon from '@/shared/components/layout/BottomNavigation/components/MyNaviIcon'
+import ReportNaviIcon from '@/shared/components/layout/BottomNavigation/components/ReportNaviIcon'
+import SearchNaviIcon from '@/shared/components/layout/BottomNavigation/components/SearchNaviIcon'
+import Flex from '@/shared/components/layout/Flex'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { ReactNode } from 'react'
 
 export default function BottomNavigation() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   const MENU = [
     {
@@ -31,13 +31,13 @@ export default function BottomNavigation() {
       icon: <MyNaviIcon isActive={pathname.includes('/my')} />,
       href: '/my',
     },
-  ];
+  ]
 
   type MenuType = {
-    label: string;
-    icon: ReactNode;
-    href: string;
-  };
+    label: string
+    icon: ReactNode
+    href: string
+  }
 
   return (
     <Flex className="fixed bottom-0 left-0 z-sticky w-full bg-white layout-center">
@@ -58,5 +58,5 @@ export default function BottomNavigation() {
         </Link>
       ))}
     </Flex>
-  );
+  )
 }

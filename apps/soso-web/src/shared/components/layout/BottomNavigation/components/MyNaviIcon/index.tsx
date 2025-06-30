@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function MyNaviIcon({ isActive }: IconProps) {
   return (
@@ -15,5 +15,5 @@ export default function MyNaviIcon({ isActive }: IconProps) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

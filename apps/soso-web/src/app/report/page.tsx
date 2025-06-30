@@ -1,71 +1,71 @@
-'use client';
+'use client'
 
-import { useReportStore } from '@/app/report/store/useReportStore';
-import Button from '@/shared/components/button/Button';
-import LinkIcon from '@/shared/components/icons/LinkIcon';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import NaverMap from '@/shared/components/layout/NaverMap';
-import FullMap from '@/shared/components/modal/FullMap';
-import { REPORT_MARKER_ID } from '@/shared/constant/location';
-import useMapStore from '@/shared/store/useMapStore';
-import { getCurrentAddress } from '@/shared/utils/getCurrentAddress';
-import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useReportStore } from '@/app/report/store/useReportStore'
+import Button from '@/shared/components/button/Button'
+import LinkIcon from '@/shared/components/icons/LinkIcon'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import NaverMap from '@/shared/components/layout/NaverMap'
+import FullMap from '@/shared/components/modal/FullMap'
+import { REPORT_MARKER_ID } from '@/shared/constant/location'
+import useMapStore from '@/shared/store/useMapStore'
+import { getCurrentAddress } from '@/shared/utils/getCurrentAddress'
+import { getCurrentLocation } from '@/shared/utils/getCurrentLocation'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function ReportPage() {
-  const [isFullMap, setIsFullMap] = useState(false);
-  const [currentAddress, setCurrentAddress] = useState<string | undefined>('');
+  const [isFullMap, setIsFullMap] = useState(false)
+  const [currentAddress, setCurrentAddress] = useState<string | undefined>('')
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const { shop, setShop } = useReportStore();
-  const { map, setCenter, addMarker, clearMarkers } = useMapStore();
+  const { shop, setShop } = useReportStore()
+  const { map, setCenter, addMarker, clearMarkers } = useMapStore()
 
   const handleNext = () => {
-    router.push('/report/write');
-  };
+    router.push('/report/write')
+  }
 
   const handleAddressSearchLink = () => {
-    router.push('/report/address');
-  };
+    router.push('/report/address')
+  }
 
   const handleOpenFullMap = () => {
-    setIsFullMap(true);
-  };
+    setIsFullMap(true)
+  }
 
   const handleCloseFullMap = () => {
-    setIsFullMap(false);
-  };
+    setIsFullMap(false)
+  }
 
   useEffect(() => {
     const currentAddMarker = async () => {
-      const currentLocation = await getCurrentLocation();
+      const currentLocation = await getCurrentLocation()
       if ((!shop.lat || !shop.lng) && currentLocation !== 'denied') {
-        setCenter(currentLocation.lat, currentLocation.lng);
-        const currentAddress = await getCurrentAddress(currentLocation.lat, currentLocation.lng);
+        setCenter(currentLocation.lat, currentLocation.lng)
+        const currentAddress = await getCurrentAddress(currentLocation.lat, currentLocation.lng)
         if (currentAddress) {
-          setCurrentAddress(currentAddress);
-          setShop({ ...shop, location: currentAddress, lat: currentLocation.lat, lng: currentLocation.lng });
+          setCurrentAddress(currentAddress)
+          setShop({ ...shop, location: currentAddress, lat: currentLocation.lat, lng: currentLocation.lng })
         }
       }
 
-      if (currentLocation === 'denied') return;
-    };
+      if (currentLocation === 'denied') return
+    }
 
-    clearMarkers();
-    currentAddMarker();
-  }, []);
+    clearMarkers()
+    currentAddMarker()
+  }, [])
 
   useEffect(() => {
-    if (!shop.lat || !shop.lng || !map) return;
-    setCenter(shop.lat, shop.lng);
+    if (!shop.lat || !shop.lng || !map) return
+    setCenter(shop.lat, shop.lng)
     addMarker({
       id: REPORT_MARKER_ID,
       position: { lat: shop.lat, lng: shop.lng },
-    });
-  }, [shop, map]);
+    })
+  }, [shop, map])
 
   return (
     <div>
@@ -113,5 +113,5 @@ export default function ReportPage() {
         </Flex>
       </Flex>
     </div>
-  );
+  )
 }

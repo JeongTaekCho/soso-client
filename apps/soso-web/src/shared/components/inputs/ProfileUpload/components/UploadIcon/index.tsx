@@ -15,5 +15,5 @@ export default function UploadIcon() {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

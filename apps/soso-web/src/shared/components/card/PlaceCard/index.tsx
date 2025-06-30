@@ -1,44 +1,44 @@
-import RoadFindButton from '@/shared/components/button/RoadFindButton';
-import Flex from '@/shared/components/layout/Flex';
-import { useLocationStore } from '@/shared/store/useLocationStore';
-import { ShopType } from '@/shared/types/shopType';
-import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop';
-import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
-import { getDistance } from '@/shared/utils/getDistance';
-import { handleImageError } from '@/shared/utils/handleImageError';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import RoadFindButton from '@/shared/components/button/RoadFindButton'
+import Flex from '@/shared/components/layout/Flex'
+import { useLocationStore } from '@/shared/store/useLocationStore'
+import { ShopType } from '@/shared/types/shopType'
+import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
+import { getCurrentLocation } from '@/shared/utils/getCurrentLocation'
+import { getDistance } from '@/shared/utils/getDistance'
+import { handleImageError } from '@/shared/utils/handleImageError'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 interface PlaceCardProps {
-  width?: string;
-  height?: string;
-  type?: 'default' | 'map';
-  data: ShopType;
+  width?: string
+  height?: string
+  type?: 'default' | 'map'
+  data: ShopType
 }
 export default function PlaceCard({ width, height, type, data }: PlaceCardProps) {
-  const [currentLat, setCurrentLat] = useState<number | null>(0);
-  const [currentLng, setCurrentLng] = useState<number | null>(0);
-  const { setPrevLocation } = useLocationStore();
+  const [currentLat, setCurrentLat] = useState<number | null>(0)
+  const [currentLng, setCurrentLng] = useState<number | null>(0)
+  const { setPrevLocation } = useLocationStore()
 
   useEffect(() => {
     const setCurrentLocation = async () => {
-      const currentLocation = await getCurrentLocation();
+      const currentLocation = await getCurrentLocation()
 
       if (currentLocation === 'denied') {
-        return;
+        return
       }
 
-      setCurrentLat(Number(currentLocation.lat));
-      setCurrentLng(Number(currentLocation.lng));
-    };
+      setCurrentLat(Number(currentLocation.lat))
+      setCurrentLng(Number(currentLocation.lng))
+    }
 
-    setCurrentLocation();
-  }, []);
+    setCurrentLocation()
+  }, [])
 
   const handleSavePrevLocation = (lat: number, lng: number, id: number) => {
-    setPrevLocation(lat, lng, id);
-  };
+    setPrevLocation(lat, lng, id)
+  }
 
   return type === 'map' ? (
     <Link
@@ -112,5 +112,5 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
         />
       </Flex>
     </Link>
-  );
+  )
 }

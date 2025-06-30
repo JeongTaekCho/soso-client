@@ -1,27 +1,27 @@
-import Flex from '@/shared/components/layout/Flex';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, FreeMode } from 'swiper/modules';
-import Image from 'next/image';
-import { useState } from 'react';
-import ImageSwiperModal from '@/shared/components/modal/ImageSwiperModal';
-import { ImageType } from '@/shared/types/shopType';
+import Flex from '@/shared/components/layout/Flex'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, FreeMode } from 'swiper/modules'
+import Image from 'next/image'
+import { useState } from 'react'
+import ImageSwiperModal from '@/shared/components/modal/ImageSwiperModal'
+import { ImageType } from '@/shared/types/shopType'
 
 interface ReviewPhotoProps {
-  data: ImageType[] | undefined;
+  data: ImageType[] | undefined
 }
 
 export default function ReviewPhoto({ data }: ReviewPhotoProps) {
-  const [isImageViewer, setIsImageViewer] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isImageViewer, setIsImageViewer] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const handleOpenImageViewer = (index: number) => {
-    setSelectedIndex(index);
-    setIsImageViewer(true);
-  };
+    setSelectedIndex(index)
+    setIsImageViewer(true)
+  }
 
   const handleCloseImageViewer = () => {
-    setIsImageViewer(false);
-  };
+    setIsImageViewer(false)
+  }
 
   return (
     <Flex direction="col" gap={8} className="w-full">
@@ -49,5 +49,5 @@ export default function ReviewPhoto({ data }: ReviewPhotoProps) {
         initialSlide={selectedIndex}
       />
     </Flex>
-  );
+  )
 }

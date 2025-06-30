@@ -1,9 +1,9 @@
-import CheckIcon from '@/shared/components/icons/CheckIcon';
+import CheckIcon from '@/shared/components/icons/CheckIcon'
 
 interface FilterSelectButtonProps {
-  label: string;
-  active?: boolean;
-  onClick: (area: string) => void;
+  label: string
+  active?: boolean
+  onClick: (area: string) => void
 }
 
 export default function FilterSelectButton({ label, active, onClick }: FilterSelectButtonProps) {
@@ -12,5 +12,5 @@ export default function FilterSelectButton({ label, active, onClick }: FilterSel
       <span className="text-black font-body2_m">{label}</span>
       {active && <CheckIcon />}
     </button>
-  );
+  )
 }

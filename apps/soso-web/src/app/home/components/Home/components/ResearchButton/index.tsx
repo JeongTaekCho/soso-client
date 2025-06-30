@@ -1,8 +1,8 @@
-import clsx from 'clsx';
-import { ButtonHTMLAttributes } from 'react';
+import clsx from 'clsx'
+import { ButtonHTMLAttributes } from 'react'
 
 interface ResearchButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
+  className?: string
 }
 
 export default function ResearchButton({ className, ...props }: ResearchButtonProps) {
@@ -25,5 +25,5 @@ export default function ResearchButton({ className, ...props }: ResearchButtonPr
 
       <span className="text-main font-body2_m">현재 지도에서 재검색</span>
     </button>
-  );
+  )
 }

@@ -15,5 +15,5 @@ export default function NextIcon() {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

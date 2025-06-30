@@ -1,54 +1,54 @@
-'use client';
+'use client'
 
-import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery';
-import Flex from '@/shared/components/layout/Flex';
-import MessageBox from '@/shared/components/layout/Review/components/MessageBox';
-import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite';
-import { useDeleteReviewMutation } from '@/shared/components/layout/Review/hooks/useDeleteReviewMutation';
-import Loading from '@/shared/components/loading/Loading';
-import ImageSwiperModal from '@/shared/components/modal/ImageSwiperModal';
-import ProfileImage from '@/shared/components/ui/ProfileImage';
-import { useDialog } from '@/shared/context/DialogContext';
-import { useToast } from '@/shared/context/ToastContext';
-import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
-import { useAuthStore } from '@/shared/store/useAuthStore';
-import { ReviewType } from '@/shared/types/shopType';
-import { formatStringDate } from '@/shared/utils/formatStringDate';
-import { getSafeImageUrl } from '@/shared/utils/getSafeImageUrl';
-import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, FreeMode } from 'swiper/modules';
-import ReviewReportModal from '@/shared/components/layout/Review/components/ReviewReportModal';
+import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery'
+import Flex from '@/shared/components/layout/Flex'
+import MessageBox from '@/shared/components/layout/Review/components/MessageBox'
+import ReviewWrite from '@/shared/components/layout/Review/components/ReviewWrite'
+import { useDeleteReviewMutation } from '@/shared/components/layout/Review/hooks/useDeleteReviewMutation'
+import Loading from '@/shared/components/loading/Loading'
+import ImageSwiperModal from '@/shared/components/modal/ImageSwiperModal'
+import ProfileImage from '@/shared/components/ui/ProfileImage'
+import { useDialog } from '@/shared/context/DialogContext'
+import { useToast } from '@/shared/context/ToastContext'
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery'
+import { useAuthStore } from '@/shared/store/useAuthStore'
+import { ReviewType } from '@/shared/types/shopType'
+import { formatStringDate } from '@/shared/utils/formatStringDate'
+import { getSafeImageUrl } from '@/shared/utils/getSafeImageUrl'
+import Image from 'next/image'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, FreeMode } from 'swiper/modules'
+import ReviewReportModal from '@/shared/components/layout/Review/components/ReviewReportModal'
 
 interface ReviewProps {
-  isMe?: boolean;
-  isWrite?: boolean;
-  isBorder?: boolean;
-  data: ReviewType | undefined;
+  isMe?: boolean
+  isWrite?: boolean
+  isBorder?: boolean
+  data: ReviewType | undefined
 }
 export default function Review({ isMe, isWrite = false, isBorder = true, data }: ReviewProps) {
-  const [isWriteModal, setIsWriteModal] = useState(false);
-  const [isImageViewer, setIsImageViewer] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [isReportModal, setIsReportModal] = useState(false);
+  const [isWriteModal, setIsWriteModal] = useState(false)
+  const [isImageViewer, setIsImageViewer] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [isReportModal, setIsReportModal] = useState(false)
 
-  const { openDialog, closeDialog } = useDialog();
-  const { openToast } = useToast();
-  const { id } = useParams();
-  const router = useRouter();
+  const { openDialog, closeDialog } = useDialog()
+  const { openToast } = useToast()
+  const { id } = useParams()
+  const router = useRouter()
 
-  const { token } = useAuthStore();
+  const { token } = useAuthStore()
 
-  const { mutate: deleteReviewMutate, isPending } = useDeleteReviewMutation();
-  const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id));
-  const { data: userData } = useGetUserProfileQuery();
+  const { mutate: deleteReviewMutate, isPending } = useDeleteReviewMutation()
+  const { data: detailData, refetch: detailRefetch } = useGetShopDetailQuery(String(id))
+  const { data: userData } = useGetUserProfileQuery()
 
   const confirm = () => {
-    router.push('/login');
-    closeDialog();
-  };
+    router.push('/login')
+    closeDialog()
+  }
 
   const handleToggleReportModal = () => {
     if (!token) {
@@ -59,16 +59,16 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
         rightLabel: '로그인/회원가입하기',
         onConfirm: () => confirm(),
         onCancel: () => closeDialog(),
-      });
-      return;
+      })
+      return
     }
 
-    setIsReportModal((prev) => !prev);
-  };
+    setIsReportModal((prev) => !prev)
+  }
 
   const handleToggleWriteModal = () => {
     if (token) {
-      setIsWriteModal((prev) => !prev);
+      setIsWriteModal((prev) => !prev)
     } else {
       openDialog({
         type: 'alert',
@@ -77,31 +77,31 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
         rightLabel: '로그인/회원가입하기',
         onConfirm: () => confirm(),
         onCancel: () => closeDialog(),
-      });
+      })
     }
-  };
+  }
 
   const handleOpenImageViewer = (index: number) => {
-    setSelectedIndex(index);
-    setIsImageViewer(true);
-  };
+    setSelectedIndex(index)
+    setIsImageViewer(true)
+  }
 
   const handleCloseImageViewer = () => {
-    setIsImageViewer(false);
-  };
+    setIsImageViewer(false)
+  }
 
   const handleReviewDelete = () => {
-    if (!detailData?.userReviews[0].id) return;
+    if (!detailData?.userReviews[0].id) return
     deleteReviewMutate(String(detailData?.userReviews[0].id), {
       onSuccess: () => {
-        closeDialog();
-        detailRefetch();
+        closeDialog()
+        detailRefetch()
         openToast({
           message: '리뷰가 삭제 되었습니다.',
-        });
+        })
       },
-    });
-  };
+    })
+  }
 
   const handleOpenDeleteModal = () => {
     openDialog({
@@ -114,8 +114,8 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
       ),
       type: 'confirm',
       onConfirm: handleReviewDelete,
-    });
-  };
+    })
+  }
 
   return (
     <Flex
@@ -222,5 +222,5 @@ export default function Review({ isMe, isWrite = false, isBorder = true, data }:
         handleToggleReportModal={handleToggleReportModal}
       />
     </Flex>
-  );
+  )
 }

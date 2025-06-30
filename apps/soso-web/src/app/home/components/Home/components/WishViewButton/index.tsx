@@ -1,10 +1,10 @@
-import WishIcon from '@/shared/components/icons/WishIcon';
-import clsx from 'clsx';
-import { ButtonHTMLAttributes } from 'react';
+import WishIcon from '@/shared/components/icons/WishIcon'
+import clsx from 'clsx'
+import { ButtonHTMLAttributes } from 'react'
 
 interface WishViewButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
-  isActive: boolean;
+  className?: string
+  isActive: boolean
 }
 
 export default function WishViewButtonProps({ className, isActive, ...props }: WishViewButtonProps) {
@@ -22,5 +22,5 @@ export default function WishViewButtonProps({ className, isActive, ...props }: W
         찜
       </span>
     </button>
-  );
+  )
 }
