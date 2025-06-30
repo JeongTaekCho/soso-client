@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
-import Button from '@/shared/components/button/Button';
-import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
-import SellProduct from '@/shared/components/card/SellProduct';
-import Flex from '@/shared/components/layout/Flex';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
-import { PRODUCT_LIST } from '@/shared/constant/Product';
-import { ProductType } from '@/shared/types/shopType';
+import { useEffect, useState } from 'react'
+import Button from '@/shared/components/button/Button'
+import ModalCloseButton from '@/shared/components/button/MocalCloseButton'
+import SellProduct from '@/shared/components/card/SellProduct'
+import Flex from '@/shared/components/layout/Flex'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import BottomModalTitle from '@/shared/components/text/BottomModalTitle'
+import { PRODUCT_LIST } from '@/shared/constant/Product'
+import { ProductType } from '@/shared/types/shopType'
 
 interface SelectCategoryModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  categoryIdList: number[];
-  onSubmit: (idList: number[]) => void;
+  isOpen: boolean
+  onClose: () => void
+  categoryIdList: number[]
+  onSubmit: (idList: number[]) => void
 }
 
-export const DEFAULT_CATEGORY_ID_LIST = PRODUCT_LIST.map((item) => item.id);
+export const DEFAULT_CATEGORY_ID_LIST = PRODUCT_LIST.map((item) => item.id)
 
 export default function SelectCategoryModal({
   isOpen,
@@ -23,31 +23,27 @@ export default function SelectCategoryModal({
   categoryIdList: initList,
   onSubmit,
 }: SelectCategoryModalProps) {
-  const [idList, setIdList] = useState<number[]>([]);
+  const [idList, setIdList] = useState<number[]>([])
 
   const toggleCategory = (id: number) => {
-    const isProductInList = idList.some((prevId) => prevId === id);
-    const updatedList = isProductInList ? idList.filter((prevId) => prevId !== id) : [...idList, id];
-    setIdList(updatedList);
-  };
+    const isProductInList = idList.some((prevId) => prevId === id)
+    const updatedList = isProductInList ? idList.filter((prevId) => prevId !== id) : [...idList, id]
+    setIdList(updatedList)
+  }
 
   const onClickSubmit = () => {
-    onSubmit(idList);
-    handleCloseModal();
-  };
-
-  useEffect(() => {
-    if (!isOpen) return;
-  }, [isOpen]);
+    onSubmit(idList)
+    handleCloseModal()
+  }
 
   const handleCloseModal = () => {
-    onClose();
-  };
+    onClose()
+  }
 
   useEffect(() => {
-    const isDefault = initList.length === 0;
-    setIdList(isDefault ? DEFAULT_CATEGORY_ID_LIST : initList);
-  }, [initList]);
+    const isDefault = initList.length === 0
+    setIdList(isDefault ? DEFAULT_CATEGORY_ID_LIST : initList)
+  }, [initList])
 
   return (
     <BottomModal isOpen={isOpen} onClose={handleCloseModal}>
@@ -83,5 +79,5 @@ export default function SelectCategoryModal({
         </Flex>
       </Flex>
     </BottomModal>
-  );
+  )
 }
