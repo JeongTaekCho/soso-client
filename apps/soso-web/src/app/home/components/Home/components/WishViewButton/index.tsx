@@ -7,11 +7,11 @@ interface WishViewButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isActive: boolean
 }
 
-export default function WishViewButtonProps({ className, isActive, ...props }: WishViewButtonProps) {
+export default function WishViewButton({ className, isActive, ...props }: WishViewButtonProps) {
   return (
     <button
       className={clsx(
-        'flex items-center justify-center gap-4 rounded-full border bg-white px-10 py-6 shadow-button',
+        'flex items-center justify-center gap-4 rounded-full border bg-white px-10 py-6',
         isActive ? 'border-main' : 'border-gray-100',
         className
       )}

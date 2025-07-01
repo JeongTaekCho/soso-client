@@ -8,10 +8,7 @@ interface ResearchButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export default function ResearchButton({ className, ...props }: ResearchButtonProps) {
   return (
     <button
-      className={clsx(
-        'z-important mx-auto mt-8 flex h-34 items-center gap-4 rounded-full bg-white px-10 shadow-button',
-        className
-      )}
+      className={clsx('mx-auto flex h-34 items-center gap-4 rounded-full bg-white px-10 shadow-button', className)}
       {...props}
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
