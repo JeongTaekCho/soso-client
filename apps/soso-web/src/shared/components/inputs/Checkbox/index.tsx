@@ -1,10 +1,10 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
 interface CheckboxProps {
-  id: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-  size?: number;
+  id: string
+  checked: boolean
+  onChange: (checked: boolean) => void
+  size?: number
 }
 
 const Checkbox = ({ id, checked, onChange, size = 20 }: CheckboxProps) => {
@@ -38,7 +38,7 @@ const Checkbox = ({ id, checked, onChange, size = 20 }: CheckboxProps) => {
         </svg>
       </label>
     </div>
-  );
-};
+  )
+}
 
-export default Checkbox;
+export default Checkbox

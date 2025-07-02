@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function ProposalIcon({ width, height }: IconProps) {
   return (
@@ -21,5 +21,5 @@ export default function ProposalIcon({ width, height }: IconProps) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

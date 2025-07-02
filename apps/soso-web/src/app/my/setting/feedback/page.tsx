@@ -1,19 +1,19 @@
-'use client';
+'use client'
 
-import { usePostFeedbackMutation } from '@/app/my/setting/feedback/hooks/usePostFeedbackMutation';
-import Button from '@/shared/components/button/Button';
-import Textarea from '@/shared/components/inputs/Textarea';
-import Header from '@/shared/components/layout/Header';
-import useInput from '@/shared/hooks/useInput';
+import { usePostFeedbackMutation } from '@/app/my/setting/feedback/hooks/usePostFeedbackMutation'
+import Button from '@/shared/components/button/Button'
+import Textarea from '@/shared/components/inputs/Textarea'
+import Header from '@/shared/components/layout/Header'
+import useInput from '@/shared/hooks/useInput'
 
 export default function FeedbackPage() {
-  const { value: feedback, onChange } = useInput('');
+  const { value: feedback, onChange } = useInput('')
 
-  const { mutate: postFeedbackMutate } = usePostFeedbackMutation();
+  const { mutate: postFeedbackMutate } = usePostFeedbackMutation()
 
   const handleSubmit = () => {
-    postFeedbackMutate({ feedback });
-  };
+    postFeedbackMutate({ feedback })
+  }
 
   return (
     <div>
@@ -29,5 +29,5 @@ export default function FeedbackPage() {
         <Button title="의견 보내기" onClick={handleSubmit} />
       </div>
     </div>
-  );
+  )
 }

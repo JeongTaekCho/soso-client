@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function XIcon({ width, height, fill }: IconProps) {
   return (
@@ -16,5 +16,5 @@ export default function XIcon({ width, height, fill }: IconProps) {
         strokeWidth="0.8"
       />
     </svg>
-  );
+  )
 }

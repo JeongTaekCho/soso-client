@@ -1,84 +1,84 @@
-'use client';
+'use client'
 
-import SearchItem from '@/app/search/components/SearchList/components/SearchItem';
-import { useGetShopSearchListQuery } from '@/app/search/components/SearchList/hooks/useGetShopSearchListQuery';
-import PlaceCard from '@/shared/components/card/PlaceCard';
-import Flex from '@/shared/components/layout/Flex';
-import useDebounce from '@/shared/hooks/useDebounce';
-import { useGetShopQuery } from '@/shared/hooks/useGetShopQuery';
-import { useSearchStore } from '@/shared/store/useSearchStore';
-import { getCurrentLocation } from '@/shared/utils/getCurrentLocation';
-import Link from 'next/link';
-import { MouseEvent, useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, FreeMode } from 'swiper/modules';
-import { useAuthStore } from '@/shared/store/useAuthStore';
-import { useInView } from 'react-intersection-observer';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ShopType } from '@/shared/types/shopType';
-import Loading from '@/shared/components/loading/Loading';
-import { useGetUserFindShopQuery } from '@/app/search/components/SearchList/hooks/useGetUserFindShopQuery';
-import { useDeleteUserFindShopMutation } from '@/app/search/components/SearchList/hooks/useDeleteUserFindShopMutation';
-import { useAllDeleteUserFindShopMutation } from '@/app/search/components/SearchList/hooks/useAllDeleteUserFindShopMutation';
+import SearchItem from '@/app/search/components/SearchList/components/SearchItem'
+import { useGetShopSearchListQuery } from '@/app/search/components/SearchList/hooks/useGetShopSearchListQuery'
+import PlaceCard from '@/shared/components/card/PlaceCard'
+import Flex from '@/shared/components/layout/Flex'
+import useDebounce from '@/shared/hooks/useDebounce'
+import { useGetShopQuery } from '@/shared/hooks/useGetShopQuery'
+import { useSearchStore } from '@/shared/store/useSearchStore'
+import { getCurrentLocation } from '@/shared/utils/getCurrentLocation'
+import Link from 'next/link'
+import { MouseEvent, useEffect, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, FreeMode } from 'swiper/modules'
+import { useAuthStore } from '@/shared/store/useAuthStore'
+import { useInView } from 'react-intersection-observer'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ShopType } from '@/shared/types/shopType'
+import Loading from '@/shared/components/loading/Loading'
+import { useGetUserFindShopQuery } from '@/app/search/components/SearchList/hooks/useGetUserFindShopQuery'
+import { useDeleteUserFindShopMutation } from '@/app/search/components/SearchList/hooks/useDeleteUserFindShopMutation'
+import { useAllDeleteUserFindShopMutation } from '@/app/search/components/SearchList/hooks/useAllDeleteUserFindShopMutation'
 
 interface Location {
-  lat: number;
-  lng: number;
+  lat: number
+  lng: number
 }
 
 export default function SearchList() {
-  const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<Location | null>(null)
 
-  const { searchValue } = useSearchStore();
-  const searchDebounceValue = useDebounce(searchValue, 300);
+  const { searchValue } = useSearchStore()
+  const searchDebounceValue = useDebounce(searchValue, 300)
 
-  const { data: shopSortData } = useGetShopQuery(currentLocation?.lat ?? null, currentLocation?.lng ?? null, true);
+  const { data: shopSortData } = useGetShopQuery(currentLocation?.lat ?? null, currentLocation?.lng ?? null, true)
   const {
     data: shopSearchData,
     isLoading,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetShopSearchListQuery(searchDebounceValue);
+  } = useGetShopSearchListQuery(searchDebounceValue)
 
-  const { data: userFindShopData } = useGetUserFindShopQuery();
+  const { data: userFindShopData } = useGetUserFindShopQuery()
 
-  const { mutate: deleteFindShopMutate } = useDeleteUserFindShopMutation();
-  const { mutate: allDeleteFindShopMutate } = useAllDeleteUserFindShopMutation();
+  const { mutate: deleteFindShopMutate } = useDeleteUserFindShopMutation()
+  const { mutate: allDeleteFindShopMutate } = useAllDeleteUserFindShopMutation()
 
   const { ref, inView } = useInView({
     threshold: 0.2,
-  });
+  })
 
-  const { token } = useAuthStore();
+  const { token } = useAuthStore()
 
   const handleDeleteFindShop = (e: MouseEvent<HTMLButtonElement>, shopName: string) => {
-    e.stopPropagation();
-    e.preventDefault();
-    deleteFindShopMutate({ shopName });
-  };
+    e.stopPropagation()
+    e.preventDefault()
+    deleteFindShopMutate({ shopName })
+  }
   const handleAllDeleteFindShop = () => {
-    allDeleteFindShopMutate();
-  };
+    allDeleteFindShopMutate()
+  }
 
   useEffect(() => {
     const fetchLocation = async () => {
-      const result = await getCurrentLocation();
+      const result = await getCurrentLocation()
       if (result === 'denied') {
-        setCurrentLocation(null);
+        setCurrentLocation(null)
       } else {
-        setCurrentLocation(result);
+        setCurrentLocation(result)
       }
-    };
+    }
 
-    fetchLocation();
-  }, []);
+    fetchLocation()
+  }, [])
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage && !isLoading) {
-      fetchNextPage();
+      fetchNextPage()
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading])
 
   // 컨테이너 애니메이션 변형
   const containerVariants = {
@@ -91,7 +91,7 @@ export default function SearchList() {
         ease: 'easeOut',
       },
     },
-  };
+  }
 
   // 내부 콘텐츠 애니메이션 변형
   const contentVariants = {
@@ -110,7 +110,7 @@ export default function SearchList() {
         opacity: { duration: 0.2 },
       },
     },
-  };
+  }
 
   return (
     <Flex direction="col" gap={18} className="mt-20 w-full">
@@ -156,7 +156,7 @@ export default function SearchList() {
                             id={shop.id}
                             label={shop.shopName}
                             onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                              handleDeleteFindShop(e, shop.shopName);
+                              handleDeleteFindShop(e, shop.shopName)
                             }}
                           />
                         </SwiperSlide>
@@ -224,5 +224,5 @@ export default function SearchList() {
         </div>
       </div>
     </Flex>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import SideBar from '@/app/soso-admin/components/SideBar';
-import Flex from '@/shared/components/layout/Flex';
+import SideBar from '@/app/soso-admin/components/SideBar'
+import Flex from '@/shared/components/layout/Flex'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,5 +19,5 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <main className="flex-1 p-24">{children}</main>
       </Flex>
     </div>
-  );
+  )
 }

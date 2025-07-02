@@ -1,11 +1,11 @@
-import { handleImageError } from '@/shared/utils/handleImageError';
-import clsx from 'clsx';
-import Image from 'next/image';
+import { handleImageError } from '@/shared/utils/handleImageError'
+import clsx from 'clsx'
+import Image from 'next/image'
 
 interface ProductImageProps {
-  imgUrl?: string;
-  size?: number;
-  className?: string;
+  imgUrl?: string
+  size?: number
+  className?: string
 }
 export default function ProductImage({ imgUrl, size, className }: ProductImageProps) {
   return (
@@ -18,5 +18,5 @@ export default function ProductImage({ imgUrl, size, className }: ProductImagePr
         onError={handleImageError}
       />
     </div>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function GoogleIcon({ width, height }: IconProps) {
   return (
@@ -41,5 +41,5 @@ export default function GoogleIcon({ width, height }: IconProps) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

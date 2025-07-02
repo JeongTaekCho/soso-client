@@ -1,13 +1,13 @@
-'use client';
+'use client'
 
-import Flex from '@/shared/components/layout/Flex';
-import ProfileImage from '@/shared/components/ui/ProfileImage';
-import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
-import Image from 'next/image';
-import Link from 'next/link';
+import Flex from '@/shared/components/layout/Flex'
+import ProfileImage from '@/shared/components/ui/ProfileImage'
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function MyProfile() {
-  const { data: userData } = useGetUserProfileQuery();
+  const { data: userData } = useGetUserProfileQuery()
 
   return (
     <Flex direction="col" gap={20} className="w-full pb-16 pt-20">
@@ -33,5 +33,5 @@ export default function MyProfile() {
         </Flex>
       </div>
     </Flex>
-  );
+  )
 }

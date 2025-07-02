@@ -1,32 +1,32 @@
-'use client';
+'use client'
 
-import { usePostReportMutation } from '@/app/report/hooks/usePostReportMutation';
-import { useReportStore } from '@/app/report/store/useReportStore';
-import Button from '@/shared/components/button/Button';
-import TimePickerButton from '@/shared/components/button/TimePickerButton';
-import SellProduct from '@/shared/components/card/SellProduct';
-import Input from '@/shared/components/inputs/Input';
-import TimePicker from '@/shared/components/inputs/TimePicker';
-import YoilCheckbox from '@/shared/components/inputs/YoilCheckbox';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import NaverMap from '@/shared/components/layout/NaverMap';
-import AddProductModal from '@/shared/components/modal/AddProductModal';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import ModalPortal from '@/shared/components/modal/ModalPortal';
-import useInput from '@/shared/hooks/useInput';
-import { useTimePicker } from '@/shared/hooks/useTimePicker';
-import useProductListStore from '@/shared/store/useProductListStore';
-import { useYoilStore } from '@/shared/store/useYoilStore';
-import { usePathname, useRouter } from 'next/navigation';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { usePostReportMutation } from '@/app/report/hooks/usePostReportMutation'
+import { useReportStore } from '@/app/report/store/useReportStore'
+import Button from '@/shared/components/button/Button'
+import TimePickerButton from '@/shared/components/button/TimePickerButton'
+import SellProduct from '@/shared/components/card/SellProduct'
+import Input from '@/shared/components/inputs/Input'
+import TimePicker from '@/shared/components/inputs/TimePicker'
+import YoilCheckbox from '@/shared/components/inputs/YoilCheckbox'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import NaverMap from '@/shared/components/layout/NaverMap'
+import AddProductModal from '@/shared/components/modal/AddProductModal'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import ModalPortal from '@/shared/components/modal/ModalPortal'
+import useInput from '@/shared/hooks/useInput'
+import { useTimePicker } from '@/shared/hooks/useTimePicker'
+import useProductListStore from '@/shared/store/useProductListStore'
+import { useYoilStore } from '@/shared/store/useYoilStore'
+import { usePathname, useRouter } from 'next/navigation'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 export default function ReportWrite() {
-  const [isDeclareModal, setIsDeclareModal] = useState(false);
-  const [isAddProductModal, setIsAddProductModal] = useState(false);
+  const [isDeclareModal, setIsDeclareModal] = useState(false)
+  const [isAddProductModal, setIsAddProductModal] = useState(false)
 
-  const { value: shopName, onChange: handleChangeShopName } = useInput('');
-  const { value: phoneNumber, onChange: handleChangePhoneNumber } = useInput('');
+  const { value: shopName, onChange: handleChangeShopName } = useInput('')
+  const { value: phoneNumber, onChange: handleChangePhoneNumber } = useInput('')
 
   const {
     openTime,
@@ -36,68 +36,68 @@ export default function ReportWrite() {
     handleCloseTimePicker,
     handleOpenTimePicker,
     handleTimePicker,
-  } = useTimePicker();
-  const { productList, clearProductList } = useProductListStore();
-  const { yoil, toggleYoil } = useYoilStore();
-  const { shop, setShop, operatingHours, setOperatingHours, products, setProduct } = useReportStore();
+  } = useTimePicker()
+  const { productList, clearProductList } = useProductListStore()
+  const { yoil, toggleYoil } = useYoilStore()
+  const { shop, setShop, operatingHours, setOperatingHours, products, setProduct } = useReportStore()
 
-  const { mutate: postReportMutate } = usePostReportMutation();
+  const { mutate: postReportMutate } = usePostReportMutation()
 
-  const router = useRouter();
-  const pathname = usePathname();
+  const router = useRouter()
+  const pathname = usePathname()
 
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id } = e.target as HTMLInputElement;
+    const { id } = e.target as HTMLInputElement
 
-    toggleYoil(id);
-  };
+    toggleYoil(id)
+  }
 
   const handleToggleTimeSettingModal = () => {
-    setIsDeclareModal((prev) => !prev);
-  };
+    setIsDeclareModal((prev) => !prev)
+  }
 
   const handleToggleAddProductModal = () => {
-    setIsAddProductModal((prev) => !prev);
-  };
+    setIsAddProductModal((prev) => !prev)
+  }
 
   const handleSubmitReport = () => {
     const data = {
       shop,
       operatingHours,
       products,
-    };
+    }
 
-    postReportMutate(data);
-  };
+    postReportMutate(data)
+  }
 
   useEffect(() => {
     if (!shop.location) {
-      router.back();
+      router.back()
     }
-  }, [shop]);
+  }, [shop])
 
   useEffect(() => {
     return () => {
-      clearProductList();
-    };
-  }, [pathname, clearProductList]);
+      clearProductList()
+    }
+  }, [pathname, clearProductList])
 
   const convertTimeFormat = (timeString: string): string => {
-    const [period, time] = timeString.split(' ');
-    const [hour, minute] = time.split(':').map(Number);
+    const [period, time] = timeString.split(' ')
+    const [hour, minute] = time.split(':').map(Number)
 
     if (period === '오전') {
-      return time;
+      return time
     } else if (period === '오후') {
-      const convertedHour = hour === 12 ? 12 : hour + 12;
-      return `${convertedHour}:${minute.toString().padStart(2, '0')}`;
+      const convertedHour = hour === 12 ? 12 : hour + 12
+      return `${convertedHour}:${minute.toString().padStart(2, '0')}`
     }
 
-    return timeString;
-  };
+    return timeString
+  }
 
   useEffect(() => {
-    setShop({ ...shop, name: shopName });
+    setShop({ ...shop, name: shopName })
     setOperatingHours({
       ...operatingHours,
       monday: yoil[0].checked,
@@ -110,13 +110,13 @@ export default function ReportWrite() {
       phoneNumber,
       startTime: convertTimeFormat(openTime),
       endTime: convertTimeFormat(closeTime),
-    });
+    })
 
     const customProducts = productList.map((el) => {
-      return { id: el.id, name: el.name };
-    });
-    setProduct(customProducts);
-  }, [shopName, yoil, openTime, closeTime, phoneNumber, productList]);
+      return { id: el.id, name: el.name }
+    })
+    setProduct(customProducts)
+  }, [shopName, yoil, openTime, closeTime, phoneNumber, productList])
 
   return (
     <form className="flex flex-col modal-page">
@@ -217,5 +217,5 @@ export default function ReportWrite() {
       </ModalPortal>
       <AddProductModal isOpen={isAddProductModal} onClose={handleToggleAddProductModal} />
     </form>
-  );
+  )
 }

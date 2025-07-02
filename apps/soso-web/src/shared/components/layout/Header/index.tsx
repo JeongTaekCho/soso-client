@@ -1,22 +1,22 @@
-'use client';
+'use client'
 
-import BackIcon from '@/shared/components/icons/BackIcon.tsx';
-import XIcon from '@/shared/components/icons/XIcon';
-import Flex from '@/shared/components/layout/Flex';
-import useBack from '@/shared/hooks/useBack';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import BackIcon from '@/shared/components/icons/BackIcon'
+import XIcon from '@/shared/components/icons/XIcon'
+import Flex from '@/shared/components/layout/Flex'
+import useBack from '@/shared/hooks/useBack'
+import { usePathname } from 'next/navigation'
+import { ReactNode } from 'react'
 
 interface HeaderProps {
-  type?: 'close' | 'back' | 'customBack' | 'customBtn';
-  title?: string;
-  customBtn?: ReactNode;
-  top?: string;
+  type?: 'close' | 'back' | 'customBack' | 'customBtn'
+  title?: string
+  customBtn?: ReactNode
+  top?: string
 }
 
 export default function Header({ type, title, customBtn, top }: HeaderProps) {
-  const { handleBack } = useBack();
-  const pathname = usePathname();
+  const { handleBack } = useBack()
+  const pathname = usePathname()
 
   return (
     <div
@@ -50,5 +50,5 @@ export default function Header({ type, title, customBtn, top }: HeaderProps) {
         </Flex>
       )}
     </div>
-  );
+  )
 }

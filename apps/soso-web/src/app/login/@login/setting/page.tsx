@@ -1,48 +1,48 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Button from '@/shared/components/button/Button';
-import Input from '@/shared/components/inputs/Input';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import ValidationText from '@/shared/components/text/ValidationText';
-import { useGetDuplicateNicknameQuery } from '@/shared/hooks/useGetDuplicateNicknameQuery';
-import useDebounce from '@/shared/hooks/useDebounce';
-import { usePostSaveNicknameMutation } from '@/app/login/@login/setting/hooks/usePostSaveNicknameMutation';
+import React, { useEffect, useState } from 'react'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import Button from '@/shared/components/button/Button'
+import Input from '@/shared/components/inputs/Input'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import ValidationText from '@/shared/components/text/ValidationText'
+import { useGetDuplicateNicknameQuery } from '@/shared/hooks/useGetDuplicateNicknameQuery'
+import useDebounce from '@/shared/hooks/useDebounce'
+import { usePostSaveNicknameMutation } from '@/app/login/@login/setting/hooks/usePostSaveNicknameMutation'
 
 export default function InfoSetting() {
   const [isError, setIsError] = useState({
     lengthError: true,
     patternError: true,
-  });
+  })
 
   const { register, handleSubmit, watch } = useForm({
     mode: 'onChange',
-  });
+  })
 
-  const nickname = watch('nickName');
-  const debounceNickname = useDebounce(nickname, 200);
+  const nickname = watch('nickName')
+  const debounceNickname = useDebounce(nickname, 200)
 
-  const { data: isDuplicateNickname, isLoading } = useGetDuplicateNicknameQuery(debounceNickname);
-  const { mutate: saveNicknameMutate } = usePostSaveNicknameMutation();
+  const { data: isDuplicateNickname, isLoading } = useGetDuplicateNicknameQuery(debounceNickname)
+  const { mutate: saveNicknameMutate } = usePostSaveNicknameMutation()
 
   useEffect(() => {
-    const lengthError = nickname?.length < 2 || nickname?.length > 10;
-    const patternError = !/^[가-힣a-zA-Z0-9]+$/.test(nickname);
+    const lengthError = nickname?.length < 2 || nickname?.length > 10
+    const patternError = !/^[가-힣a-zA-Z0-9]+$/.test(nickname)
 
     setIsError((prevErrors) => ({
       ...prevErrors,
       lengthError,
       patternError,
-    }));
-  }, [nickname]);
+    }))
+  }, [nickname])
 
-  const isDisabled = isError.lengthError || isError.patternError || !nickname || isDuplicateNickname || isLoading;
+  const isDisabled = isError.lengthError || isError.patternError || !nickname || isDuplicateNickname || isLoading
 
   const handleClick: SubmitHandler<FieldValues> = (data) => {
-    saveNicknameMutate(data);
-  };
+    saveNicknameMutate(data)
+  }
 
   return (
     <div className="modal-page">
@@ -68,5 +68,5 @@ export default function InfoSetting() {
         </form>
       </Flex>
     </div>
-  );
+  )
 }

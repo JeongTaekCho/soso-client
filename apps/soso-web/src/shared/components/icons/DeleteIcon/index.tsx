@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function DeleteIcon({ width, height, fill }: IconProps) {
   return (
@@ -16,5 +16,5 @@ export default function DeleteIcon({ width, height, fill }: IconProps) {
         strokeWidth="0.5"
       />
     </svg>
-  );
+  )
 }

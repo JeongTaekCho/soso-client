@@ -1,8 +1,8 @@
-import XIcon from '@/shared/components/icons/XIcon';
-import { ButtonHTMLAttributes } from 'react';
+import XIcon from '@/shared/components/icons/XIcon'
+import { ButtonHTMLAttributes } from 'react'
 
 interface ModalCloseButton extends ButtonHTMLAttributes<HTMLButtonElement> {
-  onClick: () => void;
+  onClick: () => void
 }
 
 export default function ModalCloseButton({ onClick }: ModalCloseButton) {
@@ -10,5 +10,5 @@ export default function ModalCloseButton({ onClick }: ModalCloseButton) {
     <button onClick={onClick}>
       <XIcon />
     </button>
-  );
+  )
 }

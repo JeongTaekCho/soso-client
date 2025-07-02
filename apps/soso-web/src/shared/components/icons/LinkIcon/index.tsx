@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function LinkIcon({ width, height }: IconProps) {
   return (
@@ -23,5 +23,5 @@ export default function LinkIcon({ width, height }: IconProps) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

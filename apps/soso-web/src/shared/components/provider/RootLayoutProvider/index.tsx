@@ -1,44 +1,44 @@
-'use client';
+'use client'
 
-import AuthComponent from '@/shared/components/config/AuthComponent';
-import BottomNavigation from '@/shared/components/layout/BottomNavigation';
-import TanstackQueryProvider from '@/shared/components/provider/TanstackQueryProvider';
-import { DialogProvider } from '@/shared/context/DialogContext';
-import { ToastProvider } from '@/shared/context/ToastContext';
-import { useIsNavigation } from '@/shared/hooks/useIsNavigation';
-import { usePathname } from 'next/navigation';
-import { ReactNode, useEffect, useRef } from 'react';
+import AuthComponent from '@/shared/components/config/AuthComponent'
+import BottomNavigation from '@/shared/components/layout/BottomNavigation'
+import TanstackQueryProvider from '@/shared/components/provider/TanstackQueryProvider'
+import { DialogProvider } from '@/shared/context/DialogContext'
+import { ToastProvider } from '@/shared/context/ToastContext'
+import { useIsNavigation } from '@/shared/hooks/useIsNavigation'
+import { usePathname } from 'next/navigation'
+import { ReactNode, useEffect, useRef } from 'react'
 
 interface RootLayoutProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export default function RootLayoutProvider({ children }: RootLayoutProviderProps) {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
-  const isNavigation = useIsNavigation();
+  const isNavigation = useIsNavigation()
 
   useEffect(() => {
     const setVh = () => {
-      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-    };
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+    }
 
-    setVh();
-    window.addEventListener('resize', setVh);
+    setVh()
+    window.addEventListener('resize', setVh)
 
     return () => {
-      window.removeEventListener('resize', setVh);
-    };
-  }, []);
+      window.removeEventListener('resize', setVh)
+    }
+  }, [])
 
   // 라우팅 했을 때 스크롤 최상단
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (contentRef.current) {
-      contentRef.current.scrollTop = 0;
+      contentRef.current.scrollTop = 0
     }
-  }, [pathname]);
+  }, [pathname])
 
   return (
     <div>
@@ -64,5 +64,5 @@ export default function RootLayoutProvider({ children }: RootLayoutProviderProps
         </DialogProvider>
       </TanstackQueryProvider>
     </div>
-  );
+  )
 }

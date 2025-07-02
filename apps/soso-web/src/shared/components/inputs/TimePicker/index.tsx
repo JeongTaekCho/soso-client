@@ -1,52 +1,52 @@
-'use client';
+'use client'
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore from 'swiper';
-import './swiper.css';
-import XIcon from '@/shared/components/icons/XIcon';
+import React, { useEffect, useRef, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import SwiperCore from 'swiper'
+import './swiper.css'
+import XIcon from '@/shared/components/icons/XIcon'
 interface TimePickerProps {
-  onConfirm: (time: string) => void;
-  onCancel: () => void;
-  value?: string; // 기본값
+  onConfirm: (time: string) => void
+  onCancel: () => void
+  value?: string // 기본값
 }
 
 const TimePicker: React.FC<TimePickerProps> = ({ onConfirm, onCancel, value }) => {
-  const [selectedAMPM, setSelectedAMPM] = useState('오전');
-  const [selectedHour, setSelectedHour] = useState(10);
-  const [selectedMinute, setSelectedMinute] = useState(0);
+  const [selectedAMPM, setSelectedAMPM] = useState('오전')
+  const [selectedHour, setSelectedHour] = useState(10)
+  const [selectedMinute, setSelectedMinute] = useState(0)
 
-  const ampmSwiperRef = useRef<SwiperCore | null>(null);
-  const hourSwiperRef = useRef<SwiperCore | null>(null);
-  const minuteSwiperRef = useRef<SwiperCore | null>(null);
+  const ampmSwiperRef = useRef<SwiperCore | null>(null)
+  const hourSwiperRef = useRef<SwiperCore | null>(null)
+  const minuteSwiperRef = useRef<SwiperCore | null>(null)
 
   useEffect(() => {
     if (value) {
-      const [ampm, time] = value.split(' ');
-      const [hour, minute] = time.split(':').map(Number);
+      const [ampm, time] = value.split(' ')
+      const [hour, minute] = time.split(':').map(Number)
 
-      setSelectedAMPM(ampm);
-      setSelectedHour(hour);
-      setSelectedMinute(minute);
+      setSelectedAMPM(ampm)
+      setSelectedHour(hour)
+      setSelectedMinute(minute)
 
       if (ampmSwiperRef.current) {
-        ampmSwiperRef.current.slideTo(ampm === '오전' ? 0 : 1, 0);
+        ampmSwiperRef.current.slideTo(ampm === '오전' ? 0 : 1, 0)
       }
       if (hourSwiperRef.current) {
-        hourSwiperRef.current.slideTo(hour - 1, 0);
+        hourSwiperRef.current.slideTo(hour - 1, 0)
       }
       if (minuteSwiperRef.current) {
-        minuteSwiperRef.current.slideTo(minute / 5, 0);
+        minuteSwiperRef.current.slideTo(minute / 5, 0)
       }
     }
-  }, [value]);
+  }, [value])
 
   const handleConfirm = () => {
     const time = `${selectedAMPM} ${selectedHour < 10 ? '0' : ''}${selectedHour}:${
       selectedMinute < 10 ? '0' : ''
-    }${selectedMinute}`;
-    onConfirm(time);
-  };
+    }${selectedMinute}`
+    onConfirm(time)
+  }
 
   return (
     <div className="flex items-center justify-center">
@@ -126,7 +126,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ onConfirm, onCancel, value }) =
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TimePicker;
+export default TimePicker

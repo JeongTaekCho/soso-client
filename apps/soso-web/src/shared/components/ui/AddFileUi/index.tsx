@@ -1,16 +1,16 @@
-import AddButton from '@/shared/components/button/AddButton';
-import WhiteXIcon from '@/shared/components/ui/AddFileUi/components/WhiteXIcon';
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, FreeMode } from 'swiper/modules';
+import AddButton from '@/shared/components/button/AddButton'
+import WhiteXIcon from '@/shared/components/ui/AddFileUi/components/WhiteXIcon'
+import Image from 'next/image'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, FreeMode } from 'swiper/modules'
 
 interface AddFileUiProps {
-  previewArr: string[];
-  removeFile: (index: number) => void;
-  removePrevFile: (index: number) => void;
-  addFiles: (newFiles: File[]) => void;
-  maxLength?: number;
-  images?: { id: number; url: string }[];
+  previewArr: string[]
+  removeFile: (index: number) => void
+  removePrevFile: (index: number) => void
+  addFiles: (newFiles: File[]) => void
+  maxLength?: number
+  images?: { id: number; url: string }[]
 }
 
 export default function AddFileUi({
@@ -22,10 +22,10 @@ export default function AddFileUi({
   images,
 }: AddFileUiProps) {
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
+    if (!e.target.files) return
 
-    addFiles(Array.from(e.target.files));
-  };
+    addFiles(Array.from(e.target.files))
+  }
 
   return (
     <Swiper
@@ -67,5 +67,5 @@ export default function AddFileUi({
         {previewArr.length + (images?.length || 0) < maxLength && <AddButton onChange={handleChangeFile} />}
       </SwiperSlide>
     </Swiper>
-  );
+  )
 }

@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Flex from '@/shared/components/layout/Flex';
+import { useState } from 'react'
+import Flex from '@/shared/components/layout/Flex'
 
 const SearchBar = () => {
-  const [search, setSearch] = useState('');
-  const [status, setStatus] = useState('all');
+  const [search, setSearch] = useState('')
+  const [status, setStatus] = useState('all')
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('검색:', search, '상태:', status);
-  };
+    e.preventDefault()
+    console.log('검색:', search, '상태:', status)
+  }
 
   return (
     <form onSubmit={handleSearch} className="mb-24 w-full">
@@ -45,8 +45,8 @@ const SearchBar = () => {
         <button
           type="button"
           onClick={() => {
-            setSearch('');
-            setStatus('all');
+            setSearch('')
+            setStatus('all')
           }}
           className="h-40 w-100 rounded-8 bg-gray-100 text-gray-600 hover:bg-gray-200"
         >
@@ -54,7 +54,7 @@ const SearchBar = () => {
         </button>
       </Flex>
     </form>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar

@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function GpsIcon({ width, height, fill }: IconProps) {
   return (
@@ -14,5 +14,5 @@ export default function GpsIcon({ width, height, fill }: IconProps) {
         fill={fill || '#72787F'}
       />
     </svg>
-  );
+  )
 }

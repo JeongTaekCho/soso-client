@@ -1,8 +1,8 @@
-import Flex from '@/shared/components/layout/Flex';
-import { handleStopEvent } from '@/shared/utils/stopEvent';
+import Flex from '@/shared/components/layout/Flex'
+import { handleStopEvent } from '@/shared/utils/stopEvent'
 
 interface LoadingProps {
-  text?: string;
+  text?: string
 }
 
 export default function Loading({ text }: LoadingProps) {
@@ -17,5 +17,5 @@ export default function Loading({ text }: LoadingProps) {
         <p className="text-gray-500 font-body1_m">{text || ''}</p>
       </Flex>
     </div>
-  );
+  )
 }

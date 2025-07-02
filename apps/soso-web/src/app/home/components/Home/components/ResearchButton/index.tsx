@@ -1,17 +1,14 @@
-import clsx from 'clsx';
-import { ButtonHTMLAttributes } from 'react';
+import clsx from 'clsx'
+import { ButtonHTMLAttributes } from 'react'
 
 interface ResearchButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
+  className?: string
 }
 
 export default function ResearchButton({ className, ...props }: ResearchButtonProps) {
   return (
     <button
-      className={clsx(
-        'fixed left-1/2 top-85 z-sticky flex h-34 -translate-x-1/2 items-center gap-4 rounded-full bg-white px-10',
-        className
-      )}
+      className={clsx('mx-auto flex h-34 items-center gap-4 rounded-full bg-white px-10 shadow-button', className)}
       {...props}
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,5 +22,5 @@ export default function ResearchButton({ className, ...props }: ResearchButtonPr
 
       <span className="text-main font-body2_m">현재 지도에서 재검색</span>
     </button>
-  );
+  )
 }

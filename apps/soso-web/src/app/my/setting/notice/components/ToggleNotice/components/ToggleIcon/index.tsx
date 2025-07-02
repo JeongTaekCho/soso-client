@@ -15,5 +15,5 @@ export default function ToggleIcon() {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

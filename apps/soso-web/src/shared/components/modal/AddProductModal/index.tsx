@@ -1,55 +1,55 @@
-import { useState, useEffect } from 'react';
-import Button from '@/shared/components/button/Button';
-import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
-import SellProduct from '@/shared/components/card/SellProduct';
-import Flex from '@/shared/components/layout/Flex';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
-import { PRODUCT_LIST } from '@/shared/constant/Product';
-import useProductListStore from '@/shared/store/useProductListStore';
-import { ProductType } from '@/shared/types/shopType';
-import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery';
-import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react'
+import Button from '@/shared/components/button/Button'
+import ModalCloseButton from '@/shared/components/button/MocalCloseButton'
+import SellProduct from '@/shared/components/card/SellProduct'
+import Flex from '@/shared/components/layout/Flex'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import BottomModalTitle from '@/shared/components/text/BottomModalTitle'
+import { PRODUCT_LIST } from '@/shared/constant/Product'
+import useProductListStore from '@/shared/store/useProductListStore'
+import { ProductType } from '@/shared/types/shopType'
+import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery'
+import { useParams } from 'next/navigation'
 
 interface AddProductModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onClick?: () => void;
-  isEdit?: boolean;
+  isOpen: boolean
+  onClose: () => void
+  onClick?: () => void
+  isEdit?: boolean
 }
 
 export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: AddProductModalProps) {
-  const { productList, setProductList, toggleProduct, clearProductList } = useProductListStore();
-  const { id } = useParams();
-  const { data: detailData } = useGetShopDetailQuery(id);
+  const { productList, setProductList, toggleProduct, clearProductList } = useProductListStore()
+  const { id } = useParams()
+  const { data: detailData } = useGetShopDetailQuery(id)
 
   const compareArrays = (
     arr1: { id: number; name: string }[] | undefined,
     arr2: { id: number; name: string }[] | undefined
   ): boolean => {
-    if (!arr1 || !arr2) return false;
-    if (arr1.length !== arr2.length) return false;
+    if (!arr1 || !arr2) return false
+    if (arr1.length !== arr2.length) return false
 
-    return arr1.every((item1) => arr2.some((item2) => item1.id === item2.id && item1.name === item2.name));
-  };
+    return arr1.every((item1) => arr2.some((item2) => item1.id === item2.id && item1.name === item2.name))
+  }
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return
     if (detailData?.shop.products) {
-      setProductList(detailData?.shop.products);
+      setProductList(detailData?.shop.products)
     } else {
-      clearProductList();
+      clearProductList()
     }
-  }, [isOpen, clearProductList]);
+  }, [isOpen, clearProductList])
 
   const handleCloseModal = () => {
-    onClose();
-  };
+    onClose()
+  }
 
   const handleSetProductList = () => {
-    handleCloseModal();
-    if (onClick) onClick();
-  };
+    handleCloseModal()
+    if (onClick) onClick()
+  }
 
   return (
     <BottomModal isOpen={isOpen} onClose={handleCloseModal}>
@@ -79,5 +79,5 @@ export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: Ad
         </Flex>
       </Flex>
     </BottomModal>
-  );
+  )
 }

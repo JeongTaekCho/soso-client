@@ -1,27 +1,27 @@
-'use client';
+'use client'
 
-import ImageSwiperModal from '@/shared/components/modal/ImageSwiperModal';
-import clsx from 'clsx';
-import Image from 'next/image';
-import { useState } from 'react';
+import ImageSwiperModal from '@/shared/components/modal/ImageSwiperModal'
+import clsx from 'clsx'
+import Image from 'next/image'
+import { useState } from 'react'
 
 interface ProfileImage {
-  imgUrl?: string | null;
-  size?: number;
-  className?: string;
+  imgUrl?: string | null
+  size?: number
+  className?: string
 }
 export default function ProfileImage({ imgUrl, size, className }: ProfileImage) {
-  const [isImageViewer, setIsImageViewer] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isImageViewer, setIsImageViewer] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const handleOpenImageViewer = (index: number) => {
-    setSelectedIndex(index);
-    setIsImageViewer(true);
-  };
+    setSelectedIndex(index)
+    setIsImageViewer(true)
+  }
 
   const handleCloseImageViewer = () => {
-    setIsImageViewer(false);
-  };
+    setIsImageViewer(false)
+  }
 
   return (
     <>
@@ -45,5 +45,5 @@ export default function ProfileImage({ imgUrl, size, className }: ProfileImage) 
         initialSlide={selectedIndex}
       />
     </>
-  );
+  )
 }

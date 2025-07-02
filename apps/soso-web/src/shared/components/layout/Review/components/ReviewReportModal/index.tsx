@@ -1,20 +1,20 @@
-import ReportRadio from '@/app/shop/components/ShopTopInfo/components/ReportModal/components/ReportRadio';
-import Button from '@/shared/components/button/Button';
-import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
-import Textarea from '@/shared/components/inputs/Textarea';
-import Flex from '@/shared/components/layout/Flex';
-import { REVIEW_REPORT_LIST } from '@/shared/components/layout/Review/components/ReviewReportModal/constants/ReviewReportList';
-import { usePostReviewReportMutation } from '@/shared/components/layout/Review/components/ReviewReportModal/hooks/usePostReviewReportMutation';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import { useDialog } from '@/shared/context/DialogContext';
-import useInput from '@/shared/hooks/useInput';
-import { CustomError } from '@/shared/utils/customFetch';
-import { useState } from 'react';
+import ReportRadio from '@/app/shop/components/ShopTopInfo/components/ReportModal/components/ReportRadio'
+import Button from '@/shared/components/button/Button'
+import ModalCloseButton from '@/shared/components/button/MocalCloseButton'
+import Textarea from '@/shared/components/inputs/Textarea'
+import Flex from '@/shared/components/layout/Flex'
+import { REVIEW_REPORT_LIST } from '@/shared/components/layout/Review/components/ReviewReportModal/constants/ReviewReportList'
+import { usePostReviewReportMutation } from '@/shared/components/layout/Review/components/ReviewReportModal/hooks/usePostReviewReportMutation'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import { useDialog } from '@/shared/context/DialogContext'
+import useInput from '@/shared/hooks/useInput'
+import { CustomError } from '@/shared/utils/customFetch'
+import { useState } from 'react'
 
 interface ReviewReportModalProps {
-  reviewId?: number;
-  isReportModal: boolean;
-  handleToggleReportModal: () => void;
+  reviewId?: number
+  isReportModal: boolean
+  handleToggleReportModal: () => void
 }
 
 export default function ReviewReportModal({
@@ -22,29 +22,29 @@ export default function ReviewReportModal({
   isReportModal,
   handleToggleReportModal,
 }: ReviewReportModalProps) {
-  const [selectedId, setSelectedId] = useState<string>('');
-  const { value: etcValue, onChange: handleChangeEtcValue, setValue: setEtcValue } = useInput('');
-  const { openDialog } = useDialog();
+  const [selectedId, setSelectedId] = useState<string>('')
+  const { value: etcValue, onChange: handleChangeEtcValue, setValue: setEtcValue } = useInput('')
+  const { openDialog } = useDialog()
 
-  const { mutate: reviewReportMutate } = usePostReviewReportMutation();
+  const { mutate: reviewReportMutate } = usePostReviewReportMutation()
 
   const handleChange = (reportId: string) => {
-    if (!reviewId) return;
+    if (!reviewId) return
 
-    setSelectedId(reportId);
-  };
+    setSelectedId(reportId)
+  }
 
   const handleSubmitReviewReport = () => {
     const data = {
       reviewId: Number(reviewId),
       status: Number(selectedId),
       message: etcValue,
-    };
+    }
 
     reviewReportMutate(data, {
       onSuccess: () => {
-        handleToggleReportModal();
-        setEtcValue('');
+        handleToggleReportModal()
+        setEtcValue('')
         openDialog({
           type: 'alert',
           title: '신고 완료',
@@ -55,27 +55,27 @@ export default function ReviewReportModal({
               확인 후 해당 리뷰는 삭제될 예정입니다.
             </span>
           ),
-        });
-        setSelectedId('');
+        })
+        setSelectedId('')
       },
       onError: (error: unknown) => {
         if (error instanceof CustomError) {
-          const responseData = error.data;
+          const responseData = error.data
           if (responseData.status === 409) {
-            handleToggleReportModal();
-            setSelectedId('');
-            setEtcValue('');
+            handleToggleReportModal()
+            setSelectedId('')
+            setEtcValue('')
             openDialog({
               title: '이미 신고한 후기입니다.',
               type: 'alert',
-            });
+            })
           }
         } else {
-          console.log('알 수 없는 에러:', error);
+          console.log('알 수 없는 에러:', error)
         }
       },
-    });
-  };
+    })
+  }
 
   return (
     <BottomModal isOpen={isReportModal} onClose={handleToggleReportModal}>
@@ -113,5 +113,5 @@ export default function ReviewReportModal({
         />
       </Flex>
     </BottomModal>
-  );
+  )
 }

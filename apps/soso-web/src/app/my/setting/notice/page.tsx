@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import ToggleNotice from '@/app/my/setting/notice/components/ToggleNotice';
-import { useGetNoticeQuery } from '@/app/my/setting/notice/hooks/useGetNoticeQuery';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
+import ToggleNotice from '@/app/my/setting/notice/components/ToggleNotice'
+import { useGetNoticeQuery } from '@/app/my/setting/notice/hooks/useGetNoticeQuery'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
 
 export default function NoticePage() {
-  const { data: noticeData } = useGetNoticeQuery();
+  const { data: noticeData } = useGetNoticeQuery()
 
   return (
     <div>
@@ -21,5 +21,5 @@ export default function NoticePage() {
         )}
       </Flex>
     </div>
-  );
+  )
 }

@@ -1,27 +1,27 @@
-'use client';
+'use client'
 
-import IconButton from '@/shared/components/button/IconButton';
-import LinkIcon from '@/shared/components/icons/LinkIcon';
-import ContentBox from '@/shared/components/layout/ContentBox';
-import Flex from '@/shared/components/layout/Flex';
-import Review from '@/shared/components/layout/Review';
-import ReviewPhoto from '@/shared/components/layout/Review/components/ReviewPhoto';
-import ContentTitle from '@/shared/components/text/ContentTitle';
-import EmptyData from '@/shared/components/ui/EmptyData';
-import { ShopDetailType } from '@/shared/types/shopType';
-import { useRouter } from 'next/navigation';
+import IconButton from '@/shared/components/button/IconButton'
+import LinkIcon from '@/shared/components/icons/LinkIcon'
+import ContentBox from '@/shared/components/layout/ContentBox'
+import Flex from '@/shared/components/layout/Flex'
+import Review from '@/shared/components/layout/Review'
+import ReviewPhoto from '@/shared/components/layout/Review/components/ReviewPhoto'
+import ContentTitle from '@/shared/components/text/ContentTitle'
+import EmptyData from '@/shared/components/ui/EmptyData'
+import { ShopDetailType } from '@/shared/types/shopType'
+import { useRouter } from 'next/navigation'
 
 interface ShopReviewProps {
-  shopData: ShopDetailType | undefined;
-  id?: string;
+  shopData: ShopDetailType | undefined
+  id?: string
 }
 
 export default function ShopReview({ shopData, id }: ShopReviewProps) {
-  const router = useRouter();
+  const router = useRouter()
 
   const handleGoReviewPage = () => {
-    router.push(`/shop/${id}/review`);
-  };
+    router.push(`/shop/${id}/review`)
+  }
 
   return (
     <ContentBox>
@@ -45,5 +45,5 @@ export default function ShopReview({ shopData, id }: ShopReviewProps) {
         )}
       </Flex>
     </ContentBox>
-  );
+  )
 }
