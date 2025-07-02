@@ -1,19 +1,19 @@
-import UploadIcon from '@/shared/components/inputs/ProfileUpload/components/UploadIcon';
-import ProfileImage from '@/shared/components/ui/ProfileImage';
-import { useSingleFileUpload } from '@/shared/hooks/useFileUpload';
-import { ChangeEvent } from 'react';
+import UploadIcon from '@/shared/components/inputs/ProfileUpload/components/UploadIcon'
+import ProfileImage from '@/shared/components/ui/ProfileImage'
+import { useSingleFileUpload } from '@/shared/hooks/useFileUpload'
+import { ChangeEvent } from 'react'
 
 interface ProfileUploadProps {
-  prevImage?: string;
-  preview: string | null;
-  setSingleFile: (file: File) => void;
+  prevImage?: string
+  preview: string | null
+  setSingleFile: (file: File) => void
 }
 
 export default function ProfileUpload({ prevImage, preview, setSingleFile }: ProfileUploadProps) {
   const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    setSingleFile(e.target.files[0]);
-  };
+    if (!e.target.files) return
+    setSingleFile(e.target.files[0])
+  }
 
   return (
     <div>
@@ -25,5 +25,5 @@ export default function ProfileUpload({ prevImage, preview, setSingleFile }: Pro
         </label>
       </div>
     </div>
-  );
+  )
 }

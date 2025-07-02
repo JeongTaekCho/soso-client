@@ -1,42 +1,42 @@
-'use client';
+'use client'
 
-import GoogleIcon from '@/shared/components/icons/GoogleIcon';
-import Flex from '@/shared/components/layout/Flex';
-import { useAuthStore } from '@/shared/store/useAuthStore';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import GoogleIcon from '@/shared/components/icons/GoogleIcon'
+import Flex from '@/shared/components/layout/Flex'
+import { useAuthStore } from '@/shared/store/useAuthStore'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function LoginPage() {
-  const [redirectUri, setRedirectUri] = useState('');
+  const [redirectUri, setRedirectUri] = useState('')
 
-  const router = useRouter();
-  const { isHydrated, token } = useAuthStore();
+  const router = useRouter()
+  const { isHydrated, token } = useAuthStore()
 
   const handleGuestLogin = () => {
-    router.push('/');
-  };
+    router.push('/')
+  }
 
   useEffect(() => {
-    setRedirectUri(`${window.location.origin}/login/callback`);
-  }, []);
+    setRedirectUri(`${window.location.origin}/login/callback`)
+  }, [])
 
   const googleLogin = () => {
-    if (!redirectUri) return;
+    if (!redirectUri) return
 
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    const scope = encodeURIComponent('openid profile email');
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+    const scope = encodeURIComponent('openid profile email')
 
-    const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
-    window.location.href = authUrl;
-  };
+    const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`
+    window.location.href = authUrl
+  }
 
   useEffect(() => {
-    if (!isHydrated || !token) return;
+    if (!isHydrated || !token) return
     if (token) {
-      router.push('/');
+      router.push('/')
     }
-  }, [token, isHydrated]);
+  }, [token, isHydrated])
 
   return (
     <Flex justify="center" align="center" className="h-screenVh w-full">
@@ -71,5 +71,5 @@ export default function LoginPage() {
         </button>
       </Flex>
     </Flex>
-  );
+  )
 }

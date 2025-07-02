@@ -1,10 +1,10 @@
-import MyProfile from '@/app/my/components/MyProfile';
-import ProductLists from '@/app/my/components/ProductLists';
-import Divider from '@/shared/components/divider/Divider';
-import SettingIcon from '@/shared/components/icons/SettingIcon';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import Link from 'next/link';
+import MyProfile from '@/app/my/components/MyProfile'
+import ProductLists from '@/app/my/components/ProductLists'
+import Divider from '@/shared/components/divider/Divider'
+import SettingIcon from '@/shared/components/icons/SettingIcon'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import Link from 'next/link'
 
 export default function MyPage() {
   return (
@@ -26,5 +26,5 @@ export default function MyPage() {
         <ProductLists />
       </Flex>
     </div>
-  );
+  )
 }

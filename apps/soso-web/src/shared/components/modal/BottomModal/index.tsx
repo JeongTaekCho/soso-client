@@ -1,33 +1,33 @@
-'use client';
+'use client'
 
-import { handleStopEvent } from '@/shared/utils/stopEvent';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MouseEvent, ReactNode, useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { handleStopEvent } from '@/shared/utils/stopEvent'
+import { motion, AnimatePresence } from 'framer-motion'
+import { MouseEvent, ReactNode, useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
 
 interface BottomModalProps {
-  isOpen: boolean;
-  onClose: (e: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLDivElement>) => void;
-  children: ReactNode;
+  isOpen: boolean
+  onClose: (e: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLDivElement>) => void
+  children: ReactNode
 }
 
 export default function BottomModal({ isOpen, onClose, children }: BottomModalProps) {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   const handleClose = (e: MouseEvent<HTMLDivElement>) => {
-    handleStopEvent(e);
-    onClose(e);
-  };
+    handleStopEvent(e)
+    onClose(e)
+  }
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
-  const modalRoot = document.getElementById('bottom-modal-root');
+  const modalRoot = document.getElementById('bottom-modal-root')
 
-  if (!modalRoot) return null;
+  if (!modalRoot) return null
 
   return ReactDOM.createPortal(
     <AnimatePresence>
@@ -63,5 +63,5 @@ export default function BottomModal({ isOpen, onClose, children }: BottomModalPr
       )}
     </AnimatePresence>,
     modalRoot
-  );
+  )
 }

@@ -1,12 +1,12 @@
-import Flex from '@/shared/components/layout/Flex';
-import ProductImage from '@/shared/components/ui/ProductImage';
-import clsx from 'clsx';
+import Flex from '@/shared/components/layout/Flex'
+import ProductImage from '@/shared/components/ui/ProductImage'
+import clsx from 'clsx'
 
 interface ShopInfoProps {
-  name: string;
-  date: string;
-  imgUrl?: string;
-  disabled?: boolean;
+  name: string
+  date: string
+  imgUrl?: string
+  disabled?: boolean
 }
 
 export default function ShopInfo({ name, date, imgUrl, disabled }: ShopInfoProps) {
@@ -18,5 +18,5 @@ export default function ShopInfo({ name, date, imgUrl, disabled }: ShopInfoProps
         <p className={clsx('text-gray-400 font-caption', disabled && 'text-gray-200')}>{date}</p>
       </Flex>
     </Flex>
-  );
+  )
 }

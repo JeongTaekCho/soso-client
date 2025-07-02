@@ -1,23 +1,23 @@
-import InstaIcon from '@/app/shop/components/SnsInfo/components/InstaIcon';
-import ContentBox from '@/shared/components/layout/ContentBox';
-import Flex from '@/shared/components/layout/Flex';
-import ContentTitle from '@/shared/components/text/ContentTitle';
-import Link from 'next/link';
+import InstaIcon from '@/app/shop/components/SnsInfo/components/InstaIcon'
+import ContentBox from '@/shared/components/layout/ContentBox'
+import Flex from '@/shared/components/layout/Flex'
+import ContentTitle from '@/shared/components/text/ContentTitle'
+import Link from 'next/link'
 
 export default function SnsInfo() {
   const openInstagram = (instagramId: string) => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
     if (isMobile) {
-      window.location.href = `instagram://user?username=${instagramId}`;
+      window.location.href = `instagram://user?username=${instagramId}`
 
       setTimeout(() => {
-        window.open(`https://www.instagram.com/${instagramId}/`, '_blank');
-      }, 1000);
+        window.open(`https://www.instagram.com/${instagramId}/`, '_blank')
+      }, 1000)
     } else {
-      window.open(`https://www.instagram.com/${instagramId}/`, '_blank');
+      window.open(`https://www.instagram.com/${instagramId}/`, '_blank')
     }
-  };
+  }
 
   return (
     <ContentBox>
@@ -31,5 +31,5 @@ export default function SnsInfo() {
         </button>
       </Flex>
     </ContentBox>
-  );
+  )
 }

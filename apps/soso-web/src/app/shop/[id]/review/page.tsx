@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
-import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import Review from '@/shared/components/layout/Review';
-import ReviewPhoto from '@/shared/components/layout/Review/components/ReviewPhoto';
-import EmptyData from '@/shared/components/ui/EmptyData';
-import { use } from 'react';
+import { useGetShopDetailQuery } from '@/app/shop/hooks/useGetShopDetailQuery'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import Review from '@/shared/components/layout/Review'
+import ReviewPhoto from '@/shared/components/layout/Review/components/ReviewPhoto'
+import EmptyData from '@/shared/components/ui/EmptyData'
+import { use } from 'react'
 
 interface PageProps {
-  params: Promise<{ id: string }>; // ✅ params가 Promise 객체임
+  params: Promise<{ id: string }> // ✅ params가 Promise 객체임
 }
 export default function ShopReviewPage({ params }: PageProps) {
-  const { id } = use(params);
+  const { id } = use(params)
 
-  const { data: shopDetailData } = useGetShopDetailQuery(id);
+  const { data: shopDetailData } = useGetShopDetailQuery(id)
 
   return (
     <div>
@@ -30,5 +30,5 @@ export default function ShopReviewPage({ params }: PageProps) {
         )}
       </Flex>
     </div>
-  );
+  )
 }

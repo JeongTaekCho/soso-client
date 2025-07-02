@@ -8,5 +8,5 @@ export default function PrevIcon() {
         fill="#FF7F50"
       />
     </svg>
-  );
+  )
 }

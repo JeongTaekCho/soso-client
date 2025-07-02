@@ -1,39 +1,39 @@
-'use client';
+'use client'
 
-import { useAddShopProductMutation } from '@/app/shop/components/ShopProducts/hooks/useAddShopProductMutation';
-import IconButton from '@/shared/components/button/IconButton';
-import SellProduct from '@/shared/components/card/SellProduct';
-import ProposalIcon from '@/shared/components/icons/ProposalIcon';
-import ContentBox from '@/shared/components/layout/ContentBox';
-import Flex from '@/shared/components/layout/Flex';
-import AddProductModal from '@/shared/components/modal/AddProductModal';
-import ContentTitle from '@/shared/components/text/ContentTitle';
-import EmptyData from '@/shared/components/ui/EmptyData';
-import { useDialog } from '@/shared/context/DialogContext';
-import { useAuthStore } from '@/shared/store/useAuthStore';
-import useProductListStore from '@/shared/store/useProductListStore';
-import { ProductType } from '@/shared/types/shopType';
-import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useAddShopProductMutation } from '@/app/shop/components/ShopProducts/hooks/useAddShopProductMutation'
+import IconButton from '@/shared/components/button/IconButton'
+import SellProduct from '@/shared/components/card/SellProduct'
+import ProposalIcon from '@/shared/components/icons/ProposalIcon'
+import ContentBox from '@/shared/components/layout/ContentBox'
+import Flex from '@/shared/components/layout/Flex'
+import AddProductModal from '@/shared/components/modal/AddProductModal'
+import ContentTitle from '@/shared/components/text/ContentTitle'
+import EmptyData from '@/shared/components/ui/EmptyData'
+import { useDialog } from '@/shared/context/DialogContext'
+import { useAuthStore } from '@/shared/store/useAuthStore'
+import useProductListStore from '@/shared/store/useProductListStore'
+import { ProductType } from '@/shared/types/shopType'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface ShopProductsProps {
-  productData: ProductType[] | undefined;
+  productData: ProductType[] | undefined
 }
 export default function ShopProducts({ productData }: ShopProductsProps) {
-  const [isBottomModal, setIsBottomModal] = useState(false);
-  const { productList, clearProductList } = useProductListStore();
-  const { id } = useParams();
-  const { token } = useAuthStore();
-  const { openDialog, closeDialog } = useDialog();
+  const [isBottomModal, setIsBottomModal] = useState(false)
+  const { productList, clearProductList } = useProductListStore()
+  const { id } = useParams()
+  const { token } = useAuthStore()
+  const { openDialog, closeDialog } = useDialog()
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const { mutate: addShopProductMutate } = useAddShopProductMutation();
+  const { mutate: addShopProductMutate } = useAddShopProductMutation()
 
   const confirm = () => {
-    router.push('/login');
-    closeDialog();
-  };
+    router.push('/login')
+    closeDialog()
+  }
 
   const handleToggleBottomModal = () => {
     if (!token) {
@@ -44,26 +44,26 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
         rightLabel: '로그인/회원가입하기',
         onConfirm: () => confirm(),
         onCancel: () => closeDialog(),
-      });
+      })
 
-      return;
+      return
     }
 
-    setIsBottomModal((prev) => !prev);
-  };
+    setIsBottomModal((prev) => !prev)
+  }
 
   const handleAddProduct = () => {
     const data = {
       shopId: Number(id),
       products: productList.map((el) => {
-        return { id: el.id };
+        return { id: el.id }
       }),
-    };
+    }
 
     addShopProductMutate(data, {
       onSuccess: () => {
-        clearProductList();
-        setIsBottomModal(false);
+        clearProductList()
+        setIsBottomModal(false)
         openDialog({
           type: 'alert',
           title: '제안 완료',
@@ -74,10 +74,10 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
               확인 후 업데이트 될 예정입니다.
             </span>
           ),
-        });
+        })
       },
-    });
-  };
+    })
+  }
 
   return (
     <ContentBox>
@@ -95,5 +95,5 @@ export default function ShopProducts({ productData }: ShopProductsProps) {
 
       <AddProductModal isEdit onClick={handleAddProduct} isOpen={isBottomModal} onClose={handleToggleBottomModal} />
     </ContentBox>
-  );
+  )
 }

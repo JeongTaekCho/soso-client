@@ -1,30 +1,30 @@
-import { User } from '@/app/soso-admin/users/types/user';
-import Flex from '@/shared/components/layout/Flex';
+import { User } from '@/app/soso-admin/users/types/user'
+import Flex from '@/shared/components/layout/Flex'
 
 interface UserItemProps {
-  user: User;
-  onDelete: (id: string) => void;
+  user: User
+  onDelete: (id: string) => void
 }
 
 const UserItem = ({ user, onDelete }: UserItemProps) => {
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
       case 'active':
-        return 'bg-etc-green text-white';
+        return 'bg-etc-green text-white'
       case 'inactive':
-        return 'bg-gray-400 text-white';
+        return 'bg-gray-400 text-white'
       case 'suspended':
-        return 'bg-etc-red text-white';
+        return 'bg-etc-red text-white'
       default:
-        return 'bg-gray-200 text-gray-600';
+        return 'bg-gray-200 text-gray-600'
     }
-  };
+  }
 
   const formatDate = (dateString?: string) => {
-    if (!dateString) return '-';
-    const date = new Date(dateString);
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-  };
+    if (!dateString) return '-'
+    const date = new Date(dateString)
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+  }
 
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-50">
@@ -46,7 +46,7 @@ const UserItem = ({ user, onDelete }: UserItemProps) => {
         </Flex>
       </td>
     </tr>
-  );
-};
+  )
+}
 
-export default UserItem;
+export default UserItem

@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import GoogleIcon from '@/shared/components/icons/GoogleIcon';
-import Flex from '@/shared/components/layout/Flex';
-import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
+import GoogleIcon from '@/shared/components/icons/GoogleIcon'
+import Flex from '@/shared/components/layout/Flex'
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery'
 
 export default function LoginInfo() {
-  const { data: userData } = useGetUserProfileQuery();
+  const { data: userData } = useGetUserProfileQuery()
 
   return (
     <Flex direction="col" gap={8} className="w-full p-16">
@@ -17,5 +17,5 @@ export default function LoginInfo() {
         <p className="text-gray-500 font-body1_m">{userData?.email}</p>
       </Flex>
     </Flex>
-  );
+  )
 }

@@ -1,35 +1,35 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Zoom } from 'swiper/modules';
+import { useState } from 'react'
+import Image from 'next/image'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, Zoom } from 'swiper/modules'
 
-import 'swiper/css/zoom';
-import './custom-swiper.css';
-import XIcon from '@/shared/components/icons/XIcon';
-import PrevIcon from '@/shared/components/ui/ImageSwiper/components/PrevIcon';
-import NextIcon from '@/shared/components/ui/ImageSwiper/components/NextIcon';
+import 'swiper/css/zoom'
+import './custom-swiper.css'
+import XIcon from '@/shared/components/icons/XIcon'
+import PrevIcon from '@/shared/components/ui/ImageSwiper/components/PrevIcon'
+import NextIcon from '@/shared/components/ui/ImageSwiper/components/NextIcon'
 
 interface ImageSwiperProps {
-  images: string[];
-  onClose?: () => void;
-  initialSlide?: number;
+  images: string[]
+  onClose?: () => void
+  initialSlide?: number
 }
 
 const ImageSwiper = ({ images, onClose, initialSlide = 0 }: ImageSwiperProps) => {
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(initialSlide);
+  const [isFullScreen, setIsFullScreen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(initialSlide)
 
   const handleFullScreenToggle = () => {
-    setIsFullScreen(!isFullScreen);
-  };
+    setIsFullScreen(!isFullScreen)
+  }
 
   const closeViewer = () => {
     if (onClose) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   return (
     <div className={`relative h-full w-full bg-black ${isFullScreen ? 'fixed inset-0 z-50' : ''}`}>
@@ -87,7 +87,7 @@ const ImageSwiper = ({ images, onClose, initialSlide = 0 }: ImageSwiperProps) =>
 
       <div className="swiper-pagination absolute bottom-16 left-1/2 z-10 -translate-x-1/2 transform"></div>
     </div>
-  );
-};
+  )
+}
 
-export default ImageSwiper;
+export default ImageSwiper

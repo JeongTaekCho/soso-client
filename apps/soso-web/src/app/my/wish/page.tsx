@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
-import { useGetMyWishQuery } from '@/app/my/components/ProductLists/hooks/useGetMyWishQuery';
-import FilterSelectButton from '@/app/my/wish/components/FilterSelectButton';
-import WishProduct from '@/app/my/wish/components/WishProduct';
-import BottomArrowIcon from '@/shared/components/icons/BottomArrowIcon';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import Loading from '@/shared/components/loading/Loading';
-import { useClickOutside } from '@/shared/hooks/useClickOutside';
-import { useInView } from 'react-intersection-observer';
-import { useRef, useState, useEffect } from 'react';
-import { useGetWishRegionQuery } from '@/app/my/wish/hooks/useGetWishRegionQuery';
+import { useGetMyWishQuery } from '@/app/my/components/ProductLists/hooks/useGetMyWishQuery'
+import FilterSelectButton from '@/app/my/wish/components/FilterSelectButton'
+import WishProduct from '@/app/my/wish/components/WishProduct'
+import BottomArrowIcon from '@/shared/components/icons/BottomArrowIcon'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import Loading from '@/shared/components/loading/Loading'
+import { useClickOutside } from '@/shared/hooks/useClickOutside'
+import { useInView } from 'react-intersection-observer'
+import { useRef, useState, useEffect } from 'react'
+import { useGetWishRegionQuery } from '@/app/my/wish/hooks/useGetWishRegionQuery'
 
 export default function MyWishPage() {
-  const [area, setArea] = useState('전체 지역');
-  const [isFilter, setIsFilter] = useState(false);
+  const [area, setArea] = useState('전체 지역')
+  const [isFilter, setIsFilter] = useState(false)
 
   const {
     data: myWishData,
@@ -23,37 +23,37 @@ export default function MyWishPage() {
     isFetchingNextPage,
     isLoading,
     refetch: wishDataRefetch,
-  } = useGetMyWishQuery(15, area === '전체 지역' ? '' : area);
-  const { data: regionData } = useGetWishRegionQuery();
+  } = useGetMyWishQuery(15, area === '전체 지역' ? '' : area)
+  const { data: regionData } = useGetWishRegionQuery()
 
-  const filterRef = useRef<HTMLDivElement>(null);
+  const filterRef = useRef<HTMLDivElement>(null)
 
   const { ref, inView } = useInView({
     threshold: 0.2,
-  });
+  })
 
   const handleChangeArea = (area: string) => {
-    setArea(area);
-    handleToggleFilter();
-  };
+    setArea(area)
+    handleToggleFilter()
+  }
 
   const handleToggleFilter = () => {
-    setIsFilter((prev) => !prev);
-  };
+    setIsFilter((prev) => !prev)
+  }
 
-  useClickOutside(filterRef, () => setIsFilter(false));
+  useClickOutside(filterRef, () => setIsFilter(false))
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage && !isLoading) {
-      fetchNextPage();
+      fetchNextPage()
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading])
 
   useEffect(() => {
-    wishDataRefetch();
-  }, [area]);
+    wishDataRefetch()
+  }, [area])
 
-  const allWishItems = myWishData?.pages.flatMap((page) => page.data) || [];
+  const allWishItems = myWishData?.pages.flatMap((page) => page.data) || []
 
   return (
     <div>
@@ -100,5 +100,5 @@ export default function MyWishPage() {
         )}
       </Flex>
     </div>
-  );
+  )
 }

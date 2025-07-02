@@ -1,51 +1,51 @@
-'use client';
+'use client'
 
-import { usePostShopOperatingMutation } from '@/app/shop/components/ShopOperInfo/hooks/usePostShopOperatingMutation';
-import Button from '@/shared/components/button/Button';
-import IconButton from '@/shared/components/button/IconButton';
-import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
-import TimePickerButton from '@/shared/components/button/TimePickerButton';
-import Divider from '@/shared/components/divider/Divider';
-import ProposalIcon from '@/shared/components/icons/ProposalIcon';
-import Input from '@/shared/components/inputs/Input';
-import TimePicker from '@/shared/components/inputs/TimePicker';
-import YoilCheckbox from '@/shared/components/inputs/YoilCheckbox';
-import ContentBox from '@/shared/components/layout/ContentBox';
-import Flex from '@/shared/components/layout/Flex';
-import InputContent from '@/shared/components/layout/InputContent';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import ModalPortal from '@/shared/components/modal/ModalPortal';
-import BottomModalTitle from '@/shared/components/text/BottomModalTitle';
-import ContentSubTitle from '@/shared/components/text/ContentSubTitle';
-import ContentTitle from '@/shared/components/text/ContentTitle';
-import EmptyData from '@/shared/components/ui/EmptyData';
-import { useDialog } from '@/shared/context/DialogContext';
-import { useToast } from '@/shared/context/ToastContext';
-import useInput from '@/shared/hooks/useInput';
-import { useTimePicker } from '@/shared/hooks/useTimePicker';
-import { useAuthStore } from '@/shared/store/useAuthStore';
-import { useYoilStore } from '@/shared/store/useYoilStore';
-import { OperatingHourType } from '@/shared/types/shopType';
-import { useParams, useRouter } from 'next/navigation';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { usePostShopOperatingMutation } from '@/app/shop/components/ShopOperInfo/hooks/usePostShopOperatingMutation'
+import Button from '@/shared/components/button/Button'
+import IconButton from '@/shared/components/button/IconButton'
+import ModalCloseButton from '@/shared/components/button/MocalCloseButton'
+import TimePickerButton from '@/shared/components/button/TimePickerButton'
+import Divider from '@/shared/components/divider/Divider'
+import ProposalIcon from '@/shared/components/icons/ProposalIcon'
+import Input from '@/shared/components/inputs/Input'
+import TimePicker from '@/shared/components/inputs/TimePicker'
+import YoilCheckbox from '@/shared/components/inputs/YoilCheckbox'
+import ContentBox from '@/shared/components/layout/ContentBox'
+import Flex from '@/shared/components/layout/Flex'
+import InputContent from '@/shared/components/layout/InputContent'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import ModalPortal from '@/shared/components/modal/ModalPortal'
+import BottomModalTitle from '@/shared/components/text/BottomModalTitle'
+import ContentSubTitle from '@/shared/components/text/ContentSubTitle'
+import ContentTitle from '@/shared/components/text/ContentTitle'
+import EmptyData from '@/shared/components/ui/EmptyData'
+import { useDialog } from '@/shared/context/DialogContext'
+import { useToast } from '@/shared/context/ToastContext'
+import useInput from '@/shared/hooks/useInput'
+import { useTimePicker } from '@/shared/hooks/useTimePicker'
+import { useAuthStore } from '@/shared/store/useAuthStore'
+import { useYoilStore } from '@/shared/store/useYoilStore'
+import { OperatingHourType } from '@/shared/types/shopType'
+import { useParams, useRouter } from 'next/navigation'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 interface ShopOperInfoProps {
-  operData: OperatingHourType[] | undefined;
+  operData: OperatingHourType[] | undefined
 }
 
 export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
-  const [isFormChanged, setIsFormChanged] = useState(false);
+  const [isFormChanged, setIsFormChanged] = useState(false)
   const [status, setStatus] = useState({
     isYoilData: false,
     isTimeData: false,
     isPhoneData: false,
-  });
-  const { yoil, setCheckYoil, addYoil, setAddYoil, toggleAddYoil, resetAddYoil } = useYoilStore();
-  const { token } = useAuthStore();
-  const [isBottomModal, setIsBottomModal] = useState(false);
-  const { id } = useParams();
+  })
+  const { yoil, setCheckYoil, addYoil, setAddYoil, toggleAddYoil, resetAddYoil } = useYoilStore()
+  const { token } = useAuthStore()
+  const [isBottomModal, setIsBottomModal] = useState(false)
+  const { id } = useParams()
 
-  const router = useRouter();
+  const router = useRouter()
 
   const {
     openTime,
@@ -57,23 +57,23 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
     handleCloseTimePicker,
     handleOpenTimePicker,
     handleTimePicker,
-  } = useTimePicker();
+  } = useTimePicker()
 
-  const { value: phoneNumber, onChange: handleChangePhoneNumber, setValue: setPhoneNumber } = useInput('');
-  const { openDialog, closeDialog } = useDialog();
+  const { value: phoneNumber, onChange: handleChangePhoneNumber, setValue: setPhoneNumber } = useInput('')
+  const { openDialog, closeDialog } = useDialog()
 
-  const { mutate: postOperatingMutate } = usePostShopOperatingMutation();
+  const { mutate: postOperatingMutate } = usePostShopOperatingMutation()
 
   const handleChangeCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id } = e.target as HTMLInputElement;
+    const { id } = e.target as HTMLInputElement
 
-    toggleAddYoil(id);
-  };
+    toggleAddYoil(id)
+  }
 
   const confirm = () => {
-    router.push('/login');
-    closeDialog();
-  };
+    router.push('/login')
+    closeDialog()
+  }
 
   const handleToggleBottomModal = () => {
     if (!token) {
@@ -84,12 +84,12 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
         rightLabel: '로그인/회원가입하기',
         onConfirm: () => confirm(),
         onCancel: () => closeDialog(),
-      });
-      return;
+      })
+      return
     }
 
-    setIsBottomModal((prev) => !prev);
-  };
+    setIsBottomModal((prev) => !prev)
+  }
 
   const handleSubmitOperating = () => {
     const data = {
@@ -106,11 +106,11 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
         saturday: addYoil[5].checked,
         sunday: addYoil[6].checked,
       },
-    };
+    }
 
     postOperatingMutate(data, {
       onSuccess: () => {
-        handleToggleBottomModal();
+        handleToggleBottomModal()
         openDialog({
           type: 'alert',
           title: '제안 완료',
@@ -121,30 +121,30 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
               확인 후 업데이트 될 예정입니다.
             </span>
           ),
-        });
+        })
       },
-    });
-  };
+    })
+  }
 
   useEffect(() => {
-    setCheckYoil('월', operData?.[0]?.monday || false);
-    setCheckYoil('화', operData?.[0]?.tuesday || false);
-    setCheckYoil('수', operData?.[0]?.wednesday || false);
-    setCheckYoil('목', operData?.[0]?.thursday || false);
-    setCheckYoil('금', operData?.[0]?.friday || false);
-    setCheckYoil('토', operData?.[0]?.saturday || false);
-    setCheckYoil('일', operData?.[0]?.sunday || false);
-    setAddYoil('월', operData?.[0]?.monday || false);
-    setAddYoil('화', operData?.[0]?.tuesday || false);
-    setAddYoil('수', operData?.[0]?.wednesday || false);
-    setAddYoil('목', operData?.[0]?.thursday || false);
-    setAddYoil('금', operData?.[0]?.friday || false);
-    setAddYoil('토', operData?.[0]?.saturday || false);
-    setAddYoil('일', operData?.[0]?.sunday || false);
-    setOpenTime(operData?.[0]?.startTime || '');
-    setCloseTime(operData?.[0]?.endTime || '');
-    setPhoneNumber(operData?.[0]?.phoneNumber || '');
-  }, [operData, isBottomModal]);
+    setCheckYoil('월', operData?.[0]?.monday || false)
+    setCheckYoil('화', operData?.[0]?.tuesday || false)
+    setCheckYoil('수', operData?.[0]?.wednesday || false)
+    setCheckYoil('목', operData?.[0]?.thursday || false)
+    setCheckYoil('금', operData?.[0]?.friday || false)
+    setCheckYoil('토', operData?.[0]?.saturday || false)
+    setCheckYoil('일', operData?.[0]?.sunday || false)
+    setAddYoil('월', operData?.[0]?.monday || false)
+    setAddYoil('화', operData?.[0]?.tuesday || false)
+    setAddYoil('수', operData?.[0]?.wednesday || false)
+    setAddYoil('목', operData?.[0]?.thursday || false)
+    setAddYoil('금', operData?.[0]?.friday || false)
+    setAddYoil('토', operData?.[0]?.saturday || false)
+    setAddYoil('일', operData?.[0]?.sunday || false)
+    setOpenTime(operData?.[0]?.startTime || '')
+    setCloseTime(operData?.[0]?.endTime || '')
+    setPhoneNumber(operData?.[0]?.phoneNumber || '')
+  }, [operData, isBottomModal])
 
   useEffect(() => {
     // 운영요일 변경 확인
@@ -155,17 +155,17 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
       addYoil[3].checked !== (operData?.[0]?.thursday || false) ||
       addYoil[4].checked !== (operData?.[0]?.friday || false) ||
       addYoil[5].checked !== (operData?.[0]?.saturday || false) ||
-      addYoil[6].checked !== (operData?.[0]?.sunday || false);
+      addYoil[6].checked !== (operData?.[0]?.sunday || false)
 
     // 운영시간 변경 확인
-    const isTimeChanged = openTime !== (operData?.[0]?.startTime || '') || closeTime !== (operData?.[0]?.endTime || '');
+    const isTimeChanged = openTime !== (operData?.[0]?.startTime || '') || closeTime !== (operData?.[0]?.endTime || '')
 
     // 전화번호 변경 확인
-    const isPhoneChanged = phoneNumber !== (operData?.[0]?.phoneNumber || '');
+    const isPhoneChanged = phoneNumber !== (operData?.[0]?.phoneNumber || '')
 
     // 하나라도 변경되었으면 폼이 변경된 것으로 판단
-    setIsFormChanged(isYoilChanged || isTimeChanged || isPhoneChanged);
-  }, [addYoil, openTime, closeTime, phoneNumber, operData]);
+    setIsFormChanged(isYoilChanged || isTimeChanged || isPhoneChanged)
+  }, [addYoil, openTime, closeTime, phoneNumber, operData])
 
   useEffect(() => {
     if (operData && operData.length > 0) {
@@ -173,17 +173,17 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
         (key) =>
           ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].includes(key) &&
           operData[0][key as keyof OperatingHourType] === true
-      );
+      )
 
-      const timeExists = !!operData[0].startTime && !!operData[0].endTime;
+      const timeExists = !!operData[0].startTime && !!operData[0].endTime
 
       setStatus({
         isYoilData: yoilExists,
         isTimeData: timeExists,
         isPhoneData: !!operData[0]?.phoneNumber,
-      });
+      })
     }
-  }, [operData]);
+  }, [operData])
 
   return (
     <ContentBox>
@@ -287,5 +287,5 @@ export default function ShopOperInfo({ operData }: ShopOperInfoProps) {
         />
       </ModalPortal>
     </ContentBox>
-  );
+  )
 }

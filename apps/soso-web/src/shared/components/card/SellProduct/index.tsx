@@ -1,15 +1,15 @@
-import Flex from '@/shared/components/layout/Flex';
-import { PRODUCT_LIST } from '@/shared/constant/Product';
-import { ProductType } from '@/shared/types/shopType';
-import clsx from 'clsx';
-import Image from 'next/image';
+import Flex from '@/shared/components/layout/Flex'
+import { PRODUCT_LIST } from '@/shared/constant/Product'
+import { ProductType } from '@/shared/types/shopType'
+import clsx from 'clsx'
+import Image from 'next/image'
 
 interface SellProductProps {
-  product: ProductType;
-  checkbox?: boolean;
-  isCheck?: boolean;
-  onClick?: (product: ProductType) => void;
-  isModal?: boolean;
+  product: ProductType
+  checkbox?: boolean
+  isCheck?: boolean
+  onClick?: (product: ProductType) => void
+  isModal?: boolean
 }
 
 export default function SellProduct({ product, checkbox, isCheck, onClick, isModal }: SellProductProps) {
@@ -47,5 +47,5 @@ export default function SellProduct({ product, checkbox, isCheck, onClick, isMod
         <p className="text-gray-500 font-body2_m">{product.name}</p>
       </Flex>
     </div>
-  );
+  )
 }

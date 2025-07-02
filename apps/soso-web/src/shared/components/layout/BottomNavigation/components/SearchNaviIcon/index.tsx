@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function SearchNaviIcon({ isActive }: IconProps) {
   return (
@@ -9,5 +9,5 @@ export default function SearchNaviIcon({ isActive }: IconProps) {
         stroke={isActive ? '#FF7F50' : '#C9CDD2'}
       />
     </svg>
-  );
+  )
 }

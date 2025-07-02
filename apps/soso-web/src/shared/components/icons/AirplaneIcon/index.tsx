@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function AirplaneIcon({ width, height }: IconProps) {
   return (
@@ -14,5 +14,5 @@ export default function AirplaneIcon({ width, height }: IconProps) {
         fill="#FF7F50"
       />
     </svg>
-  );
+  )
 }

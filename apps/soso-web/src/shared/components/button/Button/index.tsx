@@ -1,16 +1,16 @@
-import clsx from 'clsx';
-import { ButtonHTMLAttributes } from 'react';
+import clsx from 'clsx'
+import { ButtonHTMLAttributes } from 'react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  width?: string;
-  height?: string;
-  title: string;
-  disabled?: boolean;
-  borderColor?: string;
-  bgColor?: string;
-  textColor?: string;
-  radius?: string;
-  className?: string;
+  width?: string
+  height?: string
+  title: string
+  disabled?: boolean
+  borderColor?: string
+  bgColor?: string
+  textColor?: string
+  radius?: string
+  className?: string
 }
 
 export default function Button({
@@ -41,5 +41,5 @@ export default function Button({
     >
       {title}
     </button>
-  );
+  )
 }

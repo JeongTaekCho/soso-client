@@ -1,7 +1,7 @@
-import LinkButton from '@/shared/components/button/LinkButton';
-import LinkIcon from '@/shared/components/icons/LinkIcon';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
+import LinkButton from '@/shared/components/button/LinkButton'
+import LinkIcon from '@/shared/components/icons/LinkIcon'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
 
 export default function PolicyPage() {
   return (
@@ -12,5 +12,5 @@ export default function PolicyPage() {
         <LinkButton title="위치 기반 서비스 이용 약관" link="/policy/location" icon={<LinkIcon />} />
       </Flex>
     </div>
-  );
+  )
 }

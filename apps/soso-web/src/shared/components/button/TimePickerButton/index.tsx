@@ -1,9 +1,9 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react'
 
 interface TimePickerButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  width?: string;
-  height?: string;
-  label: string;
+  width?: string
+  height?: string
+  label: string
 }
 
 export default function TimePickerButton({ width, height, label, ...props }: TimePickerButtonProps) {
@@ -19,5 +19,5 @@ export default function TimePickerButton({ width, height, label, ...props }: Tim
     >
       {label}
     </button>
-  );
+  )
 }

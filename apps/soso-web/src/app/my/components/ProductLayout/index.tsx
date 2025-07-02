@@ -1,29 +1,29 @@
-'use client';
+'use client'
 
-import Flex from '@/shared/components/layout/Flex';
-import ProductImage from '@/shared/components/ui/ProductImage';
-import Link from 'next/link';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, FreeMode } from 'swiper/modules';
-import EmptyData from '@/shared/components/ui/EmptyData';
-import LinkIcon from '@/shared/components/icons/LinkIcon';
-import clsx from 'clsx';
+import Flex from '@/shared/components/layout/Flex'
+import ProductImage from '@/shared/components/ui/ProductImage'
+import Link from 'next/link'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, FreeMode } from 'swiper/modules'
+import EmptyData from '@/shared/components/ui/EmptyData'
+import LinkIcon from '@/shared/components/icons/LinkIcon'
+import clsx from 'clsx'
 
 interface Data {
-  id: number;
-  image: string | null;
-  name: string;
-  link: string;
-  type?: number;
+  id: number
+  image: string | null
+  name: string
+  link: string
+  type?: number
 }
 
 interface ProductLayoutProps {
-  data: Data[];
-  title: string;
-  placeholder: string;
-  productLink: string;
-  type?: number;
-  totalData?: number;
+  data: Data[]
+  title: string
+  placeholder: string
+  productLink: string
+  type?: number
+  totalData?: number
 }
 
 export default function ProductLayout({ data, title, placeholder, productLink, totalData }: ProductLayoutProps) {
@@ -66,5 +66,5 @@ export default function ProductLayout({ data, title, placeholder, productLink, t
         <EmptyData text={placeholder} />
       )}
     </Flex>
-  );
+  )
 }

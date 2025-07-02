@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Flex from '@/shared/components/layout/Flex';
-import UserItem from '@/app/soso-admin/users/components/UserList/components/UserItem';
+import { useState } from 'react'
+import Flex from '@/shared/components/layout/Flex'
+import UserItem from '@/app/soso-admin/users/components/UserList/components/UserItem'
 
 // 하드코딩된 임시 회원 데이터
 const dummyUsers = [
@@ -36,16 +36,16 @@ const dummyUsers = [
     lastLogin: '2023-09-20T16:20:00Z',
     role: 'user' as const,
   },
-];
+]
 
 const UserList = () => {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [userToDelete, setUserToDelete] = useState<string | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [userToDelete, setUserToDelete] = useState<string | null>(null)
 
   const handleDelete = (id: string) => {
-    setUserToDelete(id);
-    setIsDeleteModalOpen(true);
-  };
+    setUserToDelete(id)
+    setIsDeleteModalOpen(true)
+  }
 
   return (
     <div className="mt-16 w-full">
@@ -89,7 +89,7 @@ const UserList = () => {
               </button>
               <button
                 onClick={() => {
-                  setIsDeleteModalOpen(false);
+                  setIsDeleteModalOpen(false)
                 }}
                 className="rounded-8 bg-etc-red px-16 py-8 text-white hover:bg-red-700"
               >
@@ -100,7 +100,7 @@ const UserList = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default UserList;
+export default UserList

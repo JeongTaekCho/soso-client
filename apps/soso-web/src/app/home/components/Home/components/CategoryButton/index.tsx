@@ -1,17 +1,17 @@
-import ListIcon from '@/shared/components/icons/ListIcon';
-import clsx from 'clsx';
-import { ButtonHTMLAttributes } from 'react';
+import ListIcon from '@/shared/components/icons/ListIcon'
+import clsx from 'clsx'
+import { ButtonHTMLAttributes } from 'react'
 
 interface CategoryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
-  isActive: boolean;
+  className?: string
+  isActive: boolean
 }
 
 export default function CategoryButton({ className, isActive, ...props }: CategoryButtonProps) {
   return (
     <button
       className={clsx(
-        'flex items-center justify-center gap-4 rounded-full border bg-white px-10 py-6 shadow-button',
+        'flex items-center justify-center gap-4 rounded-full border bg-white px-10 py-6',
         isActive ? 'border-main' : 'border-gray-100',
         className
       )}
@@ -24,5 +24,5 @@ export default function CategoryButton({ className, isActive, ...props }: Catego
         카테고리
       </span>
     </button>
-  );
+  )
 }

@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
-import { useGetMyReviewQuery } from '@/app/my/components/ProductLists/hooks/useGetMyReviewQuery';
-import MyReview from '@/app/my/review/components/MyReview';
-import Divider from '@/shared/components/divider/Divider';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import Loading from '@/shared/components/loading/Loading';
-import { useInView } from 'react-intersection-observer';
-import clsx from 'clsx';
-import { MouseEvent, useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useGetMyReviewQuery } from '@/app/my/components/ProductLists/hooks/useGetMyReviewQuery'
+import MyReview from '@/app/my/review/components/MyReview'
+import Divider from '@/shared/components/divider/Divider'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import Loading from '@/shared/components/loading/Loading'
+import { useInView } from 'react-intersection-observer'
+import clsx from 'clsx'
+import { MouseEvent, useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function MyReviewPage() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [isLatest, setIsLatest] = useState(true);
+  const [isLatest, setIsLatest] = useState(true)
 
   const {
     data: myReviewData,
@@ -22,36 +22,36 @@ export default function MyReviewPage() {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useGetMyReviewQuery(10, isLatest ? 'DESC' : 'ASC');
+  } = useGetMyReviewQuery(10, isLatest ? 'DESC' : 'ASC')
 
   const { ref, inView } = useInView({
     threshold: 0.2,
-  });
+  })
 
   const handleClickFilter = (e: MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as HTMLButtonElement;
-    if (!target) return;
-    const name = target.name;
+    const target = e.target as HTMLButtonElement
+    if (!target) return
+    const name = target.name
 
     if (name === 'latest') {
-      setIsLatest(true);
-      return;
+      setIsLatest(true)
+      return
     }
 
     if (name === 'old') {
-      setIsLatest(false);
+      setIsLatest(false)
     }
-  };
+  }
 
   // inView 상태가 변경될 때 다음 페이지 데이터 로드
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage && !isLoading) {
-      fetchNextPage();
+      fetchNextPage()
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading])
 
   // 모든 페이지의 데이터를 하나의 배열로 펼치기
-  const allReviews = myReviewData?.pages.flatMap((page) => page.data) || [];
+  const allReviews = myReviewData?.pages.flatMap((page) => page.data) || []
 
   return (
     <div>
@@ -101,5 +101,5 @@ export default function MyReviewPage() {
         </Flex>
       </Flex>
     </div>
-  );
+  )
 }
