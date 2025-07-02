@@ -1,24 +1,24 @@
-'use client';
+'use client'
 
-import SearchIcon from '@/shared/components/icons/SearchIcon';
-import Input from '@/shared/components/inputs/Input';
-import { useSearchStore } from '@/shared/store/useSearchStore';
-import { ChangeEvent, useEffect, useRef } from 'react';
+import SearchIcon from '@/shared/components/icons/SearchIcon'
+import Input from '@/shared/components/inputs/Input'
+import { useSearchStore } from '@/shared/store/useSearchStore'
+import { ChangeEvent, useEffect, useRef } from 'react'
 
 export default function HeaderSearch() {
-  const { searchValue, setSearchValue } = useSearchStore();
+  const { searchValue, setSearchValue } = useSearchStore()
 
-  const inputRef = useRef<HTMLInputElement>(null); //
+  const inputRef = useRef<HTMLInputElement>(null) //
 
   const handleChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
+    setSearchValue(e.target.value)
+  }
 
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
-  }, []);
+  }, [])
 
   return (
     <div className="fixed top-0 z-sticky h-46 w-full px-16 py-10 layout-center">
@@ -36,5 +36,5 @@ export default function HeaderSearch() {
         />
       </div>
     </div>
-  );
+  )
 }

@@ -1,13 +1,13 @@
-import clsx from 'clsx';
-import { ChangeEvent, InputHTMLAttributes } from 'react';
+import clsx from 'clsx'
+import { ChangeEvent, InputHTMLAttributes } from 'react'
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
-  id: string;
-  checked: boolean;
-  disabled?: boolean;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  size?: number;
-  label: string;
+  id: string
+  checked: boolean
+  disabled?: boolean
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  size?: number
+  label: string
 }
 
 const YoilCheckbox = ({ id, checked, onChange, size = 40, label, disabled, ...props }: CheckboxProps) => {
@@ -34,7 +34,7 @@ const YoilCheckbox = ({ id, checked, onChange, size = 40, label, disabled, ...pr
         <span className={clsx(checked ? 'text-main' : 'text-gray-400')}>{label}</span>
       </label>
     </div>
-  );
-};
+  )
+}
 
-export default YoilCheckbox;
+export default YoilCheckbox

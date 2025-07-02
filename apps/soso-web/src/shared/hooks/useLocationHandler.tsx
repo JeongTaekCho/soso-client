@@ -1,26 +1,26 @@
-import { useDialog } from '@/shared/context/DialogContext';
-import { useLocationStore } from '@/shared/store/useLocationStore';
-import { useEffect } from 'react';
+import { useDialog } from '@/shared/context/DialogContext'
+import { useLocationStore } from '@/shared/store/useLocationStore'
+import { useEffect } from 'react'
 
 const useLocationHandler = () => {
-  const { setLocation, resetLocation } = useLocationStore();
-  const { openDialog } = useDialog();
+  const { setLocation, resetLocation } = useLocationStore()
+  const { openDialog } = useDialog()
 
   useEffect(() => {
-    requestLocation();
-  }, []);
+    requestLocation()
+  }, [])
 
   const requestLocation = async () => {
     if (!navigator.geolocation) {
-      console.warn('Geolocation이 지원되지 않는 브라우저입니다.');
-      resetLocation();
-      return;
+      console.warn('Geolocation이 지원되지 않는 브라우저입니다.')
+      resetLocation()
+      return
     }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const { latitude, longitude } = position.coords;
-        setLocation(latitude, longitude);
+        const { latitude, longitude } = position.coords
+        setLocation(latitude, longitude)
       },
       (error) => {
         openDialog({
@@ -32,18 +32,18 @@ const useLocationHandler = () => {
               <br /> 기본 위치를 사용합니다.
             </span>
           ),
-        });
-        resetLocation(); // 기본 위치 설정
+        })
+        resetLocation() // 기본 위치 설정
       },
       {
         enableHighAccuracy: true,
         timeout: 10000,
         maximumAge: 0,
       }
-    );
-  };
+    )
+  }
 
-  return null;
-};
+  return null
+}
 
-export default useLocationHandler;
+export default useLocationHandler

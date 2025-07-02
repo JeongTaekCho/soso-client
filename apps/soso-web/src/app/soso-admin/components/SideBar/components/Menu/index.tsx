@@ -1,10 +1,10 @@
-import clsx from 'clsx';
-import Link from 'next/link';
+import clsx from 'clsx'
+import Link from 'next/link'
 
 interface MenuProps {
-  label: string;
-  isActive?: boolean;
-  link: string;
+  label: string
+  isActive?: boolean
+  link: string
 }
 
 export default function Menu({ label, link, isActive }: MenuProps) {
@@ -20,5 +20,5 @@ export default function Menu({ label, link, isActive }: MenuProps) {
         {label}
       </Link>
     </li>
-  );
+  )
 }

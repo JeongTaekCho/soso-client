@@ -1,8 +1,8 @@
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes } from 'react'
 
 interface AddButtonProps extends InputHTMLAttributes<HTMLInputElement> {
-  width?: string;
-  height?: string;
+  width?: string
+  height?: string
 }
 
 export default function AddButton({ width, height, ...props }: AddButtonProps) {
@@ -23,5 +23,5 @@ export default function AddButton({ width, height, ...props }: AddButtonProps) {
         </svg>
       </label>
     </div>
-  );
+  )
 }

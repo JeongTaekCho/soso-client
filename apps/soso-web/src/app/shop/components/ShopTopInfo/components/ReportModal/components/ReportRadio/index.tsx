@@ -1,11 +1,11 @@
-import CheckIcon from '@/app/shop/components/ShopTopInfo/components/ReportModal/components/ReportRadio/components/CheckIcon';
-import { InputHTMLAttributes, useState } from 'react';
+import CheckIcon from '@/app/shop/components/ShopTopInfo/components/ReportModal/components/ReportRadio/components/CheckIcon'
+import { InputHTMLAttributes, useState } from 'react'
 
 interface ReportRadioProps extends InputHTMLAttributes<HTMLInputElement> {
-  text: string;
-  id: string;
-  name: string;
-  isChecked: boolean;
+  text: string
+  id: string
+  name: string
+  isChecked: boolean
 }
 
 export default function ReportRadio({ text, id, name, isChecked, ...props }: ReportRadioProps) {
@@ -17,5 +17,5 @@ export default function ReportRadio({ text, id, name, isChecked, ...props }: Rep
         {isChecked && <CheckIcon />}
       </label>
     </div>
-  );
+  )
 }

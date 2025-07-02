@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import LinkIcon from '@/shared/components/icons/LinkIcon';
-import Checkbox from '@/shared/components/inputs/Checkbox';
-import Flex from '@/shared/components/layout/Flex';
-import Link from 'next/link';
+import LinkIcon from '@/shared/components/icons/LinkIcon'
+import Checkbox from '@/shared/components/inputs/Checkbox'
+import Flex from '@/shared/components/layout/Flex'
+import Link from 'next/link'
 
 interface AgreementItemProps {
-  id: string;
-  checked: boolean;
-  label: string;
-  onChange: (checked: boolean) => void;
-  link?: string;
+  id: string
+  checked: boolean
+  label: string
+  onChange: (checked: boolean) => void
+  link?: string
 }
 
 export default function AgreementItem({ id, checked, label, onChange, link }: AgreementItemProps) {
@@ -26,5 +26,5 @@ export default function AgreementItem({ id, checked, label, onChange, link }: Ag
         </Link>
       )}
     </Flex>
-  );
+  )
 }

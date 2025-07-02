@@ -1,11 +1,11 @@
-import Flex from '@/shared/components/layout/Flex';
-import clsx from 'clsx';
-import { ReactNode } from 'react';
+import Flex from '@/shared/components/layout/Flex'
+import clsx from 'clsx'
+import { ReactNode } from 'react'
 
 interface InputContentProps {
-  label: string;
-  className?: string;
-  children: ReactNode;
+  label: string
+  className?: string
+  children: ReactNode
 }
 
 export default function InputContent({ label, className, children }: InputContentProps) {
@@ -14,5 +14,5 @@ export default function InputContent({ label, className, children }: InputConten
       <h5 className={clsx('text-gray-500 font-body1_m', className)}>{label}</h5>
       {children}
     </Flex>
-  );
+  )
 }

@@ -1,50 +1,50 @@
-'use client';
+'use client'
 
-import { useGetMyShopQuery } from '@/app/my/components/ProductLists/hooks/useGetMyShopQuery';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import Loading from '@/shared/components/loading/Loading';
-import ShopInfo from '@/shared/components/ui/ShopInfo';
-import { useInView } from 'react-intersection-observer';
-import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { useDialog } from '@/shared/context/DialogContext';
+import { useGetMyShopQuery } from '@/app/my/components/ProductLists/hooks/useGetMyShopQuery'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import Loading from '@/shared/components/loading/Loading'
+import ShopInfo from '@/shared/components/ui/ShopInfo'
+import { useInView } from 'react-intersection-observer'
+import clsx from 'clsx'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useDialog } from '@/shared/context/DialogContext'
 
 export default function MyShopPage() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const { openDialog, closeDialog } = useDialog();
+  const { openDialog, closeDialog } = useDialog()
 
   // useInfiniteQuery로 변경된 훅 사용
-  const { data: myShopData, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useGetMyShopQuery(10);
+  const { data: myShopData, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useGetMyShopQuery(10)
 
   // 무한 스크롤을 위한 InView 설정
   const { ref, inView } = useInView({
     threshold: 0.2,
-  });
+  })
 
   // 숍 상세 페이지로 이동하는 함수
   const handleLink = (shopId: number) => {
-    router.push(`/shop/${shopId}`);
-  };
+    router.push(`/shop/${shopId}`)
+  }
 
   const handleOpenDeleteModal = () => {
     openDialog({
       type: 'confirm',
       title: '등록한 정보를 삭제하시겠습니까?',
-    });
-  };
+    })
+  }
 
   // inView 상태가 변경될 때 다음 페이지 데이터 로드
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage && !isLoading) {
-      fetchNextPage();
+      fetchNextPage()
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading])
 
   // 모든 페이지의 데이터를 하나의 배열로 펼치기
-  const allShops = myShopData?.pages.flatMap((page) => page.data) || [];
+  const allShops = myShopData?.pages.flatMap((page) => page.data) || []
 
   return (
     <div>
@@ -95,5 +95,5 @@ export default function MyShopPage() {
         )}
       </Flex>
     </div>
-  );
+  )
 }

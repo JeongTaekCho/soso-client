@@ -1,35 +1,35 @@
-'use client';
+'use client'
 
-import Loading from '@/shared/components/loading/Loading';
-import useLocationHandler from '@/shared/hooks/useLocationHandler';
-import useMapStore from '@/shared/store/useMapStore';
-import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
+import Loading from '@/shared/components/loading/Loading'
+import useLocationHandler from '@/shared/hooks/useLocationHandler'
+import useMapStore from '@/shared/store/useMapStore'
+import Script from 'next/script'
+import { useEffect, useRef, useState } from 'react'
 
 interface NaverMapProps {
-  width?: string;
-  height?: string;
-  markerEvent?: (marker: naver.maps.Marker, data: any) => void;
-  isCurrent?: boolean;
-  isDisabled?: boolean;
+  width?: string
+  height?: string
+  markerEvent?: (marker: naver.maps.Marker, data: any) => void
+  isCurrent?: boolean
+  isDisabled?: boolean
 }
 
 interface CustomMap extends naver.maps.Map {
-  customMarkers?: naver.maps.Marker[];
+  customMarkers?: naver.maps.Marker[]
 }
 
 export default function NaverMap({ width, height, markerEvent, isCurrent, isDisabled }: NaverMapProps) {
   if (isCurrent) {
-    useLocationHandler();
+    useLocationHandler()
   }
 
-  const mapRef = useRef<HTMLDivElement>(null);
-  const { setMap, center, minZoom, zoom, map, markers } = useMapStore();
+  const mapRef = useRef<HTMLDivElement>(null)
+  const { setMap, center, minZoom, zoom, map, markers } = useMapStore()
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
 
   const initMap = () => {
-    if (!window.naver || !mapRef.current) return;
+    if (!window.naver || !mapRef.current) return
 
     const mapOptions = {
       center: new naver.maps.LatLng(center.lat, center.lng),
@@ -42,22 +42,22 @@ export default function NaverMap({ width, height, markerEvent, isCurrent, isDisa
       disableDoubleTapZoom: !!isDisabled,
       disableDoubleClickZoom: !!isDisabled,
       disableTwoFingerTapZoom: !!isDisabled,
-    };
+    }
 
-    const newMap = new naver.maps.Map(mapRef.current, mapOptions) as CustomMap;
-    newMap.customMarkers = [];
-    setMap(newMap);
+    const newMap = new naver.maps.Map(mapRef.current, mapOptions) as CustomMap
+    newMap.customMarkers = []
+    setMap(newMap)
 
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   const updateMarkers = () => {
-    if (!map) return;
+    if (!map) return
 
-    const customMap = map as CustomMap;
+    const customMap = map as CustomMap
 
-    customMap.customMarkers?.forEach((marker) => marker.setMap(null));
-    customMap.customMarkers = [];
+    customMap.customMarkers?.forEach((marker) => marker.setMap(null))
+    customMap.customMarkers = []
 
     const newMarkers = markers.map((markerData) => {
       const newMarker = new naver.maps.Marker({
@@ -67,76 +67,76 @@ export default function NaverMap({ width, height, markerEvent, isCurrent, isDisa
           content: `<div style="width:48px; height:48px"><img width='48' height='48' src="/images/marker/map_active_marker.svg" alt="지도 마커" ></img></div>`,
         },
         zIndex: markerData.zIndex || 1,
-      });
+      })
 
       naver.maps.Event.addListener(newMarker, 'click', () => {
-        map.panTo(newMarker.getPosition());
+        map.panTo(newMarker.getPosition())
         if (markerEvent) {
-          markerEvent(newMarker, markerData);
+          markerEvent(newMarker, markerData)
         }
-      });
+      })
 
-      return newMarker;
-    });
+      return newMarker
+    })
 
-    customMap.customMarkers = newMarkers;
-  };
+    customMap.customMarkers = newMarkers
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (window.naver && mapRef.current) {
-        initMap();
-        clearInterval(interval);
+        initMap()
+        clearInterval(interval)
       }
-    }, 500);
+    }, 500)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
-    if (!map) return;
+    if (!map) return
 
-    map.setOptions('draggable', !isDisabled);
-    map.setOptions('scrollWheel', !isDisabled);
-    map.setOptions('pinchZoom', !isDisabled);
-    map.setOptions('keyboardShortcuts', !isDisabled);
-    map.setOptions('disableDoubleTapZoom', !!isDisabled);
-    map.setOptions('disableDoubleClickZoom', !!isDisabled);
-    map.setOptions('disableTwoFingerTapZoom', !!isDisabled);
-  }, [map, isDisabled]);
+    map.setOptions('draggable', !isDisabled)
+    map.setOptions('scrollWheel', !isDisabled)
+    map.setOptions('pinchZoom', !isDisabled)
+    map.setOptions('keyboardShortcuts', !isDisabled)
+    map.setOptions('disableDoubleTapZoom', !!isDisabled)
+    map.setOptions('disableDoubleClickZoom', !!isDisabled)
+    map.setOptions('disableTwoFingerTapZoom', !!isDisabled)
+  }, [map, isDisabled])
 
   useEffect(() => {
     if (map) {
-      updateMarkers();
+      updateMarkers()
     }
-  }, [map, markers]);
+  }, [map, markers])
 
   useEffect(() => {
-    if (!map) return;
-    map.panTo(new naver.maps.LatLng(center.lat, center.lng));
-  }, [map, center]);
+    if (!map) return
+    map.panTo(new naver.maps.LatLng(center.lat, center.lng))
+  }, [map, center])
 
   useEffect(() => {
-    if (!map) return;
-    map.setZoom(zoom);
-  }, [zoom]);
+    if (!map) return
+    map.setZoom(zoom)
+  }, [zoom])
 
   const mapStyle = {
     width: width || '100%',
     height: height || 'calc(100vh - 60px)',
-  };
+  }
 
   return (
     <>
       <Script
         strategy="lazyOnload"
         type="text/javascript"
-        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&submodules=geocoder`}
+        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&submodules=geocoder`}
       />
 
       {loading && <Loading />}
 
       <div ref={mapRef} id="map" style={mapStyle} />
     </>
-  );
+  )
 }

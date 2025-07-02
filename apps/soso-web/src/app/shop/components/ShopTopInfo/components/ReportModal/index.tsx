@@ -1,40 +1,40 @@
-'use client';
+'use client'
 
-import ReportRadio from '@/app/shop/components/ShopTopInfo/components/ReportModal/components/ReportRadio';
-import { REPORT_LIST } from '@/app/shop/components/ShopTopInfo/components/ReportModal/constant/reportList';
-import { usePatchReportMutation } from '@/app/shop/components/ShopTopInfo/components/ReportModal/hooks/usePatchReportMutation';
-import Button from '@/shared/components/button/Button';
-import ModalCloseButton from '@/shared/components/button/MocalCloseButton';
-import Flex from '@/shared/components/layout/Flex';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import { useDialog } from '@/shared/context/DialogContext';
-import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import ReportRadio from '@/app/shop/components/ShopTopInfo/components/ReportModal/components/ReportRadio'
+import { REPORT_LIST } from '@/app/shop/components/ShopTopInfo/components/ReportModal/constant/reportList'
+import { usePatchReportMutation } from '@/app/shop/components/ShopTopInfo/components/ReportModal/hooks/usePatchReportMutation'
+import Button from '@/shared/components/button/Button'
+import ModalCloseButton from '@/shared/components/button/MocalCloseButton'
+import Flex from '@/shared/components/layout/Flex'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import { useDialog } from '@/shared/context/DialogContext'
+import { useParams } from 'next/navigation'
+import { useState } from 'react'
 
 interface ReportModalProps {
-  isReportModal: boolean;
-  handleToggleReportModal: () => void;
+  isReportModal: boolean
+  handleToggleReportModal: () => void
 }
 export default function ReportModal({ isReportModal, handleToggleReportModal }: ReportModalProps) {
-  const [selectedId, setSelectedId] = useState<string>('');
-  const { id } = useParams();
-  const { openDialog } = useDialog();
+  const [selectedId, setSelectedId] = useState<string>('')
+  const { id } = useParams()
+  const { openDialog } = useDialog()
 
-  const { mutate: patchReportMutate } = usePatchReportMutation();
+  const { mutate: patchReportMutate } = usePatchReportMutation()
 
   const handleChange = (reportId: string) => {
-    setSelectedId(reportId);
-  };
+    setSelectedId(reportId)
+  }
 
   const handleSubmitReport = () => {
     const data = {
       shopId: Number(id),
       status: Number(selectedId),
-    };
+    }
 
     patchReportMutate(data, {
       onSuccess: () => {
-        handleToggleReportModal();
+        handleToggleReportModal()
         openDialog({
           type: 'alert',
           title: '신고 완료',
@@ -45,11 +45,11 @@ export default function ReportModal({ isReportModal, handleToggleReportModal }: 
               확인 후 해당 장소는 삭제될 예정입니다.
             </span>
           ),
-        });
-        setSelectedId('');
+        })
+        setSelectedId('')
       },
-    });
-  };
+    })
+  }
 
   return (
     <BottomModal isOpen={isReportModal} onClose={handleToggleReportModal}>
@@ -74,5 +74,5 @@ export default function ReportModal({ isReportModal, handleToggleReportModal }: 
         <Button disabled={!selectedId} title="신고하기" onClick={handleSubmitReport} className="mt-16" />
       </Flex>
     </BottomModal>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function SearchIcon({ width, height, fill }: IconProps) {
   return (
@@ -14,5 +14,5 @@ export default function SearchIcon({ width, height, fill }: IconProps) {
         fill={fill || 'black'}
       />
     </svg>
-  );
+  )
 }

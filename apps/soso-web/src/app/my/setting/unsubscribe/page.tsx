@@ -1,29 +1,29 @@
-'use client';
+'use client'
 
-import { UNSUBSCRIBE_LIST } from '@/app/my/setting/unsubscribe/constants';
-import { useDeleteUserMutation } from '@/app/my/setting/unsubscribe/hooks/useDeleteUserMutation';
-import Button from '@/shared/components/button/Button';
-import Radio from '@/shared/components/inputs/Radio';
-import Flex from '@/shared/components/layout/Flex';
-import Header from '@/shared/components/layout/Header';
-import { useDialog } from '@/shared/context/DialogContext';
-import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery';
-import { ChangeEvent, useState } from 'react';
+import { UNSUBSCRIBE_LIST } from '@/app/my/setting/unsubscribe/constants'
+import { useDeleteUserMutation } from '@/app/my/setting/unsubscribe/hooks/useDeleteUserMutation'
+import Button from '@/shared/components/button/Button'
+import Radio from '@/shared/components/inputs/Radio'
+import Flex from '@/shared/components/layout/Flex'
+import Header from '@/shared/components/layout/Header'
+import { useDialog } from '@/shared/context/DialogContext'
+import { useGetUserProfileQuery } from '@/shared/hooks/useGetUserProfileQuery'
+import { ChangeEvent, useState } from 'react'
 
 export default function UnsubscribePage() {
-  const { data: userData } = useGetUserProfileQuery();
-  const { mutate: deleteUserMutate } = useDeleteUserMutation();
-  const { openDialog } = useDialog();
-  const [value, setValue] = useState('');
+  const { data: userData } = useGetUserProfileQuery()
+  const { mutate: deleteUserMutate } = useDeleteUserMutation()
+  const { openDialog } = useDialog()
+  const [value, setValue] = useState('')
 
   const handleDeleteUser = () => {
-    if (!userData) return;
+    if (!userData) return
     const data = {
       uuid: userData?.uuid,
       deleteType: Number(value),
-    };
-    deleteUserMutate(data);
-  };
+    }
+    deleteUserMutate(data)
+  }
 
   const handleClickUnsubScribe = () => {
     openDialog({
@@ -36,12 +36,12 @@ export default function UnsubscribePage() {
         </span>
       ),
       onConfirm: handleDeleteUser,
-    });
-  };
+    })
+  }
 
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+    setValue(e.target.value)
+  }
 
   return (
     <div>
@@ -75,5 +75,5 @@ export default function UnsubscribePage() {
         <Button disabled={!value} title="탈퇴하기" onClick={handleClickUnsubScribe} />
       </div>
     </div>
-  );
+  )
 }

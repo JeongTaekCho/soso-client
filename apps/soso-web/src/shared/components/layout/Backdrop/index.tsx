@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 interface BackDropProps {
-  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
 export default function Backdrop({ onClick }: BackDropProps) {
@@ -14,5 +14,5 @@ export default function Backdrop({ onClick }: BackDropProps) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     />
-  );
+  )
 }

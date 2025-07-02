@@ -1,4 +1,4 @@
-import { IconProps } from '@/shared/types/shareType';
+import { IconProps } from '@/shared/types/shareType'
 
 export default function LoadFindIcon({ width, height }: IconProps) {
   return (
@@ -31,5 +31,5 @@ export default function LoadFindIcon({ width, height }: IconProps) {
         strokeLinejoin="round"
       />
     </svg>
-  );
+  )
 }

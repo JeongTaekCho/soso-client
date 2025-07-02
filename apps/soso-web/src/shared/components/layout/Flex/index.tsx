@@ -1,14 +1,14 @@
-import { ReactNode } from 'react';
-import clsx from 'clsx';
+import { ReactNode } from 'react'
+import clsx from 'clsx'
 
 interface FlexProps {
-  children: ReactNode;
-  direction?: 'row' | 'col';
-  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
-  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
-  wrap?: boolean;
-  gap?: number;
-  className?: string;
+  children: ReactNode
+  direction?: 'row' | 'col'
+  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
+  wrap?: boolean
+  gap?: number
+  className?: string
 }
 
 export default function Flex({
@@ -36,11 +36,11 @@ export default function Flex({
     justify === 'evenly' && 'justify-evenly',
     wrap && 'flex-wrap',
     className
-  );
+  )
 
   return (
     <div style={{ gap: `${gap}px` }} className={flexClass}>
       {children}
     </div>
-  );
+  )
 }

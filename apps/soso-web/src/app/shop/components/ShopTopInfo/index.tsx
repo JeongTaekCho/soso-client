@@ -1,48 +1,48 @@
-'use client';
+'use client'
 
-import ReportModal from '@/app/shop/components/ShopTopInfo/components/ReportModal';
-import { useToggleWishMutation } from '@/app/shop/hooks/useToggleWishMutation';
-import MapButton from '@/shared/components/button/RoadFindButton/components/MapButton';
-import Divider from '@/shared/components/divider/Divider';
-import LoadFindIcon from '@/shared/components/icons/LoadFindIcon';
-import ReportIcon from '@/shared/components/icons/ReportIcon';
-import WishIcon from '@/shared/components/icons/WishIcon';
-import XIcon from '@/shared/components/icons/XIcon';
-import ContentBox from '@/shared/components/layout/ContentBox';
-import Flex from '@/shared/components/layout/Flex';
-import BottomModal from '@/shared/components/modal/BottomModal';
-import { useDialog } from '@/shared/context/DialogContext';
-import { useAuthStore } from '@/shared/store/useAuthStore';
-import { ShopDetailType } from '@/shared/types/shopType';
-import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import ReportModal from '@/app/shop/components/ShopTopInfo/components/ReportModal'
+import { useToggleWishMutation } from '@/app/shop/hooks/useToggleWishMutation'
+import MapButton from '@/shared/components/button/RoadFindButton/components/MapButton'
+import Divider from '@/shared/components/divider/Divider'
+import LoadFindIcon from '@/shared/components/icons/LoadFindIcon'
+import ReportIcon from '@/shared/components/icons/ReportIcon'
+import WishIcon from '@/shared/components/icons/WishIcon'
+import XIcon from '@/shared/components/icons/XIcon'
+import ContentBox from '@/shared/components/layout/ContentBox'
+import Flex from '@/shared/components/layout/Flex'
+import BottomModal from '@/shared/components/modal/BottomModal'
+import { useDialog } from '@/shared/context/DialogContext'
+import { useAuthStore } from '@/shared/store/useAuthStore'
+import { ShopDetailType } from '@/shared/types/shopType'
+import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface ShopTopInfoProps {
-  shopData: ShopDetailType | undefined;
+  shopData: ShopDetailType | undefined
 }
 
 export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
-  const [isFindModal, setIsFindModal] = useState(false);
-  const [isReportModal, setIsReportModal] = useState(false);
-  const { token } = useAuthStore();
-  const { openDialog, closeDialog } = useDialog();
-  const { mutate: toggleWishMutate } = useToggleWishMutation(Number(shopData?.shop.id));
+  const [isFindModal, setIsFindModal] = useState(false)
+  const [isReportModal, setIsReportModal] = useState(false)
+  const { token } = useAuthStore()
+  const { openDialog, closeDialog } = useDialog()
+  const { mutate: toggleWishMutate } = useToggleWishMutation(Number(shopData?.shop.id))
 
-  const router = useRouter();
+  const router = useRouter()
 
   const handleOpenFindModal = () => {
-    setIsFindModal((prev) => !prev);
-  };
+    setIsFindModal((prev) => !prev)
+  }
   const handleCloseFindModal = () => {
-    setIsFindModal((prev) => !prev);
-  };
+    setIsFindModal((prev) => !prev)
+  }
 
   const handleToggleReportModal = () => {
     const confirm = () => {
-      router.push('/login');
-      closeDialog();
-    };
+      router.push('/login')
+      closeDialog()
+    }
 
     if (!token) {
       openDialog({
@@ -52,18 +52,18 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
         rightLabel: '로그인/회원가입하기',
         onConfirm: () => confirm(),
         onCancel: () => closeDialog(),
-      });
-      return;
+      })
+      return
     }
 
-    setIsReportModal((prev) => !prev);
-  };
+    setIsReportModal((prev) => !prev)
+  }
 
   const handleWishClick = () => {
-    if (!shopData?.shop.id) return;
+    if (!shopData?.shop.id) return
 
-    toggleWishMutate(shopData?.shop.id);
-  };
+    toggleWishMutate(shopData?.shop.id)
+  }
 
   return (
     <ContentBox gap={32}>
@@ -112,5 +112,5 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
 
       <ReportModal isReportModal={isReportModal} handleToggleReportModal={handleToggleReportModal} />
     </ContentBox>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
 interface LoginLayoutProps {
-  children: ReactNode;
-  login: ReactNode;
+  children: ReactNode
+  login: ReactNode
 }
 
 export default function LoginLayout({ children, login }: LoginLayoutProps) {
@@ -13,5 +13,5 @@ export default function LoginLayout({ children, login }: LoginLayoutProps) {
       {login}
       {children}
     </div>
-  );
+  )
 }
