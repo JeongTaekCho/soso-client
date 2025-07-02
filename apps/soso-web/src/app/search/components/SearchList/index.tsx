@@ -153,7 +153,7 @@ export default function SearchList() {
                       {userFindShopData?.map((shop, index) => (
                         <SwiperSlide key={index} style={{ width: 'auto' }}>
                           <SearchItem
-                            id={shop.id}
+                            id={shop.shopId}
                             label={shop.shopName}
                             onClick={(e: MouseEvent<HTMLButtonElement>) => {
                               handleDeleteFindShop(e, shop.shopName)
