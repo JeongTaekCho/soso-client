@@ -131,7 +131,7 @@ export default function NaverMap({ width, height, markerEvent, isCurrent, isDisa
       <Script
         strategy="lazyOnload"
         type="text/javascript"
-        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&submodules=geocoder`}
+        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&submodules=geocoder`}
       />
 
       {loading && <Loading />}
