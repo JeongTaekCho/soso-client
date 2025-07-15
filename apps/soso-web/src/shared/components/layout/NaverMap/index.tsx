@@ -19,9 +19,7 @@ interface CustomMap extends naver.maps.Map {
 }
 
 export default function NaverMap({ width, height, markerEvent, isCurrent, isDisabled }: NaverMapProps) {
-  if (isCurrent) {
-    useLocationHandler()
-  }
+  useLocationHandler(isCurrent ?? false)
 
   const mapRef = useRef<HTMLDivElement>(null)
   const { setMap, center, minZoom, zoom, map, markers } = useMapStore()
