@@ -1,13 +1,17 @@
 'use client'
 
+import AppleLogin from '@/app/login/components/AppleLogin'
+import AppleIcon from '@/shared/components/icons/AppleIcon'
 import GoogleIcon from '@/shared/components/icons/GoogleIcon'
 import Flex from '@/shared/components/layout/Flex'
+import { useIsNativeApp } from '@/shared/hooks/useIsNativeApp'
 import { useAuthStore } from '@/shared/store/useAuthStore'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function LoginPage() {
+  const isNativeApp = useIsNativeApp()
   const [redirectUri, setRedirectUri] = useState('')
 
   const router = useRouter()
@@ -24,6 +28,11 @@ export default function LoginPage() {
   const googleLogin = () => {
     if (!redirectUri) return
 
+    if (isNativeApp) {
+      window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'GOOGLE_LOGIN_REQUEST' }))
+      return
+    }
+
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
     const scope = encodeURIComponent('openid profile email')
 
@@ -37,6 +46,25 @@ export default function LoginPage() {
       router.push('/')
     }
   }, [token, isHydrated])
+
+  useEffect(() => {
+    if (!isNativeApp) {
+      return
+    }
+
+    const onGoogleLoginSuccess = (e: Event) => {
+      const { code } = (e as CustomEvent<{ code: string }>).detail
+      if (code) {
+        router.push(`${redirectUri}?code=${code}`)
+      }
+    }
+
+    window.addEventListener('google-login-success', onGoogleLoginSuccess)
+
+    return () => {
+      window.removeEventListener('google-login-success', onGoogleLoginSuccess)
+    }
+  }, [isNativeApp])
 
   return (
     <Flex justify="center" align="center" className="h-screenVh w-full">
@@ -63,6 +91,7 @@ export default function LoginPage() {
           </div>
           Google로 시작하기
         </button>
+        <AppleLogin />
         <button
           onClick={handleGuestLogin}
           className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"

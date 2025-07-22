@@ -1,14 +1,18 @@
 import { useDialog } from '@/shared/context/DialogContext'
 import { useLocationStore } from '@/shared/store/useLocationStore'
 import { useEffect } from 'react'
+import { useIsNativeApp } from './useIsNativeApp'
 
-const useLocationHandler = () => {
+const useLocationHandler = (enable: boolean) => {
   const { setLocation, resetLocation } = useLocationStore()
   const { openDialog } = useDialog()
+  const isNativeApp = useIsNativeApp()
 
   useEffect(() => {
-    requestLocation()
-  }, [])
+    if (enable && isNativeApp === false) {
+      requestLocation()
+    }
+  }, [enable, isNativeApp])
 
   const requestLocation = async () => {
     if (!navigator.geolocation) {

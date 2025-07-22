@@ -1,15 +1,17 @@
 'use client'
 
 import { useGetShopQuery } from '@/shared/hooks/useGetShopQuery'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocationStore } from '@/shared/store/useLocationStore'
 import SelectCategoryModal, { DEFAULT_CATEGORY_ID_LIST } from './components/SelectCategoryModal'
 import { getIsSameArray } from '@/shared/utils/getIsSame'
 import MapView from './components/MapView'
 import ListView from './components/ListView'
+import { useIsNativeApp } from '@/shared/hooks/useIsNativeApp'
 
 export default function HomePage() {
-  const { lat, lng } = useLocationStore()
+  const isNativeApp = useIsNativeApp()
+  const { lat, lng, setLocation } = useLocationStore()
   const [categoryIdList, setCategoryIdList] = useState<number[]>(DEFAULT_CATEGORY_ID_LIST)
   const [isWishListView, setIsWishListView] = useState<boolean>(false)
   const [isOpenCategoryModal, setIsOpenCategoryModal] = useState<boolean>(false)
@@ -32,10 +34,28 @@ export default function HomePage() {
   //   }
   // }, [prevShopId]);
 
+  useEffect(() => {
+    if (!isNativeApp) {
+      return
+    }
+
+    const handler = (e: Event) => {
+      const { lat, lng } = (e as CustomEvent<{ lat: number; lng: number }>).detail
+      setLocation(lat, lng)
+    }
+
+    window.addEventListener('init-native-location', handler)
+
+    return () => {
+      window.removeEventListener('init-native-location', handler)
+    }
+  }, [isNativeApp])
+
   return (
     <div className="relative">
       {isMapViewMode ? (
         <MapView
+          isNativeApp={isNativeApp}
           shopData={shopData ?? []}
           totalShopCount={totalShopCount}
           toggleMapViewMode={toggleMapViewMode}
