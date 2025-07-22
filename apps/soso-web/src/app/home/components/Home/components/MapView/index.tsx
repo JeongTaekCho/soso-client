@@ -20,6 +20,7 @@ import { useSearchStore } from '@/shared/store/useSearchStore'
 import SearchIcon from '@/shared/components/icons/SearchIcon'
 
 interface MapViewProps {
+  isNativeApp: boolean | undefined
   shopData: ShopType[]
   totalShopCount: number
   isWishListView: boolean
@@ -32,6 +33,7 @@ interface MapViewProps {
 const NaverMap = dynamic(() => import('@/shared/components/layout/NaverMap'), { ssr: false })
 
 export default function MapView({
+  isNativeApp,
   shopData,
   totalShopCount,
   isWishListView,
@@ -122,6 +124,13 @@ export default function MapView({
   }
 
   const handleClickGps = async () => {
+    if (isNativeApp === undefined) {
+      return
+    }
+    if (isNativeApp) {
+      window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'REQUEST_LOCATION' }))
+    }
+
     const currentLocation = await getCurrentLocation()
 
     if (currentLocation === 'denied') {
@@ -177,6 +186,24 @@ export default function MapView({
     setupMapCenter()
     setIsRender(true)
   }, [shopData, map])
+
+  useEffect(() => {
+    if (!isNativeApp) {
+      return
+    }
+
+    const handler = (e: Event) => {
+      const { lat, lng } = (e as CustomEvent<{ lat: number; lng: number }>).detail
+      setCenter(lat, lng)
+      setIsMove(true)
+    }
+
+    window.addEventListener('native-location', handler)
+
+    return () => {
+      window.removeEventListener('native-location', handler)
+    }
+  }, [isNativeApp])
 
   return (
     <div>
