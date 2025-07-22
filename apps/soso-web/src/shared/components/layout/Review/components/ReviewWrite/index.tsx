@@ -149,7 +149,7 @@ export default function ReviewWrite({ isOpen, onClose, isEdit }: ReviewWriteProp
         <Button
           onClick={handleSubmitReview}
           disabled={(isEdit ? !content.length : !content.length) || lengthError}
-          title="후기 작성"
+          title={isEdit ? '후기 수정' : '후기 작성'}
         />
       </Flex>
 

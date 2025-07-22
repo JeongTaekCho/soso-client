@@ -2,9 +2,11 @@ import InstaIcon from '@/app/shop/components/SnsInfo/components/InstaIcon'
 import ContentBox from '@/shared/components/layout/ContentBox'
 import Flex from '@/shared/components/layout/Flex'
 import ContentTitle from '@/shared/components/text/ContentTitle'
-import Link from 'next/link'
 
-export default function SnsInfo() {
+interface SnsInfoProps {
+  instaId: string
+}
+export default function SnsInfo({ instaId }: SnsInfoProps) {
   const openInstagram = (instagramId: string) => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
@@ -25,9 +27,9 @@ export default function SnsInfo() {
         <Flex justify="between" align="center" className="w-full">
           <ContentTitle title="SNS" />
         </Flex>
-        <button onClick={() => openInstagram('j._.taek')} className="flex items-center gap-8">
+        <button onClick={() => openInstagram(instaId)} className="flex items-center gap-8">
           <InstaIcon />
-          <p className="text-14 font-medium text-gray-800 underline">j._.taek</p>
+          <p className="text-14 font-medium text-gray-800 underline">{instaId}</p>
         </button>
       </Flex>
     </ContentBox>
