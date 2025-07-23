@@ -37,10 +37,8 @@ export default function AddProductModal({ isOpen, onClose, isEdit, onClick }: Ad
     if (!isOpen) return
     if (detailData?.shop.products) {
       setProductList(detailData?.shop.products)
-    } else {
-      clearProductList()
     }
-  }, [isOpen, clearProductList])
+  }, [isOpen])
 
   const handleCloseModal = () => {
     onClose()

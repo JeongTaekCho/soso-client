@@ -9,7 +9,7 @@ interface LoginLayoutProps {
 
 export default function LoginLayout({ children, login }: LoginLayoutProps) {
   return (
-    <div className="fixed top-0 px-20 layout-center">
+    <div className="fixed top-0 bg-[#fdf9f8] px-20 layout-center">
       {login}
       {children}
     </div>

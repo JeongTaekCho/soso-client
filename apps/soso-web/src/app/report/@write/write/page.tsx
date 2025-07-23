@@ -38,8 +38,10 @@ export default function ReportWrite() {
     handleTimePicker,
   } = useTimePicker()
   const { productList, clearProductList } = useProductListStore()
-  const { yoil, toggleYoil } = useYoilStore()
+  const { yoil, toggleYoil, resetYoil } = useYoilStore()
   const { shop, setShop, operatingHours, setOperatingHours, products, setProduct } = useReportStore()
+
+  console.log(productList)
 
   const { mutate: postReportMutate } = usePostReportMutation()
 
@@ -76,11 +78,15 @@ export default function ReportWrite() {
     }
   }, [shop])
 
+  // useEffect(() => {
+  //   return () => {
+  //     clearProductList()
+  //   }
+  // }, [pathname, clearProductList])
+
   useEffect(() => {
-    return () => {
-      clearProductList()
-    }
-  }, [pathname, clearProductList])
+    resetYoil()
+  }, [pathname])
 
   const convertTimeFormat = (timeString: string): string => {
     const [period, time] = timeString.split(' ')
