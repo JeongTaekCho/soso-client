@@ -22,7 +22,7 @@ export default function BottomNavigation() {
       href: '/search',
     },
     {
-      label: '제보',
+      label: '등록',
       icon: <ReportNaviIcon isActive={pathname.includes('/report')} />,
       href: '/report',
     },

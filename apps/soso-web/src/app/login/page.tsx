@@ -1,5 +1,7 @@
 'use client'
 
+import AppleLogin from '@/app/login/components/AppleLogin'
+import AppleIcon from '@/shared/components/icons/AppleIcon'
 import GoogleIcon from '@/shared/components/icons/GoogleIcon'
 import Flex from '@/shared/components/layout/Flex'
 import { useIsNativeApp } from '@/shared/hooks/useIsNativeApp'
@@ -82,16 +84,15 @@ export default function LoginPage() {
       >
         <button
           onClick={googleLogin}
-          className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"
+          className="relative flex h-56 w-full items-center justify-center gap-6 rounded-16 border border-gray-200 bg-white font-body1_m"
         >
-          <div className="absolute left-14 top-1/2 -translate-y-1/2">
-            <GoogleIcon />
-          </div>
+          <GoogleIcon />
           Google로 시작하기
         </button>
+        <AppleLogin />
         <button
           onClick={handleGuestLogin}
-          className="relative flex h-56 w-full items-center justify-center rounded-16 bg-[#F3EDE8] font-body1_m"
+          className="flex h-56 w-full items-center justify-center text-gray-500 font-body2_m"
         >
           로그인 없이 시작하기
         </button>

@@ -10,11 +10,11 @@ import LinkIcon from '@/shared/components/icons/LinkIcon'
 import clsx from 'clsx'
 
 interface Data {
-  id: number
+  id: number | null
   image: string | null
-  name: string
-  link: string
-  type?: number
+  name: string | null
+  link: string | null
+  type?: number | null
 }
 
 interface ProductLayoutProps {
@@ -50,7 +50,7 @@ export default function ProductLayout({ data, title, placeholder, productLink, t
           {data.map((item, index) => (
             <SwiperSlide style={{ width: '72px' }} key={index}>
               <Link
-                href={item.type === 0 ? '#' : item.link}
+                href={item.type === 0 ? '#' : item.link || ''}
                 className={clsx('flex w-full flex-col gap-6 truncate', item.type === 0 && 'cursor-default')}
               >
                 <ProductImage

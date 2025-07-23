@@ -14,31 +14,31 @@ export default function ProductLists() {
   const myWishList =
     myWishData?.pages[0].data.map((wish) => {
       return {
-        id: wish.shop.id,
-        image: wish.shop.image,
-        name: wish.shop.name,
-        link: `/shop/${wish.shop.id}`,
+        id: wish.shop.id || null,
+        image: wish.shop?.image || null,
+        name: wish.shop?.name || null,
+        link: `/shop/${wish.shop?.id}` || null,
       }
     }) || []
 
   const myReviewList =
     myReviewData?.pages[0].data.map((review) => {
       return {
-        id: review.id,
-        image: review.shop.image,
-        name: review.shop.name,
-        link: `/shop/${review.shop.id}/review`,
+        id: review.id || null,
+        image: review.shop?.image || null,
+        name: review.shop?.name || null,
+        link: `/shop/${review.shop?.id}/review` || null,
       }
     }) || []
 
   const myShopList =
     myShopData?.pages[0].data.map((shop) => {
       return {
-        id: shop.shop.id,
-        image: shop.shop.image,
-        name: shop.shop.name,
-        link: `/shop/${shop.shop.id}`,
-        type: shop.type,
+        id: shop.shop?.id || null,
+        image: shop.shop?.image || null,
+        name: shop.shop?.name || null,
+        link: `/shop/${shop.shop?.id}` || null,
+        type: shop.type || null,
       }
     }) || []
 
