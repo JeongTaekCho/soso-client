@@ -1,7 +1,6 @@
 'use client'
 
 import Loading from '@/shared/components/loading/Loading'
-import useLocationHandler from '@/shared/hooks/useLocationHandler'
 import useMapStore from '@/shared/store/useMapStore'
 import Script from 'next/script'
 import { useEffect, useRef, useState } from 'react'
@@ -10,7 +9,6 @@ interface NaverMapProps {
   width?: string
   height?: string
   markerEvent?: (marker: naver.maps.Marker, data: any) => void
-  isCurrent?: boolean
   isDisabled?: boolean
 }
 
@@ -18,9 +16,7 @@ interface CustomMap extends naver.maps.Map {
   customMarkers?: naver.maps.Marker[]
 }
 
-export default function NaverMap({ width, height, markerEvent, isCurrent, isDisabled }: NaverMapProps) {
-  useLocationHandler(isCurrent ?? false)
-
+export default function NaverMap({ width, height, markerEvent, isDisabled }: NaverMapProps) {
   const mapRef = useRef<HTMLDivElement>(null)
   const { setMap, center, minZoom, zoom, map, markers } = useMapStore()
 

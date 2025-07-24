@@ -8,8 +8,10 @@ import { getIsSameArray } from '@/shared/utils/getIsSame'
 import MapView from './components/MapView'
 import ListView from './components/ListView'
 import { useIsNativeApp } from '@/shared/hooks/useIsNativeApp'
+import useLocationHandler from '@/shared/hooks/useLocationHandler'
 
 export default function HomePage() {
+  useLocationHandler(true)
   const isNativeApp = useIsNativeApp()
   const { lat, lng, setLocation } = useLocationStore()
   const [categoryIdList, setCategoryIdList] = useState<number[]>(DEFAULT_CATEGORY_ID_LIST)
