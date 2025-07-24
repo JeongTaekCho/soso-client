@@ -11,7 +11,7 @@ import { useIsNativeApp } from '@/shared/hooks/useIsNativeApp'
 import useLocationHandler from '@/shared/hooks/useLocationHandler'
 
 export default function HomePage() {
-  useLocationHandler(true)
+  useLocationHandler()
   const isNativeApp = useIsNativeApp()
   const { lat, lng, setLocation } = useLocationStore()
   const [categoryIdList, setCategoryIdList] = useState<number[]>(DEFAULT_CATEGORY_ID_LIST)
