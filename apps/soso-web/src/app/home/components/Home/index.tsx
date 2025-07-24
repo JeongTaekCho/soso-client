@@ -18,7 +18,7 @@ export default function HomePage() {
   const [isWishListView, setIsWishListView] = useState<boolean>(false)
   const [isOpenCategoryModal, setIsOpenCategoryModal] = useState<boolean>(false)
   const [isMapViewMode, setIsMapViewMode] = useState<boolean>(true)
-  const { data: shopData } = useGetShopQuery(lat, lng, undefined, isWishListView, categoryIdList)
+  const { data: shopData } = useGetShopQuery(lat, lng, !isMapViewMode, isWishListView, categoryIdList)
   const totalShopCount = shopData?.length ?? 0
   const isCategoryView = categoryIdList.length > 0 && !getIsSameArray(categoryIdList, DEFAULT_CATEGORY_ID_LIST)
 
