@@ -41,8 +41,6 @@ export default function ReportWrite() {
   const { yoil, toggleYoil, resetYoil } = useYoilStore()
   const { shop, setShop, operatingHours, setOperatingHours, products, setProduct } = useReportStore()
 
-  console.log(productList)
-
   const { mutate: postReportMutate } = usePostReportMutation()
 
   const router = useRouter()

@@ -83,10 +83,10 @@ export default function AppleLogin() {
   }
 
   const handleAppleSignInSuccess = async (response: AppleIDSignInResponse) => {
-    console.log(response)
     try {
       const { code, id_token, state } = response.authorization
       const user = response.user
+      console.log(code, id_token, state)
 
       // const backendResponse = await fetch('/api/auth/apple', {
       //   method: 'POST',
