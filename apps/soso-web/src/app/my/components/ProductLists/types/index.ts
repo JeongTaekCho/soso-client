@@ -53,9 +53,18 @@ export interface MyShopType {
   id: number
   type: number
   status: number
-  shopName: string
   rejectMessage: string | null
   submitStatus: number
+  shop: {
+    id: number
+    image: string | null
+    instagram: string | null
+    lat: number
+    lng: number
+    location: string
+    name: string
+    type: number
+  }
 }
 
 export interface GetMyShopResponse {

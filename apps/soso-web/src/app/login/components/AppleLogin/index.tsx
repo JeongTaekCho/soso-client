@@ -87,6 +87,7 @@ export default function AppleLogin() {
       const { code, id_token, state } = response.authorization
       const user = response.user
       console.log(code, id_token, state)
+      console.log(user)
 
       // const backendResponse = await fetch('/api/auth/apple', {
       //   method: 'POST',

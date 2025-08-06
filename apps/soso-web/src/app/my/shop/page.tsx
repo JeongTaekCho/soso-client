@@ -10,6 +10,7 @@ import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useDialog } from '@/shared/context/DialogContext'
+import { useDeleteSubmitShopMutation } from '@/app/my/shop/hooks/useDeleteSubmitShopMutation'
 
 export default function MyShopPage() {
   const router = useRouter()
@@ -18,6 +19,7 @@ export default function MyShopPage() {
 
   // useInfiniteQuery로 변경된 훅 사용
   const { data: myShopData, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useGetMyShopQuery(10)
+  const { mutate: deleteSubmitShopMutate } = useDeleteSubmitShopMutation()
 
   // 무한 스크롤을 위한 InView 설정
   const { ref, inView } = useInView({
@@ -29,10 +31,16 @@ export default function MyShopPage() {
     router.push(`/shop/${shopId}`)
   }
 
-  const handleOpenDeleteModal = () => {
+  const handleDeleteShop = (shopId: string) => {
+    deleteSubmitShopMutate(String(shopId))
+    closeDialog()
+  }
+
+  const handleOpenDeleteModal = (shopId: number) => {
     openDialog({
       type: 'confirm',
       title: '등록한 정보를 삭제하시겠습니까?',
+      onConfirm: () => handleDeleteShop(String(shopId)),
     })
   }
 
@@ -114,16 +122,15 @@ export default function MyShopPage() {
         {allShops?.map((data, index) => (
           <div key={`shop-${data?.id}-${index}`} className="relative w-full">
             <button
-              onClick={() => handleLink(data?.id)}
+              onClick={() => handleLink(data?.shop.id)}
               disabled={data?.type === 0}
               className="flex w-full items-center justify-between border-b border-gray-100 px-16 py-18"
             >
               <ShopInfo
-                name={data?.shopName}
+                name={data?.shop.name}
                 date={'2024.01.01'}
                 disabled={data?.type === 0}
-                imgUrl={''}
-                // imgUrl={data?.shop?.image || ''}
+                imgUrl={data?.shop.image || ''}
               />
             </button>
             <Flex direction="col" gap={8} className="absolute right-16 top-1/2 -translate-y-1/2">
@@ -137,7 +144,7 @@ export default function MyShopPage() {
                 {getStatus(data?.submitStatus)}
               </div>
               <button
-                onClick={handleOpenDeleteModal}
+                onClick={() => handleOpenDeleteModal(data?.id)}
                 className="h-26 w-86 rounded-8 border border-gray-100 text-gray-500 font-caption"
               >
                 삭제
