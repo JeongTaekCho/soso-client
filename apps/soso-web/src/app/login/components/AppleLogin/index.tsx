@@ -2,8 +2,6 @@
 
 import { useAppleLoginMutation } from '@/app/login/components/AppleLogin/hooks/useAppleLoginMutation'
 import AppleIcon from '@/shared/components/icons/AppleIcon'
-import { customFetch } from '@/shared/utils/customFetch'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 declare global {
@@ -44,7 +42,6 @@ export default function AppleLogin() {
   const [isAppleLoaded, setIsAppleLoaded] = useState(false)
   const { mutate: appleLoginMutate } = useAppleLoginMutation()
 
-  // Apple JS SDK 로드
   useEffect(() => {
     const script = document.createElement('script')
     script.src = 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
