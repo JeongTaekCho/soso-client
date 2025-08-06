@@ -1,6 +1,9 @@
 'use client'
 
+import { useAppleLoginMutation } from '@/app/login/components/AppleLogin/hooks/useAppleLoginMutation'
 import AppleIcon from '@/shared/components/icons/AppleIcon'
+import { customFetch } from '@/shared/utils/customFetch'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 declare global {
@@ -39,6 +42,7 @@ interface AppleIDSignInResponse {
 }
 export default function AppleLogin() {
   const [isAppleLoaded, setIsAppleLoaded] = useState(false)
+  const { mutate: appleLoginMutate } = useAppleLoginMutation()
 
   // Apple JS SDK 로드
   useEffect(() => {
@@ -84,34 +88,8 @@ export default function AppleLogin() {
 
   const handleAppleSignInSuccess = async (response: AppleIDSignInResponse) => {
     try {
-      const { code, id_token, state } = response.authorization
-      const user = response.user
-      console.log(code, id_token, state)
-      console.log(user)
-
-      // const backendResponse = await fetch('/api/auth/apple', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     code,
-      //     id_token,
-      //     state,
-      //     user,
-      //   }),
-      // })
-
-      // if (!backendResponse.ok) {
-      //   throw new Error('Backend authentication failed')
-      // }
-
-      // const result = await backendResponse.json()
-      // console.log('Backend response:', result)
-
-      // 로그인 성공 처리 (토큰 저장, 리다이렉트 등)
-      // localStorage.setItem('token', result.token);
-      // router.push('/dashboard');
+      const { id_token } = response.authorization
+      appleLoginMutate(id_token)
     } catch (error) {
       console.error('Error handling Apple sign in:', error)
     }
