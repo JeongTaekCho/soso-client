@@ -230,7 +230,6 @@ export default function MapView({
         markerEvent={(_marker, data) => {
           goToSlide(data.id)
         }}
-        isCurrent
       />
       <div className="fixed bottom-76 left-1/2 flex w-full -translate-x-1/2 flex-col items-end gap-20 layout-center">
         <div className="flex flex-col gap-12 px-16">
