@@ -11,8 +11,8 @@ export const useAppleLoginMutation = () => {
     mutationKey: ['appleLogin'],
     mutationFn: (idToken: string) => appleLogin(idToken),
     onSuccess: (data) => {
-      setToken(data.accessToken)
-      setRefreshToken(data.refreshToken)
+      setToken(data.result.accessToken)
+      setRefreshToken(data.result.refreshToken)
       router.push('/')
     },
   })

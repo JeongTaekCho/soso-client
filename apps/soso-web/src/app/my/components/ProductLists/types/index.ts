@@ -55,6 +55,7 @@ export interface MyShopType {
   status: number
   rejectMessage: string | null
   submitStatus: number
+  createdAt: string
   shop: {
     id: number
     image: string | null
