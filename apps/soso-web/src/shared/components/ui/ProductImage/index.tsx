@@ -12,6 +12,7 @@ export default function ProductImage({ imgUrl, size, className }: ProductImagePr
     <div style={{ width: size || '72px', height: size || '72px' }} className="relative">
       <Image
         fill
+        style={{ objectFit: 'cover' }}
         src={imgUrl || '/images/default_item.svg'}
         className={clsx('rounded-12', className)}
         alt="프로덕트 이미지"
