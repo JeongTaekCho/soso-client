@@ -9,8 +9,6 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 export const useGetShopSearchListQuery = (shopName: string, limit: number = 10) => {
   const { lat, lng } = useLocationStore()
 
-  console.log(lat, lng)
-
   return useInfiniteQuery({
     queryKey: ['shopSearchList', shopName, limit, lat, lng],
 
