@@ -2,6 +2,7 @@
 
 import { useAppleLoginMutation } from '@/app/login/components/AppleLogin/hooks/useAppleLoginMutation'
 import AppleIcon from '@/shared/components/icons/AppleIcon'
+import { useIsNativeApp } from '@/shared/hooks/useIsNativeApp'
 import { useEffect, useState } from 'react'
 
 declare global {
@@ -41,6 +42,7 @@ interface AppleIDSignInResponse {
 export default function AppleLogin() {
   const [isAppleLoaded, setIsAppleLoaded] = useState(false)
   const { mutate: appleLoginMutate } = useAppleLoginMutation()
+  const isNativeApp = useIsNativeApp()
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -58,6 +60,10 @@ export default function AppleLogin() {
 
   const loginWithApple = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    if (isNativeApp) {
+      window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'APPLE_LOGIN_REQUEST' }))
+      return
+    }
 
     if (!isAppleLoaded || !window.AppleID) {
       console.error('Apple ID SDK not loaded')
@@ -75,22 +81,41 @@ export default function AppleLogin() {
 
     try {
       const res: AppleIDSignInResponse = await window.AppleID.auth.signIn()
-      console.log('Apple Sign In Response:', res)
-
-      await handleAppleSignInSuccess(res)
+      await handleAppleSignInSuccess(res.authorization.id_token)
     } catch (error) {
       console.error('Apple Sign In Error:', error)
     }
   }
 
-  const handleAppleSignInSuccess = async (response: AppleIDSignInResponse) => {
+  const handleAppleSignInSuccess = async (idToken: string) => {
     try {
-      const { id_token } = response.authorization
-      appleLoginMutate(id_token)
+      appleLoginMutate(idToken)
     } catch (error) {
       console.error('Error handling Apple sign in:', error)
     }
   }
+
+  useEffect(() => {
+    if (!isNativeApp) {
+      return
+    }
+
+    const handler = (e: Event) => {
+      const { idToken } = (e as CustomEvent<{ idToken: string }>).detail
+
+      if (idToken) {
+        handleAppleSignInSuccess(idToken)
+      } else {
+        console.error('Error handling Apple sign in: id token is empty')
+      }
+    }
+
+    window.addEventListener('apple-login-success', handler)
+
+    return () => {
+      window.removeEventListener('apple-login-success', handler)
+    }
+  }, [isNativeApp])
 
   return (
     <button
