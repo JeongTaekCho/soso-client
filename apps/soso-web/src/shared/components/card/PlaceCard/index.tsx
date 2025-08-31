@@ -19,7 +19,7 @@ interface PlaceCardProps {
 export default function PlaceCard({ width, height, type, data }: PlaceCardProps) {
   const [currentLat, setCurrentLat] = useState<number | null>(0)
   const [currentLng, setCurrentLng] = useState<number | null>(0)
-  const { setPrevLocation } = useLocationStore()
+  const { setPrevShop } = useLocationStore()
 
   useEffect(() => {
     const setCurrentLocation = async () => {
@@ -37,7 +37,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
   }, [])
 
   const handleSavePrevLocation = (lat: number, lng: number, id: number) => {
-    setPrevLocation(lat, lng, id)
+    setPrevShop({ id, lat, lng })
   }
 
   return type === 'map' ? (

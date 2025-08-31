@@ -20,6 +20,7 @@ import { useSearchStore } from '@/shared/store/useSearchStore'
 import SearchIcon from '@/shared/components/icons/SearchIcon'
 
 interface MapViewProps {
+  className?: string
   isNativeApp: boolean | undefined
   shopData: ShopType[]
   totalShopCount: number
@@ -33,6 +34,7 @@ interface MapViewProps {
 const NaverMap = dynamic(() => import('@/shared/components/layout/NaverMap'), { ssr: false })
 
 export default function MapView({
+  className,
   isNativeApp,
   shopData,
   totalShopCount,
@@ -42,8 +44,8 @@ export default function MapView({
   handleClickWishList,
   openCategoryModal,
 }: MapViewProps) {
-  const { map, addMarker, setCenter, clearMarkers } = useMapStore()
-  const { lat, lng, setPrevLocation, setLocation } = useLocationStore()
+  const { map, addMarker, setCenter, setZoom, clearMarkers } = useMapStore()
+  const { lat, lng, prevLocation, prevShop, setPrevLocation, setPrevShop, setLocation } = useLocationStore()
   const { setSearchValue } = useSearchStore()
 
   const [isMove, setIsMove] = useState(false)
@@ -55,7 +57,7 @@ export default function MapView({
   const handleClickResearch = () => {
     const location = map?.getCenter()
 
-    setPrevLocation(null, null, null)
+    setPrevLocation(null)
 
     setLocation(Number(location?.lat()), Number(location?.lng()))
     setIsMove(false)
@@ -108,15 +110,13 @@ export default function MapView({
     })
   }, [shopData, map, addMarker, selectedShopId])
 
-  useEffect(() => {
-    if (!shopData || (shopData && !shopData.length)) return
-
-    setSelectedShopId(shopData[0].id)
-  }, [shopData])
-
   const handleSlideChange = (swiper: SwiperRef) => {
+    if (!isRender) {
+      return
+    }
     const activeIndex = swiper.realIndex
     const selectedShop = shopData?.[activeIndex]
+
     if (selectedShop) {
       setSelectedShopId(selectedShop.id)
       setCenter(selectedShop.lat, selectedShop.lng)
@@ -153,14 +153,6 @@ export default function MapView({
   }
 
   useEffect(() => {
-    if (shopData?.length) {
-      setCenter(shopData?.[0].lat, shopData?.[0].lng)
-    } else {
-      setCenter(lat, lng)
-    }
-  }, [shopData, lat, lng])
-
-  useEffect(() => {
     if (!map) return
 
     const handleDrag = () => {
@@ -170,22 +162,62 @@ export default function MapView({
     }
 
     naver.maps.Event.addListener(map, 'dragend', handleDrag)
+
+    return () => {
+      const center = map.getCenter()
+      const locationState = { lat: center.lat(), lng: center.lng(), zoom: map.getZoom() }
+      setPrevLocation(locationState)
+    }
   }, [map])
 
   useEffect(() => {
+    /* location -> center 설정 */
     if (!shopData || !map || isRender) return
 
     const setupMapCenter = async () => {
       if (shopData.length) {
+        if (prevShop) {
+          setSelectedShopId(prevShop.id)
+          setCenter(prevShop.lat, prevShop.lng)
+          const timeout = setTimeout(() => {
+            goToSlide(prevShop.id)
+            clearTimeout(timeout)
+          }, 1000)
+          return
+        }
+
+        if (prevLocation) {
+          setSelectedShopId(null)
+          return
+        }
+
         setCenter(shopData[0].lat, shopData[0].lng)
-      } else {
-        setCenter(lat, lng)
+        setSelectedShopId(shopData[0].id)
+        return
       }
+      setCenter(lat, lng)
     }
 
     setupMapCenter()
     setIsRender(true)
+    setPrevLocation(null)
+    setPrevShop(null)
   }, [shopData, map])
+
+  useEffect(() => {
+    /* 이전 위치 있다면 먼저 location 설정 */
+    if (prevShop) {
+      setLocation(lat, lng)
+      return
+    }
+
+    if (prevLocation) {
+      const { lat, lng, zoom } = prevLocation
+      setLocation(lat, lng)
+      setZoom(zoom)
+      return
+    }
+  }, [])
 
   useEffect(() => {
     if (!isNativeApp) {
@@ -206,7 +238,7 @@ export default function MapView({
   }, [isNativeApp])
 
   return (
-    <div>
+    <div className={className}>
       <div className="fixed top-0 z-sticky flex w-full max-w-screen flex-col p-16">
         <Link href="/search" onClick={() => setSearchValue('')}>
           <div className="relative h-46 w-full">
