@@ -15,6 +15,9 @@ export default function ProfileImage({ imgUrl, size, className }: ProfileImage) 
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const handleOpenImageViewer = (index: number) => {
+    if (!imgUrl) {
+      return
+    }
     setSelectedIndex(index)
     setIsImageViewer(true)
   }

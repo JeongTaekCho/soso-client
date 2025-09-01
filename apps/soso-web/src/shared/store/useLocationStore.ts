@@ -3,12 +3,12 @@ import { create } from 'zustand'
 interface LocationState {
   lat: number
   lng: number
-  prevLat: number | null
-  prevLng: number | null
-  prevShopId: number | null // 이전에 본 소품샵 ID 저장
+  prevLocation: { lat: number; lng: number; zoom: number } | null
+  prevShop: { id: number; lat: number; lng: number } | null // 이전에 본 소품샵 ID 저장
   isInitialLocationSet: boolean
   setLocation: (lat: number, lng: number) => void
-  setPrevLocation: (prevLat: number | null, prevLng: number | null, prevShopId: number | null) => void // ID도 함께 저장
+  setPrevLocation: (state: { lat: number; lng: number; zoom: number } | null) => void
+  setPrevShop: (state: { id: number; lat: number; lng: number } | null) => void
   setIsInitialLocationSet: (isInitialLocationSet: boolean) => void
   resetLocation: () => void
 }
@@ -16,12 +16,12 @@ interface LocationState {
 export const useLocationStore = create<LocationState>((set) => ({
   lat: 37.5665,
   lng: 126.978,
-  prevLat: null,
-  prevLng: null,
-  prevShopId: null, // 이전에 본 소품샵 ID 저장
+  prevLocation: null,
+  prevShop: null,
   isInitialLocationSet: false,
   setLocation: (lat, lng) => set({ lat, lng }),
-  setPrevLocation: (prevLat, prevLng, prevShopId) => set({ prevLat, prevLng, prevShopId, isInitialLocationSet: true }),
+  setPrevLocation: (state) => set({ prevLocation: state, isInitialLocationSet: true }),
+  setPrevShop: (state) => set({ prevShop: state }),
   setIsInitialLocationSet: (isInitialLocationSet: boolean) => {
     set({ isInitialLocationSet })
   },
@@ -29,9 +29,7 @@ export const useLocationStore = create<LocationState>((set) => ({
     set({
       lat: 37.5665,
       lng: 126.978,
-      prevLat: null,
-      prevLng: null,
-      prevShopId: null,
-      isInitialLocationSet: false,
+      prevLocation: null,
+      prevShop: null,
     }),
 }))
