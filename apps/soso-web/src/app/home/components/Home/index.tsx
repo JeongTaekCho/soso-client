@@ -55,27 +55,26 @@ export default function HomePage() {
 
   return (
     <div className="relative">
-      {isMapViewMode ? (
-        <MapView
-          isNativeApp={isNativeApp}
-          shopData={shopData ?? []}
-          totalShopCount={totalShopCount}
-          toggleMapViewMode={toggleMapViewMode}
-          isWishListView={isWishListView}
-          isCategoryView={isCategoryView}
-          handleClickWishList={handleClickWishList}
-          openCategoryModal={() => setIsOpenCategoryModal(true)}
-        />
-      ) : (
-        <ListView
-          shopData={shopData ?? []}
-          toggleMapViewMode={toggleMapViewMode}
-          isWishListView={isWishListView}
-          isCategoryView={isCategoryView}
-          handleClickWishList={handleClickWishList}
-          openCategoryModal={() => setIsOpenCategoryModal(true)}
-        />
-      )}
+      <MapView
+        className={isMapViewMode ? 'block' : 'hidden'}
+        isNativeApp={isNativeApp}
+        shopData={shopData ?? []}
+        totalShopCount={totalShopCount}
+        toggleMapViewMode={toggleMapViewMode}
+        isWishListView={isWishListView}
+        isCategoryView={isCategoryView}
+        handleClickWishList={handleClickWishList}
+        openCategoryModal={() => setIsOpenCategoryModal(true)}
+      />
+      <ListView
+        className={!isMapViewMode ? 'block' : 'hidden'}
+        shopData={shopData ?? []}
+        toggleMapViewMode={toggleMapViewMode}
+        isWishListView={isWishListView}
+        isCategoryView={isCategoryView}
+        handleClickWishList={handleClickWishList}
+        openCategoryModal={() => setIsOpenCategoryModal(true)}
+      />
 
       <SelectCategoryModal
         isOpen={isOpenCategoryModal}

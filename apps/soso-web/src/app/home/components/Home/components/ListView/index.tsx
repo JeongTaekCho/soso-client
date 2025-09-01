@@ -16,6 +16,7 @@ import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
 import { useLocationStore } from '@/shared/store/useLocationStore'
 
 interface ListViewProps {
+  className?: string
   shopData: ShopType[]
   isWishListView: boolean
   isCategoryView: boolean
@@ -25,6 +26,7 @@ interface ListViewProps {
 }
 
 export default function ListView({
+  className,
   shopData,
   isWishListView,
   isCategoryView,
@@ -32,7 +34,7 @@ export default function ListView({
   handleClickWishList,
   openCategoryModal,
 }: ListViewProps) {
-  const { setPrevLocation } = useLocationStore()
+  const { setPrevShop } = useLocationStore()
   const { setSearchValue } = useSearchStore()
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState<number>(122)
@@ -40,7 +42,7 @@ export default function ListView({
   const [currentLng, setCurrentLng] = useState<number | null>(0)
 
   const handleSavePrevLocation = (lat: number, lng: number, id: number) => {
-    setPrevLocation(lat, lng, id)
+    setPrevShop({ id, lat, lng })
   }
 
   useEffect(() => {
@@ -66,14 +68,14 @@ export default function ListView({
   }, [])
 
   return (
-    <div className="h-full">
+    <div className={`${className} h-full`}>
       <div ref={headerRef} className="fixed z-sticky flex w-full max-w-screen flex-col bg-white px-18 pt-16">
         <Link href="/search" onClick={() => setSearchValue('')}>
           <div className="relative h-46 w-full">
             <div className="absolute left-10 top-[52%] -translate-y-1/2">
               <SearchIcon fill="#9EA4AA" />
             </div>
-            <div className="h-full w-full rounded-12 bg-gray-50 px-16 py-14 pl-46 text-gray-400 font-body1_m focus:outline-main">
+            <div className="flex h-full w-full items-center rounded-12 bg-gray-50 pl-46 text-gray-400 font-body1_m focus:outline-main">
               찾고있는 소품샵이 있나요?
             </div>
           </div>

@@ -38,7 +38,7 @@ export default function ProductLists() {
         image: shop.shop?.image || null,
         name: shop.shop?.name || null,
         link: `/shop/${shop.shop?.id}` || null,
-        type: shop.type || null,
+        type: shop.type || 0,
       }
     }) || []
 
