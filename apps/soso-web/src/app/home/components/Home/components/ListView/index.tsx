@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react'
 import { getDistance } from '@/shared/utils/getDistance'
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation'
 import RoadFindButton from '@/shared/components/button/RoadFindButton'
-import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
+import { applefindUrl, kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
 import { useLocationStore } from '@/shared/store/useLocationStore'
 
 interface ListViewProps {
@@ -116,6 +116,7 @@ export default function ListView({
                 <RoadFindButton
                   naverUrl={naverFindUrl(shop.name, shop.lat, shop.lng)}
                   kakaoUrl={kakaoFindUrl(shop.name, shop.lat, shop.lng)}
+                  appleUrl={applefindUrl(shop.lat, shop.lng)}
                 />
               </Flex>
             </Flex>

@@ -2,7 +2,7 @@ import RoadFindButton from '@/shared/components/button/RoadFindButton'
 import Flex from '@/shared/components/layout/Flex'
 import { useLocationStore } from '@/shared/store/useLocationStore'
 import { ShopType } from '@/shared/types/shopType'
-import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
+import { applefindUrl, kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation'
 import { getDistance } from '@/shared/utils/getDistance'
 import { handleImageError } from '@/shared/utils/handleImageError'
@@ -74,6 +74,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
           <RoadFindButton
             naverUrl={naverFindUrl(data.name, data.lat, data.lng)}
             kakaoUrl={kakaoFindUrl(data.name, data.lat, data.lng)}
+            appleUrl={applefindUrl(data.lat, data.lng)}
           />
         </div>
       </Flex>
@@ -109,6 +110,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
         <RoadFindButton
           naverUrl={naverFindUrl(data.name, data.lat, data.lng)}
           kakaoUrl={kakaoFindUrl(data.name, data.lat, data.lng)}
+          appleUrl={applefindUrl(data.lat, data.lng)}
         />
       </Flex>
     </Link>
