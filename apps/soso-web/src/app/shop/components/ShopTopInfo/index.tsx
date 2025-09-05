@@ -14,7 +14,7 @@ import BottomModal from '@/shared/components/modal/BottomModal'
 import { useDialog } from '@/shared/context/DialogContext'
 import { useAuthStore } from '@/shared/store/useAuthStore'
 import { ShopDetailType } from '@/shared/types/shopType'
-import { kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
+import { applefindUrl, kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -105,7 +105,10 @@ export default function ShopTopInfo({ shopData }: ShopTopInfoProps) {
                 window.open(kakaoFindUrl(shopData?.shop.name || '', shopData?.shop.lat, shopData?.shop.lng), '_blank')
               }
             />
-            {/* <MapButton title="apple 지도" /> */}
+            <MapButton
+              title="Apple 지도"
+              onClick={() => window.open(applefindUrl(shopData?.shop.lat, shopData?.shop.lng), '_blank')}
+            />
           </Flex>
         </Flex>
       </BottomModal>

@@ -10,9 +10,10 @@ import { MouseEvent, useState } from 'react'
 interface RoadFindButtonProps {
   kakaoUrl?: string
   naverUrl?: string
+  appleUrl?: string
 }
 
-export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonProps) {
+export default function RoadFindButton({ kakaoUrl, naverUrl, appleUrl }: RoadFindButtonProps) {
   const [isFindModal, setIsFindModal] = useState(false)
 
   const handleToggleFindModal = (e: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLDivElement>) => {
@@ -40,7 +41,7 @@ export default function RoadFindButton({ kakaoUrl, naverUrl }: RoadFindButtonPro
           <Flex direction="col" gap={12} className="w-full">
             <MapButton title="네이버 지도" onClick={() => window.open(naverUrl, '_blank')} />
             <MapButton title="카카오 지도" onClick={() => window.open(kakaoUrl, '_blank')} />
-            {/* <MapButton title="apple 지도" /> */}
+            <MapButton title="Apple 지도" onClick={() => window.open(appleUrl, '_blank')} />
           </Flex>
         </Flex>
       </BottomModal>
