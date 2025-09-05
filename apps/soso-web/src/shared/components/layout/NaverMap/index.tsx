@@ -116,6 +116,8 @@ export default function NaverMap({ width, height, markerEvent, isDisabled }: Nav
   }, [zoom])
 
   const mapStyle = {
+    overFlowX: 'hidden',
+    overFlowY: 'hidden',
     width: width || '100%',
     height: height || 'calc(100vh - 60px)',
   }

@@ -56,25 +56,23 @@ export const naverFindUrl = (name: string, lat: number | undefined, lng: number 
 }
 
 /**
- * 네이버 지도 길안내 URL 생성 함수 (반응형)
- * @param name 장소명
+ * 애플 지도 열기 url
  * @param lat 위도
  * @param lng 경도
- * @returns 네이버 길안내 URL (PC 또는 모바일 버전)
+ * @returns 네이버 지도 URL (PC 또는 모바일 버전)
  */
-export const naverDirectionUrl = (name: string, lat: number | undefined, lng: number | undefined) => {
-  if (!name || !lat || !lng) return ''
-
-  const encodedName = encodeURIComponent(name)
-
+export const applefindUrl = (lat: number | undefined, lng: number | undefined) => {
   // 모바일 기기 감지
   const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
   if (isMobile) {
-    // 모바일 길찾기 URL
-    return `https://m.map.naver.com/directions/#/poiSearch/destination/${encodedName}`
+    // 모바일 버전 URL (모바일 기기 또는 웹뷰용)
+    return `maps://?q=${lat},${lng}`
   } else {
-    // PC 길찾기 URL
-    return `https://map.naver.com/p/directions/-/-/${encodedName},${lng},${lat}/-/-/-/-?c=${lng},${lat},15`
+    // PC 버전 URL
+    // 좌표가 있는 경우 지도 중심점 설정
+    if (lat && lng) {
+      return `http://maps.apple.com/?q=${lat},-${lng}`
+    }
   }
 }
