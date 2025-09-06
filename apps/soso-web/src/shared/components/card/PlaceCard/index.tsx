@@ -3,6 +3,7 @@ import Flex from '@/shared/components/layout/Flex'
 import { useLocationStore } from '@/shared/store/useLocationStore'
 import { ShopType } from '@/shared/types/shopType'
 import { applefindUrl, kakaoFindUrl, naverFindUrl } from '@/shared/utils/findShop'
+import { formatDistance } from '@/shared/utils/formatDistance'
 import { getCurrentLocation } from '@/shared/utils/getCurrentLocation'
 import { getDistance } from '@/shared/utils/getDistance'
 import { handleImageError } from '@/shared/utils/handleImageError'
@@ -66,7 +67,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
               {data.name}
             </h4>
             <p className="text-gray-400 font-body1_m">
-              {currentLat === 0 ? '-' : getDistance(Number(currentLat), Number(currentLng), data.lat, data.lng)}
+            {formatDistance(data?.distance)}
             </p>
           </Flex>
         </Flex>
@@ -103,7 +104,7 @@ export default function PlaceCard({ width, height, type, data }: PlaceCardProps)
           <Flex direction="col" gap={8}>
             <h4 className="font-title4_semi">{data.name}</h4>
             <p className="text-gray-400 font-body1_m">
-              {currentLat === 0 ? '-' : getDistance(Number(currentLat), Number(currentLng), data.lat, data.lng)}
+            {formatDistance(data?.distance)}
             </p>
           </Flex>
         </Flex>
