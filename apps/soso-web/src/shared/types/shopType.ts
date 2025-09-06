@@ -8,6 +8,9 @@ export interface ShopType {
   operatingHours: OperatingHourType[]
   products: ProductType[]
   image: string | null
+  regionId: number,
+  distance: number,
+  reviewCount: number
 }
 
 export interface OperatingHourType {
