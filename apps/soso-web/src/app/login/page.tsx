@@ -1,7 +1,6 @@
 'use client'
 
 import AppleLogin from '@/app/login/components/AppleLogin'
-import AppleIcon from '@/shared/components/icons/AppleIcon'
 import GoogleIcon from '@/shared/components/icons/GoogleIcon'
 import Flex from '@/shared/components/layout/Flex'
 import { useIsNativeApp } from '@/shared/hooks/useIsNativeApp'
@@ -20,10 +19,6 @@ export default function LoginPage() {
   const handleGuestLogin = () => {
     router.push('/')
   }
-
-  useEffect(() => {
-    setRedirectUri(`${window.location.origin}/login/callback`)
-  }, [])
 
   const googleLogin = () => {
     if (!redirectUri) return
@@ -48,7 +43,7 @@ export default function LoginPage() {
   }, [token, isHydrated])
 
   useEffect(() => {
-    if (!isNativeApp) {
+    if (!isNativeApp || !redirectUri) {
       return
     }
 
@@ -64,7 +59,11 @@ export default function LoginPage() {
     return () => {
       window.removeEventListener('google-login-success', onGoogleLoginSuccess)
     }
-  }, [isNativeApp])
+  }, [isNativeApp, redirectUri])
+
+  useEffect(() => {
+    setRedirectUri(`${window.location.origin}/login/callback`)
+  }, [])
 
   return (
     <Flex justify="center" align="center" className="h-screenVh w-full">
