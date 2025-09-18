@@ -17,7 +17,7 @@ export default function ProfileUpload({ prevImage, preview, setSingleFile }: Pro
 
   return (
     <div>
-      <input id="profile-upload" type="file" className="hidden" onChange={handleChangeFile} />
+      <input id="profile-upload" type="file" className="hidden" onChange={handleChangeFile} accept="image/*" />
       <div className="relative">
         <ProfileImage size={82} imgUrl={preview || prevImage} />
         <label htmlFor="profile-upload" className="absolute bottom-0 right-0 cursor-pointer">

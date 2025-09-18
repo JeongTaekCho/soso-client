@@ -8,7 +8,7 @@ interface AddButtonProps extends InputHTMLAttributes<HTMLInputElement> {
 export default function AddButton({ width, height, ...props }: AddButtonProps) {
   return (
     <div>
-      <input type="file" multiple className="hidden" id="add-file" {...props} />
+      <input type="file" multiple className="hidden" id="add-file" {...props} accept="image/*" />
       <label
         htmlFor="add-file"
         style={{
