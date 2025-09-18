@@ -7,6 +7,7 @@ import BottomModal from '@/shared/components/modal/BottomModal'
 import BottomModalTitle from '@/shared/components/text/BottomModalTitle'
 import { PRODUCT_LIST } from '@/shared/constant/Product'
 import { ProductType } from '@/shared/types/shopType'
+import CheckIcon from '@/shared/components/icons/CheckIcon'
 
 interface SelectCategoryModalProps {
   isOpen: boolean
@@ -15,7 +16,8 @@ interface SelectCategoryModalProps {
   onSubmit: (idList: number[]) => void
 }
 
-export const DEFAULT_CATEGORY_ID_LIST = PRODUCT_LIST.map((item) => item.id)
+export const DEFAULT_CATEGORY_ID_LIST = []
+const ALL_CATEGORY_ID_LIST = PRODUCT_LIST.map((item) => item.id)
 
 export default function SelectCategoryModal({
   isOpen,
@@ -24,6 +26,7 @@ export default function SelectCategoryModal({
   onSubmit,
 }: SelectCategoryModalProps) {
   const [idList, setIdList] = useState<number[]>([])
+  const [isSelectedAll, setIsSelctedAll] = useState<boolean>(false)
 
   const toggleCategory = (id: number) => {
     const isProductInList = idList.some((prevId) => prevId === id)
@@ -40,6 +43,23 @@ export default function SelectCategoryModal({
     onClose()
   }
 
+  const togglekSelectAll = () => {
+    if (isSelectedAll) {
+      setIdList([])
+    } else {
+      setIdList(ALL_CATEGORY_ID_LIST)
+    }
+  }
+
+  useEffect(() => {
+    if (idList.length === ALL_CATEGORY_ID_LIST.length) {
+      setIsSelctedAll(true)
+    }
+    if (idList.length < ALL_CATEGORY_ID_LIST.length) {
+      setIsSelctedAll(false)
+    }
+  }, [idList])
+
   useEffect(() => {
     const isDefault = initList.length === 0
     setIdList(isDefault ? DEFAULT_CATEGORY_ID_LIST : initList)
@@ -49,7 +69,20 @@ export default function SelectCategoryModal({
     <BottomModal isOpen={isOpen} onClose={handleCloseModal}>
       <Flex direction="col" gap={18}>
         <Flex className="w-full" justify="between" align="center">
-          <BottomModalTitle title="판매상품" />
+          <Flex direction="col">
+            <BottomModalTitle title="카테고리" />
+            <div className="text-gray-500 font-body2_m">원하는 카테고리를 선택해 주세요.</div>
+            <div className="row mt-20 flex items-center" onClick={togglekSelectAll}>
+              {isSelectedAll ? (
+                <div className="h-24 w-24 rounded-4 border-main bg-main">
+                  <CheckIcon fill={'white'} />
+                </div>
+              ) : (
+                <div className="h-24 w-24 rounded-4 border-2 border-gray-200"></div>
+              )}
+              <span className="ml-4 text-black font-body2_m">전체 선택</span>
+            </div>
+          </Flex>
           <ModalCloseButton onClick={handleCloseModal} />
         </Flex>
         <Flex direction="col" gap={38} align="center">
@@ -66,14 +99,6 @@ export default function SelectCategoryModal({
             ))}
           </Flex>
           <Flex className="w-full" direction="row" gap={9} align="center">
-            <Button
-              width={'120px'}
-              bgColor={'white'}
-              textColor={'black'}
-              borderColor={'var(--gray-100)'}
-              onClick={() => setIdList(DEFAULT_CATEGORY_ID_LIST)}
-              title="초기화"
-            />
             <Button onClick={onClickSubmit} title="선택하기" disabled={!idList.length} />
           </Flex>
         </Flex>
