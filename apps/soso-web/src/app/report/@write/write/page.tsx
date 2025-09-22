@@ -12,6 +12,7 @@ import Flex from '@/shared/components/layout/Flex'
 import Header from '@/shared/components/layout/Header'
 import NaverMap from '@/shared/components/layout/NaverMap'
 import AddProductModal from '@/shared/components/modal/AddProductModal'
+import AlertModal from '@/shared/components/modal/AlertModal'
 import BottomModal from '@/shared/components/modal/BottomModal'
 import ModalPortal from '@/shared/components/modal/ModalPortal'
 import useInput from '@/shared/hooks/useInput'
@@ -24,6 +25,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 export default function ReportWrite() {
   const [isDeclareModal, setIsDeclareModal] = useState(false)
   const [isAddProductModal, setIsAddProductModal] = useState(false)
+  const [isShopLocationAlertModal, setIsShopLocationAlertModal] = useState(false)
 
   const { value: shopName, onChange: handleChangeShopName } = useInput('')
   const { value: phoneNumber, onChange: handleChangePhoneNumber } = useInput('')
@@ -56,6 +58,10 @@ export default function ReportWrite() {
     setIsDeclareModal((prev) => !prev)
   }
 
+  const handleShopLocationAlertModal = () => {
+    setIsShopLocationAlertModal((prev) => !prev)
+  }
+
   const handleToggleAddProductModal = () => {
     setIsAddProductModal((prev) => !prev)
   }
@@ -65,6 +71,11 @@ export default function ReportWrite() {
       shop,
       operatingHours,
       products,
+    }
+
+    if (!shop.location.startsWith('서울') && !shop.location.startsWith('제주')) {
+      setIsShopLocationAlertModal(true)
+      return
     }
 
     postReportMutate(data)
@@ -219,6 +230,9 @@ export default function ReportWrite() {
           value={timePickerType === 'open' ? openTime : closeTime}
         />
       </ModalPortal>
+      <AlertModal isOpen={isShopLocationAlertModal} onClose={handleShopLocationAlertModal} title={''}>
+        {'현재 서울, 제주에 있는 소품샵만 등록이 가능합니다'}
+      </AlertModal>
       <AddProductModal isOpen={isAddProductModal} onClose={handleToggleAddProductModal} />
     </form>
   )
