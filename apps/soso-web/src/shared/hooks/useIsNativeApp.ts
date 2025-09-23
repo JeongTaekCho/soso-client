@@ -7,9 +7,7 @@ export const useIsNativeApp = (): undefined | boolean => {
     if (typeof window === 'undefined') {
       return
     }
-    // setIsNative((window as any).isNativeApp === true)
-    // 애플 심사 리젝 대응용
-    setIsNative(true)
+    setIsNative((window as any).isNativeApp === true)
   }, [])
 
   return isNative
