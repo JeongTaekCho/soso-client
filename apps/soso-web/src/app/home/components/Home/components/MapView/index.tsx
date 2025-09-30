@@ -224,16 +224,23 @@ export default function MapView({
       return
     }
 
-    const handler = (e: Event) => {
-      const { lat, lng } = (e as CustomEvent<{ lat: number; lng: number }>).detail
-      setCenter(lat, lng)
-      setIsMove(true)
+    const handler = (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data)
+        if (data.type === 'NATIVE_LOCATION') {
+          const { lat, lng } = data.payload
+          setCenter(lat, lng)
+          setIsMove(true)
+        }
+      } catch (err) {
+        console.error('NATIVE_LOCATION 처리 중 에러:', err)
+      }
     }
 
-    window.addEventListener('native-location', handler)
+    window.addEventListener('message', handler)
 
     return () => {
-      window.removeEventListener('native-location', handler)
+      window.removeEventListener('message', handler)
     }
   }, [isNativeApp])
 

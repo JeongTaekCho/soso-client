@@ -7,7 +7,9 @@ export const useIsNativeApp = (): undefined | boolean => {
     if (typeof window === 'undefined') {
       return
     }
-    setIsNative((window as any).isNativeApp === true)
+    const isWebView = typeof (window as any).ReactNativeWebView !== 'undefined'
+
+    setIsNative(isWebView)
   }, [])
 
   return isNative
