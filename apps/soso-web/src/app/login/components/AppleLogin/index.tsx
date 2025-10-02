@@ -60,6 +60,7 @@ export default function AppleLogin() {
 
   const loginWithApple = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+
     if (isNativeApp) {
       window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'APPLE_LOGIN_REQUEST' }))
       return
@@ -96,24 +97,28 @@ export default function AppleLogin() {
   }
 
   useEffect(() => {
-    if (!isNativeApp) {
-      return
-    }
+    if (!isNativeApp) return
 
-    const handler = (e: Event) => {
-      const { idToken } = (e as CustomEvent<{ idToken: string }>).detail
-
-      if (idToken) {
-        handleAppleSignInSuccess(idToken)
-      } else {
-        console.error('Error handling Apple sign in: id token is empty')
+    const handler = (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data)
+        if (data.type === 'APPLE_LOGIN_SUCCESS') {
+          const { idToken } = data.payload
+          if (idToken) {
+            handleAppleSignInSuccess(idToken)
+          } else {
+            console.error('Error handling Apple sign in: id token is empty')
+          }
+        }
+      } catch (err) {
+        console.error('APPLE_LOGIN_SUCCESS 처리 중 에러:', err)
       }
     }
 
-    window.addEventListener('apple-login-success', handler)
+    window.addEventListener('message', handler)
 
     return () => {
-      window.removeEventListener('apple-login-success', handler)
+      window.removeEventListener('message', handler)
     }
   }, [isNativeApp])
 
