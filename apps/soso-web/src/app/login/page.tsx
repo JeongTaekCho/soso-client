@@ -43,21 +43,27 @@ export default function LoginPage() {
   }, [token, isHydrated])
 
   useEffect(() => {
-    if (!isNativeApp || !redirectUri) {
-      return
-    }
+    if (!isNativeApp || !redirectUri) return
 
-    const onGoogleLoginSuccess = (e: Event) => {
-      const { code } = (e as CustomEvent<{ code: string }>).detail
-      if (code) {
-        router.push(`${redirectUri}?code=${code}`)
+    const handleMessage = (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data)
+
+        if (data.type === 'GOOGLE_LOGIN_SUCCESS') {
+          const { code } = data.payload
+          if (code) {
+            router.push(`${redirectUri}?code=${code}`)
+          }
+        }
+      } catch (err) {
+        console.error('메시지 파싱 에러:', err)
       }
     }
 
-    window.addEventListener('google-login-success', onGoogleLoginSuccess)
+    window.addEventListener('message', handleMessage)
 
     return () => {
-      window.removeEventListener('google-login-success', onGoogleLoginSuccess)
+      window.removeEventListener('message', handleMessage)
     }
   }, [isNativeApp, redirectUri])
 

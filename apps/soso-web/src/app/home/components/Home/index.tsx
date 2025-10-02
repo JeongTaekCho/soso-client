@@ -41,15 +41,22 @@ export default function HomePage() {
       return
     }
 
-    const handler = (e: Event) => {
-      const { lat, lng } = (e as CustomEvent<{ lat: number; lng: number }>).detail
-      setLocation(lat, lng)
+    const handler = (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data)
+        if (data.type === 'INIT_NATIVE_LOCATION') {
+          const { lat, lng } = data.payload
+          setLocation(lat, lng)
+        }
+      } catch (err) {
+        console.error('INIT_NATIVE_LOCATION 처리 중 에러:', err)
+      }
     }
 
-    window.addEventListener('init-native-location', handler)
+    window.addEventListener('message', handler)
 
     return () => {
-      window.removeEventListener('init-native-location', handler)
+      window.removeEventListener('message', handler)
     }
   }, [isNativeApp])
 
