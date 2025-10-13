@@ -3,6 +3,7 @@
 import { useAppleLoginMutation } from '@/app/login/components/AppleLogin/hooks/useAppleLoginMutation'
 import AppleIcon from '@/shared/components/icons/AppleIcon'
 import { useIsNativeApp } from '@/shared/hooks/useIsNativeApp'
+import amplitude from '@/shared/utils/amplitude'
 import { useEffect, useState } from 'react'
 
 declare global {
@@ -58,34 +59,49 @@ export default function AppleLogin() {
     }
   }, [])
 
-  const loginWithApple = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const loginWithApple = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    if (isNativeApp) {
-      window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'APPLE_LOGIN_REQUEST' }))
-      return
+    amplitude.track('Web Login Apple Button Clicked', { isNativeApp })
+    let tryCount = 0
+    const tryPostMessage = () => {
+      tryCount++
+      if (isNativeApp === undefined) {
+        // 아직 결정 안났으면 200ms 후 재시도
+        setTimeout(tryPostMessage, 200)
+        return
+      }
+
+      amplitude.track('Web Login Apple Attempted', { tryCount })
+
+      if (isNativeApp) {
+        // 네이티브 환경이면 postMessage만 보내기
+        window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'APPLE_LOGIN_REQUEST' }))
+        return
+      }
+
+      // 웹 환경에서 기존 AppleID SDK 로그인
+      if (!isAppleLoaded || !window.AppleID) {
+        console.error('Apple ID SDK not loaded')
+        return
+      }
+
+      window.AppleID.auth.init({
+        clientId: process.env.NEXT_PUBLIC_APPLE_CLIENT_ID!,
+        scope: 'name email',
+        redirectURI: `https://soso-client-soso-web.vercel.app/login/apple`,
+        state: Math.random().toString(36).substring(2, 15),
+        nonce: Math.random().toString(36).substring(2, 15),
+        usePopup: true,
+      })
+
+      window.AppleID.auth
+        .signIn()
+        .then((res: AppleIDSignInResponse) => handleAppleSignInSuccess(res.authorization.id_token))
+        .catch((error) => console.error('Apple Sign In Error:', error))
     }
 
-    if (!isAppleLoaded || !window.AppleID) {
-      console.error('Apple ID SDK not loaded')
-      return
-    }
-
-    window.AppleID.auth.init({
-      clientId: process.env.NEXT_PUBLIC_APPLE_CLIENT_ID!,
-      scope: 'name email',
-      redirectURI: `https://soso-client-soso-web.vercel.app/login/apple`,
-      state: Math.random().toString(36).substring(2, 15),
-      nonce: Math.random().toString(36).substring(2, 15),
-      usePopup: true,
-    })
-
-    try {
-      const res: AppleIDSignInResponse = await window.AppleID.auth.signIn()
-      await handleAppleSignInSuccess(res.authorization.id_token)
-    } catch (error) {
-      console.error('Apple Sign In Error:', error)
-    }
+    tryPostMessage()
   }
 
   const handleAppleSignInSuccess = async (idToken: string) => {
