@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.25.4",
     "@hookform/resolvers": "^3.10.0",
     "@repo/tailwind-config": "*",
     "@tanstack/react-query": "^5.63.0",

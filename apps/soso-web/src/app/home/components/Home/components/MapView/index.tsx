@@ -129,6 +129,7 @@ export default function MapView({
     }
     if (isNativeApp) {
       window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'REQUEST_LOCATION' }))
+      return
     }
 
     const currentLocation = await getCurrentLocation()

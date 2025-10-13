@@ -5,6 +5,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/free-mode'
+import { Amplitude } from '@/shared/utils/amplitude'
 
 export const metadata: Metadata = {
   title: '소소',
@@ -17,6 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Amplitude />
       <body>
         <RootLayoutProvider>{children}</RootLayoutProvider>
       </body>
